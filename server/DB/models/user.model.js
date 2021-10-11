@@ -2,9 +2,9 @@ const { mongoose } = require('../connection');
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
-  userName: String,
-  password: String,
-  email: String,
+  userName: { type: String, required: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true, index: { unique: true } },
 });
 
 const user = mongoose.model('User', userSchema);
