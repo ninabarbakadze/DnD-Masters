@@ -1,0 +1,46 @@
+.form-container {
+  border-radius: 5px;
+  background-color: rgb(200, 166, 231);
+  padding: 20px;
+  width: 20vw;
+  position: absolute;
+  left: 40vw;
+  top: 30vh;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: blueviolet;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.form-container a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link-btn {
+  border: none;
+  background-color: inherit;
+  color: white;
+  cursor: pointer;
+}
