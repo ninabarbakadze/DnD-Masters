@@ -11,7 +11,11 @@ type Inputs = {
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
@@ -23,6 +27,7 @@ export default function Login() {
           placeholder="Username"
           {...register('username', { required: true })}
         />
+        {errors.username?.type === 'required' && 'Username must be filled out'}
         {!isLogin && (
           <input
             placeholder="Email"
@@ -33,6 +38,7 @@ export default function Login() {
           placeholder="Password"
           {...register('password', { required: true })}
         />
+        {errors.password?.type === 'required' && 'Password must be filled out'}
         {!isLogin && (
           <input
             placeholder="Confirm Password"
