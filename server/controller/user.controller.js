@@ -3,7 +3,6 @@ const User = require('../DB/models/user.model');
 exports.createUser = async (req, res) => {
   try {
     const { userName } = await req.body;
-    console.log(userName);
 
     const userExist = await User.find({ userName });
     console.log(userExist);
