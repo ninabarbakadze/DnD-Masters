@@ -1,6 +1,0 @@
-{
-  "ignore": [".git", "node_modules", "dist"],
-  "watch": ["./src"], // <- files inside folder to watch
-  "exec": "npm start", // <- command that will be executed when nodemon starts
-  "ext": "ts" // <- files to watch
-}
