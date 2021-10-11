@@ -5,6 +5,8 @@ import './Login.scss';
 type Inputs = {
   username: string;
   password: string;
+  email?: string;
+  passwordConfirm?: string;
 };
 
 export default function Login() {
@@ -17,10 +19,26 @@ export default function Login() {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="Username" {...register('username')} />
-        {!isLogin && <input placeholder="Email" />}
-        <input placeholder="Password" {...register('password')} />
-        {!isLogin && <input placeholder="Confirm Password" />}
+        <input
+          placeholder="Username"
+          {...register('username', { required: true })}
+        />
+        {!isLogin && (
+          <input
+            placeholder="Email"
+            {...register('email', { required: true })}
+          />
+        )}
+        <input
+          placeholder="Password"
+          {...register('password', { required: true })}
+        />
+        {!isLogin && (
+          <input
+            placeholder="Confirm Password"
+            {...register('passwordConfirm', { required: true })}
+          />
+        )}
         <button className="submit-btn" type="submit">
           {isLogin ? 'Login' : 'Sign In'}
         </button>
