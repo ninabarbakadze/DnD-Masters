@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import './Login.scss';
 
 type Inputs = {
   username: string;
@@ -14,15 +15,21 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <form onSubmit={handleSubmit(onSubmit)}>
         <input placeholder="Username" {...register('username')} />
         {!isLogin && <input placeholder="Email" />}
         <input placeholder="Password" {...register('password')} />
         {!isLogin && <input placeholder="Confirm Password" />}
-        <input type="submit" value={isLogin ? 'Login' : 'Sign In'} />
+        <button className="submit-btn" type="submit">
+          {isLogin ? 'Login' : 'Sign In'}
+        </button>
       </form>
-      <button type="button" onClick={() => setIsLogin(!isLogin)}>
+      <button
+        className="link-btn"
+        type="button"
+        onClick={() => setIsLogin(!isLogin)}
+      >
         {isLogin ? 'Not Signed up yet? Sign up' : 'Already Signed up? Login'}
       </button>
     </div>
