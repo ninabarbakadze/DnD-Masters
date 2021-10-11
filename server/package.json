@@ -1,0 +1,19 @@
+{
+  "name": "dnd-masters",
+  "version": "1.0.0",
+  "description": "this is our backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ninabarbakadze/DnD-Masters.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ninabarbakadze/DnD-Masters/issues"
+  },
+  "homepage": "https://github.com/ninabarbakadze/DnD-Masters#readme"
+}
