@@ -10,7 +10,7 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/gameWizard">
+        <Route path="/gameWizard">
           <GameWizard />
         </Route>
       </Switch>

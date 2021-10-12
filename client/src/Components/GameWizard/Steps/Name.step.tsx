@@ -1,11 +1,12 @@
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   updateName,
-  stepForward,
   // stepBackward,
 } from '../../../actions/gameWizard.actions';
-// import { IRootState } from '../../../reducers';
+import { IRootState } from '../../../reducers';
 import { iGameWizardState } from '../../../reducers/game';
 
 type Inputs = {
@@ -13,21 +14,36 @@ type Inputs = {
   tags: string;
 };
 
-export default function Name() {
-  const dispatch = useDispatch();
-  // const gameWizard = useSelector((state: IRootState) => state.game);
-  const { register, handleSubmit } = useForm<Inputs>();
+interface iNameProps {
+  onSubmit: any;
+  path: string;
+}
 
-  const onSubmit = (data: iGameWizardState) => {
-    dispatch(updateName(data));
-    dispatch(stepForward());
-  };
+function Name(props: iNameProps): React.FC<iNameProps> {
+  // const dispatch = useDispatch();
+  const gameWizard = useSelector((state: IRootState) => state.game);
+  const { register, handleSubmit } = useForm<Inputs>({
+    defaultValues: {
+      name: gameWizard.wizardData.name,
+      tags: gameWizard.wizardData.tags,
+    },
+  });
+
+  // const onSubmit = (data: iGameWizardState) => {
+  //   dispatch(updateName(data));
+  //   history.push('/gameWizard/selectMap');
+  // };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit((data) => props.onSubmit(data, updateName, path))}
+    >
+      {console.log(gameWizard)}
       <input {...register('name', { required: true })} id="name" />
       <input {...register('tags', { required: true })} id="tags" />
       <input type="submit" />
     </form>
   );
 }
+
+export default withRouter(Name);

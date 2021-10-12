@@ -1,4 +1,6 @@
-export const updateName = (wizardData: any) => ({
+import PayloadAction from '../interfaces/reduxInterfaces';
+
+export const updateName: PayloadAction = (wizardData: any) => ({
   type: 'UPDATE_NAME',
   payload: wizardData,
 });
