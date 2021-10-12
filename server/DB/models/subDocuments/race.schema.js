@@ -10,7 +10,7 @@ const raceSchema = new Schema({
   sizeDescription: String,
   abilityModifier: abilities,
   languages: [String],
-  features: [{}], // need a think how the features data look like
+  features: [String],
   languageDesc: String,
   traits: [String],
   subRaces: [String],
