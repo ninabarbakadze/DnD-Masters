@@ -1,21 +1,15 @@
 export interface iGameWizardState {
-  position: number;
-  wizardData: {
-    name: string;
-    tags: string;
-    mapName: string;
-    mapTags: string;
-  };
+  name: string;
+  tags: string;
+  mapName: string;
+  mapTags: string;
 }
 
 const initialState = {
-  position: 0,
-  wizardData: {
-    name: '',
-    tags: '',
-    mapName: '',
-    mapTags: '',
-  },
+  name: '',
+  tags: '',
+  mapName: '',
+  mapTags: '',
 };
 
 interface IAction {
@@ -42,10 +36,6 @@ const gameReducer = (state = initialState, action: IAction) => {
         mapName: action.payload.mapName,
         mapTags: action.payload.mapTags,
       };
-    case 'STEP_FORWARD':
-      return { ...state, position: state.position + 1 };
-    case 'STEP_BACKWARD':
-      return { ...state, position: state.position - 1 };
     default:
       return state;
   }
