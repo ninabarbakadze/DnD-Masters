@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { registerUser, logIn, getUser } from '../../services/user.services';
 import './Login.scss';
 
 type Inputs = {
   username: string;
   password: string;
-  email?: string;
+  email: string;
   passwordConfirm?: string;
 };
 
@@ -17,7 +18,16 @@ export default function Login() {
     handleSubmit,
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    if (isLogin) {
+      logIn({ username: data.username, password: data.password });
+      getUser();
+    } else {
+      registerUser({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
+    }
   };
 
   return (
