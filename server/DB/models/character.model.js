@@ -102,4 +102,3 @@ const characterSchema = new Schema({
 
 const character = mongoose.model('Character', characterSchema);
 module.exports = character;
-// module.exports = characterSchema;

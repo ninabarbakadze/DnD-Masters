@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import userReducer from './user';
-import gameReducer from './game';
+import gameReducer, { iGameWizardState } from './game';
 
 export interface IRootState {
   user: { isLoggedIn: boolean; name: string };
-  game: { position: number };
+  game: iGameWizardState;
 }
 
 const allReducer = combineReducers({
