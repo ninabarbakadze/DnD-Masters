@@ -1,22 +1,25 @@
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// import { withRouter } from 'react-router-dom';
 import { updateName } from '../../../actions/gameWizard.actions';
 import { IRootState } from '../../../reducers';
 import { iGameWizardState } from '../../../reducers/game';
 
-function Name(props: any) {
-  const dispatch = useDispatch();
-  const gameWizard = useSelector((state: IRootState) => state.game);
-  const { register, handleSubmit } = useForm();
+type Inputs = {
+  name: string;
+  tags: string;
+};
 
-  const onSubmit = (data: iGameWizardState) => {
-    dispatch(updateName(data));
-    props.history.push('/gameWizard/step2');
-  };
+function Name({ path, onSubmit }: any) {
+  const gameWizard = useSelector((state: IRootState) => state.game);
+  const { register, handleSubmit } = useForm<Inputs>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit((data: iGameWizardState) => {
+        onSubmit(data, updateName, path);
+      })}
+    >
       <input
         {...register('name', { required: true })}
         id="name"
@@ -32,4 +35,4 @@ function Name(props: any) {
   );
 }
 
-export default withRouter(Name);
+export default Name;

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { updateMap } from '../../../actions/gameWizard.actions';
 import { IRootState } from '../../../reducers';
@@ -10,18 +10,16 @@ type Inputs = {
   mapTags: string;
 };
 
-function SelectMap(props: any) {
-  const dispatch = useDispatch();
+function SelectMap({ onSubmit, path }: any) {
   const gameWizard = useSelector((state: IRootState) => state.game);
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const onSubmit = (data: iGameWizardState) => {
-    dispatch(updateMap(data));
-    props.history.push('/gameWizard/Step3');
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit((data: iGameWizardState) => {
+        onSubmit(data, updateMap, path);
+      })}
+    >
       <input
         {...register('mapName', { required: true })}
         id="mapName"

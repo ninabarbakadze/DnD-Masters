@@ -6,7 +6,7 @@ export const updateName: PayloadAction<iGameWizardState> = (wizardData) => ({
   payload: wizardData,
 });
 
-export const updateMap = (wizardData: any) => ({
+export const updateMap: PayloadAction<iGameWizardState> = (wizardData) => ({
   type: 'UPDATE_MAP',
   payload: wizardData,
 });
