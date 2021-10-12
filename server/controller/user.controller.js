@@ -6,11 +6,11 @@ const logIn = (req, res, next) => {
   try {
     passport.authenticate('local', (err, user) => {
       if (err) throw err;
-      if (!user) res.send('No User Exists');
+      if (!user) res.send({ status: 'No User Exists' });
       else {
         req.logIn(user, (error) => {
           if (error) throw error;
-          res.send('Successfully Authenticated');
+          res.send({ status: 'Successfully Authenticated' });
         });
       }
     })(req, res, next);
@@ -24,7 +24,7 @@ const register = (req, res) => {
     User.findOne({ username: req.body.username }, async (err, user) => {
       if (err) throw err;
       if (user) {
-        res.send('User Already Exists');
+        res.send({ status: 'User Already Exists' });
       } else {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const newUser = new User({
@@ -32,12 +32,18 @@ const register = (req, res) => {
           password: hashedPassword,
         });
         await newUser.save();
-        res.status(200).send('User created');
+        res.status(200);
+        res.send({ status: 'User created' });
       }
     });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500);
+    res.send(err);
   }
 };
 
-module.exports = { register, logIn };
+const getUser = (req, res) => {
+  res.send(req.user); // <--- req.user stires the entire authenticated user
+};
+
+module.exports = { register, logIn, getUser };
