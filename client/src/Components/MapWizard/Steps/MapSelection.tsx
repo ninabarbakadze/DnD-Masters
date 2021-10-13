@@ -20,8 +20,10 @@ export default function MapSelection() {
       <Carousel setMapIndex={setMapIndex} show={3}>
         {maps}
       </Carousel>
-      <button type="button">Edit Map</button>
-      <button type="button">Delete Map</button>
+      <button type="button">
+        {mapIndex === 0 ? 'Create Map' : 'Edit Map'}
+      </button>
+      {mapIndex > 0 && <button type="button">Delete Map</button>}
     </div>
   );
 }
