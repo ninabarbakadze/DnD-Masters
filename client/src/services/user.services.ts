@@ -4,11 +4,13 @@ interface User {
   password: string;
 }
 
+const headers = new Headers({ 'Content-Type': 'application/json' });
+
 const registerUser = (user: User) => {
   console.log(user);
   fetch('http://localhost:3002/register', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     credentials: 'include',
     body: JSON.stringify(user),
   }).then((res) => res.json())
@@ -18,20 +20,20 @@ const registerUser = (user: User) => {
 const logIn = (user: User) => {
   fetch('http://localhost:3002/logIn', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     credentials: 'include',
     body: JSON.stringify(user),
   }).then((res) => res.json())
     .then((res) => console.log(res));
 };
 
-const getUser = () => {
+const getUser = () => (
   fetch('http://localhost:3002/user', {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     credentials: 'include',
   }).then((res) => res.json())
-    .then((res) => res);
-};
+    .then((res) => res)
+);
 
 export { registerUser, logIn, getUser };
