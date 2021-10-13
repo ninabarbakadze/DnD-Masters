@@ -5,11 +5,15 @@ import { IRootState } from '../../../reducers';
 import { iGameWizardState } from '../../../reducers/game';
 
 type Inputs = {
-  name: string;
-  tags: string;
+  race: string;
 };
 
-function Name({ path, onSubmit }: any) {
+interface iRaceSelectionProps {
+  path?: string;
+  onSubmit: any;
+}
+
+function RaceSelection({ path, onSubmit }: iRaceSelectionProps) {
   const gameWizard = useSelector((state: IRootState) => state.game);
   const { register, handleSubmit } = useForm<Inputs>();
 
@@ -20,18 +24,15 @@ function Name({ path, onSubmit }: any) {
       })}
     >
       <input
-        {...register('name', { required: true })}
+        {...register('race', { required: true })}
         id="name"
         defaultValue={gameWizard.name}
-      />
-      <input
-        {...register('tags', { required: true })}
-        id="tags"
-        defaultValue={gameWizard.tags}
       />
       <input type="submit" />
     </form>
   );
 }
 
-export default Name;
+RaceSelection.defaultProps = { path: undefined };
+
+export default RaceSelection;

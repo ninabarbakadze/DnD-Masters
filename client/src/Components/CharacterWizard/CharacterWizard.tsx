@@ -1,13 +1,12 @@
+import { FC } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { PayloadAction } from '../../interfaces/reduxInterfaces';
 
 import { iGameWizardState } from '../../reducers/game';
-import Name from './Steps/Name.step';
-import SelectMap from './Steps/SelectMap.step';
-import Invitation from './Steps/Invitation.step';
+import RaceSelection from './steps/RaceSelection.step';
 
-export default function GameWizard() {
+const CharacterWizard: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const onWizardComplete = () => console.log('finished');
@@ -16,7 +15,7 @@ export default function GameWizard() {
     data: iGameWizardState,
     payLoadAction: PayloadAction<iGameWizardState>,
     path?: string,
-  ) => {
+  ): void => {
     dispatch(payLoadAction(data));
     if (path) history.push(path);
     else {
@@ -26,18 +25,14 @@ export default function GameWizard() {
 
   return (
     <div>
-      <h1>GameWizard</h1>
+      <h1>Character Wizard</h1>
       <Switch>
-        <Route path="/gameWizard/step1">
-          <Name onSubmit={onSubmit} path="/gameWizard/step2" />
-        </Route>
-        <Route path="/gameWizard/step2">
-          <SelectMap onSubmit={onSubmit} path="/gameWizard/step3" />
-        </Route>
-        <Route path="/gameWizard/step3">
-          <Invitation onSubmit={onWizardComplete} />
+        <Route path="/characterWizard/raceSelection">
+          <RaceSelection onSubmit={onSubmit} path="/gameWizard/step2" />
         </Route>
       </Switch>
     </div>
   );
-}
+};
+
+export default CharacterWizard;
