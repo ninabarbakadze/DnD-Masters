@@ -4,8 +4,12 @@
   background-color: saddlebrown;
 }
 
+.map-edit-container {
+  width: 1200px;
+  height: 600px;
+  // overflow: scroll;
+}
 
-
-/* .box-container {
-  padding: 2%;
-} */
+svg {
+  overflow: visible;
+}
