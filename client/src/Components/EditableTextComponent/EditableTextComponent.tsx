@@ -6,16 +6,14 @@ type Input= {textfieldValue: string };
 export default function EditableTextComponent() {
   const [textfieldValue, setTextfieldValue] = useState('NAME');
   const [isInEditMode, setEditMode] = useState(false);
-  let defaultTextValue = textfieldValue;
+  const defaultTextValue = textfieldValue;
   const {
-    // reset,
     register,
     handleSubmit,
   } = useForm<Input>();
 
   const switchEditMode = () => {
     setEditMode(!isInEditMode);
-    defaultTextValue = textfieldValue;
   };
 
   const onSubmit: SubmitHandler<Input> = (data) => {
