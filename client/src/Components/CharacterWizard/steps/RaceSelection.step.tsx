@@ -13,7 +13,7 @@ interface iRaceSelectionProps {
   onSubmit: any;
 }
 
-function RaceSelection({ path, onSubmit }: iRaceSelectionProps) {
+const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
   const gameWizard = useSelector((state: IRootState) => state.game);
   const { register, handleSubmit } = useForm<Inputs>();
 
@@ -31,7 +31,7 @@ function RaceSelection({ path, onSubmit }: iRaceSelectionProps) {
       <input type="submit" />
     </form>
   );
-}
+};
 
 RaceSelection.defaultProps = { path: undefined };
 
