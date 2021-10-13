@@ -2,6 +2,7 @@ import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import GameWizard from './Components/GameWizard/Gamewizard';
+import MapWizard from './Components/MapWizard/MapWizard';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         </Route>
         <Route path="/gameWizard">
           <GameWizard />
+        </Route>
+        <Route path="/mapWizard">
+          <MapWizard />
         </Route>
       </Switch>
     </Router>
