@@ -16,7 +16,11 @@ type Inputs = {
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const dispatch = useDispatch();
-  const { register, formState: { errors }, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (isLogin) {
