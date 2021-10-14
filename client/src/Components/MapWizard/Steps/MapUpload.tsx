@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { ref, uploadBytes } from 'firebase/storage';
 import ImageUpload from '../../ImageUpload/ImageUpload';
+// @ts-ignore
 import storage from '../../../firebase';
 
 export default function MapUpload() {
