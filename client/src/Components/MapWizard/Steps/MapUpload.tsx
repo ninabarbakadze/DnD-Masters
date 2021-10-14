@@ -11,27 +11,24 @@ export default function MapUpload() {
   console.log('url from firebase', url);
 
   function handleUpload() {
-    console.log('handleupload fired');
     if (!file) return;
     const storageRef = ref(storage, `/images/${file.name}`);
     uploadBytes(storageRef, file).then((snapshot) => {
       setUrl(
         // @ts-ignore
-        `https://firebasestorage.googleapis.com/u/0/project/dnd-masters/storage/dnd-masters.appspot.com/o/${snapshot.ref._location.path_.replace(
+        `https://firebasestorage.googleapis.com/v0/b/dnd-masters.appspot.com/o/${snapshot.ref._location.path_.replace(
           /\//,
           '%2F',
         )}?alt=media`,
       );
     });
   }
-  // https://console.firebase.google.com/u/0/project/dnd-masters/storage/dnd-masters.appspot.com/files/~2Fimages
+
   const handleSubmit = (): void => {
     console.log('handlesubmit fired');
     handleUpload();
   };
 
-  console.log(url);
-  console.log(file);
   return (
     <div>
       <ImageUpload setFile={setFile} />
