@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable */
+
+import { useCallback, useEffect, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { updateName } from '../../../actions/gameWizard.actions';
+import { updateRace } from '../../../actions/characterCreationWizard.actions';
+import { iCharacter } from '../../../interfaces/character.interface';
 import { iCharacterRace } from '../../../interfaces/externalData.interfaces';
 // import { IRootState } from '../../../reducers';
 import { iGameWizardState } from '../../../reducers/game';
 import { getAllInList } from '../../../services/externalData.service';
-// import { populateRaces } from '../../../actions/characterCreationWizard.actions';
-// import { iCharacterWizardState } from '../../../interfaces/character.interface';
+import { DataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
+import Options from '../helpers/selectOptions.helper';
 
 type Inputs = {
   race: string;
@@ -19,41 +22,58 @@ interface iRaceSelectionProps {
 }
 
 const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
-  const [races, setRaces] = useState<iCharacterRace[]>();
-  // const dispatch = useDispatch();
-  // const characterCreation = useSelector(
-  //   (state: IRootState) => state.characterCreation,
-  // );
-  // const characterWizard: iCharacterWizardState = useSelector(
-  //   (state: IRootState) => state.characterWizard,
-  // );
-  const { register, handleSubmit } = useForm<Inputs>();
+  const [races, setRaces] = useState<iCharacterRace[]>([]);
+  const [raceOptionsList, setRaceListOptions] = useState<JSX.Element[]>([
+    <option>...Loading</option>,
+  ]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { register, handleSubmit, getValues } = useForm<Inputs>();
+
+  const handleNextStep = () => {
+    console.log('handling step');
+    const x = hasSubraces(getValues('race'), races);
+    console.log('hassubRace', x);
+    return x ? '/characterWizard/subRaceSelection' : path;
+  };
 
   const getAllRaceOptions = () => {
     getAllInList<iCharacterRace>('races').then((results) => {
       setRaces(results);
-      console.log(races);
-      // const state = characterWizard;
-      // state.races = races;
-      // dispatch(populateRaces(state));
+      setRaceListOptions(Options(results));
+      setIsLoading(false);
     });
   };
 
-  useEffect(() => getAllRaceOptions(), []);
+  useEffect(() => {
+    getAllRaceOptions();
+  }, []);
 
   return (
-    <form
-      onSubmit={handleSubmit((data: iGameWizardState) => {
-        onSubmit(data, updateName, path);
-      })}
-    >
-      <input {...register('race', { required: true })} id="race" />
+    <div>
+      <h2>Select Character Race</h2>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onSubmit(
+            { race: DataCleanUp(data.race, races) },
+            updateRace,
+            handleNextStep(),
+          );
+        })}
+      >
+        <select
+          {...register('race', { required: true })}
+          id="race"
+          disabled={isLoading}
+        >
+          {raceOptionsList}
+        </select>
 
-      <input type="submit" />
-    </form>
+        <input type="submit" />
+      </form>
+    </div>
   );
 };
 
-RaceSelection.defaultProps = { path: undefined };
+// RaceSelection.defaultProps = { path: undefined };
 
 export default RaceSelection;

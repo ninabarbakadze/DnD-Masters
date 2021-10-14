@@ -31,6 +31,17 @@ export interface iCharacterChoice {
   from: iAbilityScore[] | iResourceList[];
 }
 
+export interface iCharacterSubrace {
+  index: string;
+  name: string;
+  desc: string;
+  abilityBonuses: iAbilityBonus;
+  startingProficiencies: iCharacterProficiency[];
+  languages: iResourceListItem[];
+  languageOptions: iCharacterChoice;
+  racialTraits: iResourceListItem[];
+}
+
 export interface iCharacterRace {
   index: string;
   name: string;
@@ -40,9 +51,11 @@ export interface iCharacterRace {
   alignment: string;
   age: string;
   size: string;
+  sizeDescription: string;
   startingProficiencies: iCharacterProficiency[];
   startingProficiencyOptions?: iCharacterChoice[];
-  languages: iResourceList[];
+  languages: iResourceListItem[];
+  languageDesc: string;
   traits: iResourceList[];
-  subraces: iResourceList[];
+  subraces: iResourceListItem[];
 }

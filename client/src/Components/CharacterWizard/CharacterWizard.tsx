@@ -3,8 +3,9 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { PayloadAction } from '../../interfaces/reduxInterfaces';
 
-import { iGameWizardState } from '../../reducers/game';
 import RaceSelection from './steps/RaceSelection.step';
+import { iCharacter } from '../../interfaces/character.interface';
+import SubRaceSelection from './steps/subRaceSelection.step';
 
 const CharacterWizard: FC = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,8 @@ const CharacterWizard: FC = () => {
   const onWizardComplete = () => console.log('finished');
 
   const onSubmit = (
-    data: iGameWizardState,
-    payLoadAction: PayloadAction<iGameWizardState>,
+    data: iCharacter,
+    payLoadAction: PayloadAction<iCharacter>,
     path?: string,
   ): void => {
     dispatch(payLoadAction(data));
@@ -29,6 +30,9 @@ const CharacterWizard: FC = () => {
       <Switch>
         <Route path="/characterWizard/raceSelection">
           <RaceSelection onSubmit={onSubmit} path="/gameWizard/step2" />
+        </Route>
+        <Route path="/characterWizard/subRaceSelection">
+          <SubRaceSelection onSubmit={onSubmit} path="/gameWizard/step2" />
         </Route>
       </Switch>
     </div>

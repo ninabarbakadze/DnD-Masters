@@ -10,11 +10,12 @@ import {
   iCharacterWizardState,
 } from '../interfaces/character.interface';
 
+// interface prop name and reducer name must be an EXACT MATCH
 export interface IRootState {
   user: { isLoggedIn: boolean; name: string };
   game: iGameWizardState;
-  characterWizard: iCharacterWizardState;
-  characterCreation: iCharacter;
+  characterWizardStateReducer: iCharacterWizardState;
+  characterCreationReducer: iCharacter;
 }
 
 const allReducer = combineReducers({
