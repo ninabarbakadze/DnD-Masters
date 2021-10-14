@@ -22,12 +22,14 @@ export function getResource(resourceType: string, resource: string) {
 
 export async function getAllInList<T>(resourceType: string): Promise<T[]> {
   const list = await getResourceList(resourceType);
-  const resources: T[] = [];
-  console.log(list);
+  // const resources: T[] = [];
+  // console.log(list);
 
-  list.forEach(async ({ index }) => {
-    const resourceData = await getResource(resourceType, index);
-    resources.push(resourceData);
-  });
+  // list.forEach(async ({ index }) => {
+  //   const resourceData = await getResource(resourceType, index);
+  //   resources.push(resourceData);
+  // });
+  const promises = list.map(({ index }) => getResource(resourceType, index));
+  const resources = await Promise.all(promises);
   return resources;
 }

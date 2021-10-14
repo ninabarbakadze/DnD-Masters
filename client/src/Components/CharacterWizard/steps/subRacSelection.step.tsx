@@ -28,8 +28,8 @@ const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const getAllRaceOptions = () => {
-    getAllInList<iCharacterRace>('races').then((results) => {
+  const getAllSubRaceOptions = () => {
+    getAllInList<iCharacterRace>('subraces').then((results) => {
       setRaces(results);
       setRaceListOptions(raceOptions(results));
       setIsLoading(false);
