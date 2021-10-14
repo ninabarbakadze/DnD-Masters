@@ -1,35 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
+// import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
+import PointSelection from '../PointSelection/PointSelection';
 
 export default function MapEdit() {
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const svgRef = useRef(null);
+  const [pt, setPt] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    if (imgRef.current) {
-      setHeight(imgRef.current.offsetHeight);
-      setWidth(imgRef.current.offsetWidth);
-    }
-  }, []);
+  const setPoint = (evt: any) => {
+    const dim = evt.target.getBoundingClientRect();
+    const x = evt.clientX - dim.left;
+    const y = evt.clientY - dim.top;
+    setPt({ x, y });
+  };
 
   return (
-    <div>
-      {console.log(width, height)}
-      <h1>Edit Map</h1>
-      <div className="map-edit-container">
-        <svg>
+    <div className="map-edit-container">
+      <div className="map-edit-image">
+        {console.log(pt)}
+        <svg
+          ref={svgRef}
+          onClick={setPoint}
+          width="100%"
+          height="100%"
+          viewBox="50 0 1200 600"
+        >
           <image href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg" />
           <circle r="40" cx="200" cy="200" fill="red" />
         </svg>
       </div>
-      <p>
-        width:
-        {width}
-      </p>
-      <p>
-        height:
-        {height}
-      </p>
+      <PointSelection />
     </div>
   );
 }

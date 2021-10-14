@@ -4,12 +4,17 @@
   background-color: saddlebrown;
 }
 
-.map-edit-container {
+.map-edit-image {
   width: 1200px;
   height: 600px;
-  // overflow: scroll;
+  border: 2px solid saddlebrown;
 }
 
-svg {
-  overflow: visible;
+.map-edit-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.map-edit-selection {
+  border: 2px solid salmon;
 }
