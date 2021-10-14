@@ -1,5 +1,4 @@
-// import { useEffect, useState } from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import PointSelection from '../PointSelection/PointSelection';
 
 export default function MapEdit() {
@@ -12,7 +11,13 @@ export default function MapEdit() {
     width: 1200,
     height: 600,
   });
-  const [newViewBox, setNewViewBox] = useState({ x: 0, y: 0 });
+  const [newViewBox, setNewViewBox] = useState({
+    x: 0,
+    y: 0,
+    width: 1200,
+    height: 600,
+  });
+  const [viewBoxString, setViewBoxString] = useState('0 0 1200 600');
   const [pt, setPt] = useState({ x: 0, y: 0 });
   const [location, setLocation] = useState(<circle r="40" fill="red" />);
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
@@ -54,9 +59,9 @@ export default function MapEdit() {
     setNewViewBox({
       x: viewBox.x - (pointerPosition.x - pointerOrigin.x),
       y: viewBox.y - (pointerPosition.y - pointerOrigin.y),
+      width: viewBox.width,
+      height: viewBox.height,
     });
-    const viewBoxString = `${newViewBox.x} ${newViewBox.y} ${viewBox.width} ${viewBox.height}`;
-    document.querySelector('svg')?.setAttribute('viewBox', viewBoxString);
   }
 
   function onPointerUp() {
@@ -64,10 +69,27 @@ export default function MapEdit() {
     setViewBox({
       x: newViewBox.x,
       y: newViewBox.y,
-      width: 1200,
-      height: 600,
+      width: newViewBox.width,
+      height: newViewBox.height,
     });
   }
+
+  function zoom(level: number) {
+    const { width, height } = newViewBox;
+    const zoomedViewBox = {
+      ...newViewBox,
+      width: width * level,
+      height: height * level,
+    };
+    setNewViewBox(zoomedViewBox);
+    setViewBox(zoomedViewBox);
+  }
+
+  useLayoutEffect(() => {
+    setViewBoxString(
+      `${newViewBox.x} ${newViewBox.y} ${newViewBox.width} ${newViewBox.height}`,
+    );
+  }, [newViewBox]);
 
   return (
     <div className="map-edit-container">
@@ -82,11 +104,17 @@ export default function MapEdit() {
           onClick={setPoint}
           width="100%"
           height="100%"
-          viewBox="0 0 1200 600"
+          viewBox={viewBoxString}
         >
           <image href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg" />
           {locationArr}
         </svg>
+        <button onClick={() => zoom(0.5)} type="button">
+          Zoom In
+        </button>
+        <button onClick={() => zoom(2)} type="button">
+          Zoom Out
+        </button>
       </div>
       <PointSelection />
     </div>
