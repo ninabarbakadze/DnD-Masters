@@ -14,12 +14,7 @@ const initialState = {
 
 interface IAction {
   type: string;
-  payload: {
-    name: string;
-    tags: string;
-    mapName: string;
-    mapTags: string;
-  };
+  payload: iGameWizardState;
 }
 
 const gameReducer = (state = initialState, action: IAction) => {

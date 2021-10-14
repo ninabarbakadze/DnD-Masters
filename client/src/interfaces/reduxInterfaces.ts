@@ -1,4 +1,6 @@
-export type PayloadAction<T> = (payload: T) => {
+export type iAction<T> = {
   type: string;
-  payload: typeof payload;
+  payload: T;
 };
+
+export type PayloadAction<T> = (payload: T) => iAction<typeof payload>;

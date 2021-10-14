@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../../actions/user';
 import { registerUser, logIn, getUser } from '../../services/user.services';
 import './Login.scss';
 
@@ -12,15 +14,18 @@ type Inputs = {
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
+  const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (isLogin) {
-      logIn({ username: data.username, password: data.password });
-      getUser();
+      await logIn({ username: data.username, password: data.password });
+      const user = await getUser();
+      dispatch(loginAction(user.username));
+      console.log(user, 'user loggedin');
     } else {
       registerUser({
         username: data.username,
