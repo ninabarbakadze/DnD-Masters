@@ -9,6 +9,11 @@ export const updateRace: PayloadAction<iCharacter> = (characterData) => ({
   payload: characterData,
 });
 
+export const updateSubrace: PayloadAction<iCharacter> = (characterData) => ({
+  type: 'UPDATE_SUBRACE',
+  payload: characterData,
+});
+
 export const populateRaces: PayloadAction<iCharacterWizardState> = (
   wizardState,
 ) => ({

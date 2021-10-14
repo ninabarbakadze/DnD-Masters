@@ -5,6 +5,7 @@ import { PayloadAction } from '../../interfaces/reduxInterfaces';
 
 import RaceSelection from './steps/RaceSelection.step';
 import { iCharacter } from '../../interfaces/character.interface';
+import SubRaceSelection from './steps/subRaceSelection.step';
 
 const CharacterWizard: FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,6 @@ const CharacterWizard: FC = () => {
     else {
       onWizardComplete();
     }
-    console.log('data sent to reducer', data);
   };
 
   return (
@@ -30,6 +30,9 @@ const CharacterWizard: FC = () => {
       <Switch>
         <Route path="/characterWizard/raceSelection">
           <RaceSelection onSubmit={onSubmit} path="/gameWizard/step2" />
+        </Route>
+        <Route path="/characterWizard/subRaceSelection">
+          <SubRaceSelection onSubmit={onSubmit} path="/gameWizard/step2" />
         </Route>
       </Switch>
     </div>

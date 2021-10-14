@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { updateRace } from '../../../actions/characterCreationWizard.actions';
@@ -9,7 +9,8 @@ import { iCharacterRace } from '../../../interfaces/externalData.interfaces';
 // import { IRootState } from '../../../reducers';
 import { iGameWizardState } from '../../../reducers/game';
 import { getAllInList } from '../../../services/externalData.service';
-import { raceOptions, raceDataCleanUp } from '../helpers/selectOptions.helper';
+import { DataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
+import Options from '../helpers/selectOptions.helper';
 
 type Inputs = {
   race: string;
@@ -26,12 +27,19 @@ const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
     <option>...Loading</option>,
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, getValues } = useForm<Inputs>();
+
+  const handleNextStep = () => {
+    console.log('handling step');
+    const x = hasSubraces(getValues('race'), races);
+    console.log('hassubRace', x);
+    return x ? '/characterWizard/subRaceSelection' : path;
+  };
 
   const getAllRaceOptions = () => {
     getAllInList<iCharacterRace>('races').then((results) => {
       setRaces(results);
-      setRaceListOptions(raceOptions(results));
+      setRaceListOptions(Options(results));
       setIsLoading(false);
     });
   };
@@ -41,21 +49,28 @@ const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
   }, []);
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        onSubmit({ race: raceDataCleanUp(data.race, races) }, updateRace, path);
-      })}
-    >
-      <select
-        {...register('race', { required: true })}
-        id="race"
-        disabled={isLoading}
+    <div>
+      <h2>Select Character Race</h2>
+      <form
+        onSubmit={handleSubmit((data) => {
+          onSubmit(
+            { race: DataCleanUp(data.race, races) },
+            updateRace,
+            handleNextStep(),
+          );
+        })}
       >
-        {raceOptionsList}
-      </select>
+        <select
+          {...register('race', { required: true })}
+          id="race"
+          disabled={isLoading}
+        >
+          {raceOptionsList}
+        </select>
 
-      <input type="submit" />
-    </form>
+        <input type="submit" />
+      </form>
+    </div>
   );
 };
 

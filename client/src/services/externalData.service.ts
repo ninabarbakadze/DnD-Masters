@@ -1,3 +1,5 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import { iResourceListItem } from '../interfaces/externalData.interfaces';
 
 const DnDUrl = 'https://www.dnd5eapi.co/api/';
@@ -20,16 +22,15 @@ export function getResource(resourceType: string, resource: string) {
     .catch(console.log);
 }
 
-export async function getAllInList<T>(resourceType: string): Promise<T[]> {
-  const list = await getResourceList(resourceType);
-  // const resources: T[] = [];
-  // console.log(list);
-
-  // list.forEach(async ({ index }) => {
-  //   const resourceData = await getResource(resourceType, index);
-  //   resources.push(resourceData);
-  // });
-  const promises = list.map(({ index }) => getResource(resourceType, index));
+export async function getAllInList<T>(
+  resourceType: string,
+  list?: iResourceListItem[],
+): Promise<T[]> {
+  // eslint-disable-next-line no-unneeded-ternary
+  const resourceList = list ? list : await getResourceList(resourceType);
+  const promises = resourceList.map(({ index }) =>
+    getResource(resourceType, index),
+  );
   const resources = await Promise.all(promises);
   return resources;
 }

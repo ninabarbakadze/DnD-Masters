@@ -1,20 +1,14 @@
 /* eslint-disable */
-import { iCharacterRace } from '../../../interfaces/externalData.interfaces';
 
-export const raceOptions = (races: iCharacterRace[]) => {
-  const rOptions = races.map((race) => {
+const Options = (options: any[]) => {
+  const rOptions = options.map((option: any) => {
     return (
-      <option aria-label={race.index} key={race.index} value={race.name}>
-        {race.name}
+      <option aria-label={option.index} key={option.index} value={option.name}>
+        {option.name}
       </option>
     );
   });
   return rOptions;
 };
 
-export const raceDataCleanUp = (
-  raceName: string,
-  races: iCharacterRace[],
-): iCharacterRace => {
-  return races.filter((race) => race.name == raceName)[0];
-};
+export default Options;

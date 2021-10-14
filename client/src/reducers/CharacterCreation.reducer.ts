@@ -5,7 +5,7 @@ import {
 
 import { iAction } from '../interfaces/reduxInterfaces';
 
-const initialState = {};
+const initialState: iCharacter = {};
 
 export const characterCreationReducer = (
   state: iCharacter = initialState,
@@ -17,13 +17,18 @@ export const characterCreationReducer = (
         ...state,
         race: payload.race,
       };
+    case 'UPDATE_SUBRACE':
+      return {
+        ...state,
+        subrace: payload.subrace,
+      };
     default:
       return state;
   }
 };
 
 export const characterWizardStateReducer = (
-  state: iCharacterWizardState = initialState,
+  state: iCharacterWizardState = {},
   { type, payload }: iAction<iCharacterWizardState>,
 ) => {
   switch (type) {
