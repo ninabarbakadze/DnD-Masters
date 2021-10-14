@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Login from '../Login/Login';
 import { IRootState } from '../../reducers';
-import { loginAction } from '../../actions';
+import { loginAction, updateAction } from '../../actions';
 import EditableTextComponent from '../EditableTextComponent/EditableTextComponent';
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
       </button>
       {user.isLoggedIn ? <p>Logged In </p> : <p>Logged Out</p>}
       {user.name && <p>{user.name}</p>}
-      <EditableTextComponent />
+      <EditableTextComponent action={updateAction('')} initialVal={user.name} />
     </div>
   );
 }
