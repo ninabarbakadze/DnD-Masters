@@ -1,39 +1,40 @@
-import { ReactElement, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactElement, useState,
+} from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-// import { IAction } from '../../reducers/user';
 import './EditableTextComponent.scss';
 
 type Input= {textfieldValue: string };
-
-interface iAction {
-  type: string;
-  payload: string;
-}
-
 interface IProps {
-  action:iAction,
+  action:any
   initialVal: string
 }
 
 export default function EditableTextComponent({ action, initialVal }: IProps) {
   const [textfieldValue, setTextfieldValue] = useState(initialVal);
   const [isInEditMode, setEditMode] = useState(false);
-  const dispatch = useDispatch();
-  // const defaultTextValue = textfieldValue;
+
   const {
     register,
     handleSubmit,
+    reset,
   } = useForm<Input>({ defaultValues: { textfieldValue } });
 
   const switchEditMode = () => {
     setEditMode(!isInEditMode);
+    setTextfieldValue(initialVal);
+    reset({ textfieldValue });
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTextfieldValue(e.target.value);
   };
 
   const onSubmit: SubmitHandler<Input> = (data) => {
     setEditMode(false);
+    action(textfieldValue);
     setTextfieldValue(data.textfieldValue);
-    dispatch(action(textfieldValue));
   };
 
   const renderEditView = (): ReactElement => (
@@ -41,8 +42,9 @@ export default function EditableTextComponent({ action, initialVal }: IProps) {
       <form className="editable-text-field" onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register('textfieldValue')}
+          onChange={handleChange}
+          value={textfieldValue}
           type="text"
-          // defaultValue={textfieldValue}
         />
         <button
           className="editable-text-button"
@@ -60,6 +62,7 @@ export default function EditableTextComponent({ action, initialVal }: IProps) {
       </form>
     </div>
   );
+
   const renderDefaultView = (): ReactElement => (
     <div className="editable-text-field">
       <div>
