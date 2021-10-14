@@ -7,6 +7,8 @@ const userSchema = new Schema({
   email: String,
   password: String,
   characters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  // I think this should be association
+  maps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Map' }],
 });
 
 const user = mongoose.model('User', userSchema);

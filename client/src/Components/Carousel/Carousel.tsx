@@ -11,7 +11,7 @@ export default function Carousel(props: any) {
   }, [children]);
 
   const next = () => {
-    if (currentIndex < length - show) {
+    if (currentIndex < length - 1) {
       setCurrentIndex((prevState) => prevState + 1);
       setMapIndex((prevIndex: number) => prevIndex + 1);
     }
@@ -43,7 +43,7 @@ export default function Carousel(props: any) {
             {children}
           </div>
         </div>
-        {currentIndex < length - show && (
+        {currentIndex < length - 1 && (
           <button onClick={next} className="right-arrow" type="button">
             &gt;
           </button>
