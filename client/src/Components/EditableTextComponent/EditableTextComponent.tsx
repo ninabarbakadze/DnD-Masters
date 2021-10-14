@@ -1,16 +1,18 @@
 import { ReactElement, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import './EditableTextComponent.scss';
 
 type Input= {textfieldValue: string };
-export default function EditableTextComponent() {
-  const [textfieldValue, setTextfieldValue] = useState('NAME');
+export default function EditableTextComponent({ updateAction, initial }) {
+  const [textfieldValue, setTextfieldValue] = useState(initial);
   const [isInEditMode, setEditMode] = useState(false);
-  const defaultTextValue = textfieldValue;
+  const dispach = useDispatch();
+  // const defaultTextValue = textfieldValue;
   const {
     register,
     handleSubmit,
-  } = useForm<Input>();
+  } = useForm<Input>({ defaultValues: { textfieldValue } });
 
   const switchEditMode = () => {
     setEditMode(!isInEditMode);
@@ -19,15 +21,16 @@ export default function EditableTextComponent() {
   const onSubmit: SubmitHandler<Input> = (data) => {
     setEditMode(false);
     setTextfieldValue(data.textfieldValue);
+    dispatch(updateAction(textfieldValue));
   };
 
   const renderEditView = (): ReactElement => (
     <div>
       <form className="editable-text-field" onSubmit={handleSubmit(onSubmit)}>
         <input
-          type="text"
-          defaultValue={defaultTextValue}
           {...register('textfieldValue')}
+          type="text"
+          // defaultValue={textfieldValue}
         />
         <button
           className="editable-text-button"
