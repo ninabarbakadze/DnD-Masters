@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { loginAction } from '../../actions/user';
 import { registerUser, logIn, getUser } from '../../services/user.services';
 import './Login.scss';
 
@@ -12,15 +15,15 @@ type Inputs = {
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const dispatch = useDispatch();
+  const { register, formState: { errors }, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (isLogin) {
-      logIn({ username: data.username, password: data.password });
-      getUser();
+      await logIn({ username: data.username, password: data.password });
+      const user = await getUser();
+      Cookies.set('user', user.username);
+      dispatch(loginAction(user.username));
     } else {
       registerUser({
         username: data.username,
@@ -28,6 +31,10 @@ export default function Login() {
         password: data.password,
       });
     }
+  };
+
+  const logOut = (): void => {
+    Cookies.remove('user');
   };
 
   return (
@@ -65,6 +72,9 @@ export default function Login() {
         onClick={() => setIsLogin(!isLogin)}
       >
         {isLogin ? 'Not Signed up yet? Sign up' : 'Already Signed up? Login'}
+      </button>
+      <button type="button" onClick={() => logOut()}>
+        log out
       </button>
     </div>
   );

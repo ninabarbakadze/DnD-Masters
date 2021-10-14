@@ -10,12 +10,16 @@ export interface IAction {
 
 const userReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
-    case 'LOGIN':
-      return {
+    case 'LOGIN': {
+      const updatedState = {
         ...state,
         isLoggedIn: !state.isLoggedIn,
         name: action.payload,
       };
+      console.log(updatedState);
+      return updatedState;
+    }
+
     case 'LOGOUT':
       return { ...state, isLoggedIn: !state.isLoggedIn };
     case 'UPDATE': // test editable component

@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../reducers';
+// import { getUser } from '../../services/user.services';
 import './Dashboard.scss';
 
 // this will be refactored once we have real assets :)
 export default function Dashboard() {
+  const user = useSelector((state: IRootState) => state.user);
   return (
     <div>
+      {console.log(user)}
       <div className="header">
-        <p>Hello, Bob</p>
+        <p>
+          Hello,
+          {user.name}
+        </p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
