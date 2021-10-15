@@ -1,7 +1,7 @@
 export interface iResourceListItem {
   index: string;
   name: string;
-  url: string;
+  url?: string;
 }
 
 export interface iResourceList {
@@ -9,42 +9,50 @@ export interface iResourceList {
   results: iResourceList[];
 }
 
-export interface iAbilityScore {
-  index: string;
-  name: string;
-}
+export interface iAbilityScore extends iResourceListItem {}
 
 export interface iAbilityBonus {
   bonus: number;
   abilityScore: iAbilityScore;
 }
 
-export interface iCharacterProficiency {
-  index: string;
+export interface iCharacterProficiency extends iResourceListItem {
   type: string;
-  name: string;
 }
 
 export interface iCharacterChoice {
   choose: number;
   type: string;
-  from: iAbilityScore[] | iResourceList[];
+  from: iAbilityScore[] | iResourceListItem[] | string[] | { desc: string }[];
 }
 
-export interface iCharacterSubrace {
-  index: string;
+export interface iBackgroundFeature {
   name: string;
+  desc: string[];
+}
+
+export interface iCharacterBackground extends iResourceListItem {
+  startingProficiencies: iCharacterProficiency[];
+  languageOptions: iCharacterChoice;
+  startingEquipment: iResourceListItem[];
+  startingEquipmentOptions: iCharacterChoice;
+  feature: iBackgroundFeature;
+  personalityTraits: iCharacterChoice;
+  ideals: iCharacterChoice;
+  bonds: iCharacterChoice;
+  flaws: iCharacterChoice;
+}
+
+export interface iCharacterSubrace extends iResourceListItem {
   desc: string;
   abilityBonuses: iAbilityBonus;
   startingProficiencies: iCharacterProficiency[];
   languages: iResourceListItem[];
   languageOptions: iCharacterChoice;
-  racialTraits: iResourceListItem[];
+  traits: iResourceListItem[];
 }
 
-export interface iCharacterRace {
-  index: string;
-  name: string;
+export interface iCharacterRace extends iResourceListItem {
   speed: number;
   abilityBonuses: iAbilityBonus[];
   abilityBonusOptions?: iCharacterChoice[];
@@ -55,6 +63,7 @@ export interface iCharacterRace {
   startingProficiencies: iCharacterProficiency[];
   startingProficiencyOptions?: iCharacterChoice[];
   languages: iResourceListItem[];
+  languageOptions: iCharacterChoice;
   languageDesc: string;
   traits: iResourceList[];
   subraces: iResourceListItem[];
