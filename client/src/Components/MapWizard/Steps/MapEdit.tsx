@@ -1,12 +1,7 @@
-// @ts-nocheck
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { Draggable } from 'gsap/Draggable';
 import PointSelection from '../PointSelection/PointSelection';
 import MapItem from '../MapItem/MapItem';
-
-gsap.registerPlugin(Draggable);
 
 export default function MapEdit() {
   const svgRef = useRef(null);
@@ -102,7 +97,7 @@ export default function MapEdit() {
         <MapItem
           xCoord={cursorPoint.x}
           yCoord={cursorPoint.y}
-          getSVGCoord={(x, y) => getSVGCoord(x, y)}
+          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
         />,
       ]);
     }
