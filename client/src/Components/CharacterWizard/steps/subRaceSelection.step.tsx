@@ -3,26 +3,23 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { updateSubrace } from '../../../actions/characterCreationWizard.actions';
+import { iCharacter } from '../../../interfaces/character.interface';
 import { iCharacterSubrace } from '../../../interfaces/externalData.interfaces';
+import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { IRootState } from '../../../reducers';
 
 import { getAllInList } from '../../../services/externalData.service';
-import { DataCleanUp } from '../helpers/chracterCreation.helpers';
+import { dataCleanUp } from '../helpers/chracterCreation.helpers';
 import Options from '../helpers/selectOptions.helper';
 
 type Inputs = {
   subrace: string;
 };
 
-interface iSubRaceSelectionProps {
-  path?: string;
-  onSubmit: any;
-}
-
-const SubRaceSelection = ({ path, onSubmit }: iSubRaceSelectionProps) => {
+const SubRaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [subraces, setSubraces] = useState<iCharacterSubrace[]>([]);
   const [optionsList, setOptionsList] = useState<JSX.Element[]>([
-    <option>...Loading</option>,
+    <option key={0}>...Loading</option>,
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { register, handleSubmit } = useForm<Inputs>();
@@ -50,7 +47,7 @@ const SubRaceSelection = ({ path, onSubmit }: iSubRaceSelectionProps) => {
       <form
         onSubmit={handleSubmit((data) => {
           onSubmit(
-            { subrace: DataCleanUp(data.subrace, subraces) },
+            { subrace: dataCleanUp(data.subrace, subraces) },
             updateSubrace,
             path,
           );
@@ -70,7 +67,5 @@ const SubRaceSelection = ({ path, onSubmit }: iSubRaceSelectionProps) => {
     </div>
   );
 };
-
-// RaceSelection.defaultProps = { path: undefined };
 
 export default SubRaceSelection;
