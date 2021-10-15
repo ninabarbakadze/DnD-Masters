@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { IRootState } from '../../../reducers';
 import PointSelection from '../PointSelection/PointSelection';
 import MapItem from '../MapItem/MapItem';
+import Modal from '../Modal/Modal';
 import getMapElements from '../../../assets/mapElements/mapData';
 
 export default function MapEdit() {
@@ -28,6 +29,7 @@ export default function MapEdit() {
   const [viewBoxString, setViewBoxString] = useState('0 0 1200 600');
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
+  const [modalIsActive, setModalIsActive] = useState(false);
 
   // Panning
 
@@ -75,6 +77,15 @@ export default function MapEdit() {
     setViewBox(zoomedViewBox);
   }
 
+  // Create Modal for further information
+  function showModal() {
+    setModalIsActive(true);
+  }
+
+  function closeModal() {
+    setModalIsActive(false);
+  }
+
   // Point
   function getSVGCoord(x: number, y: number): {} {
     const svg = document.querySelector('.main-svg');
@@ -103,6 +114,7 @@ export default function MapEdit() {
         cursorPoint.y,
         mapReducer.selectedElement,
       );
+      if (mapReducer.selectedElement) showModal();
       setLocationArr([
         ...locationArr,
         <MapItem
@@ -163,6 +175,7 @@ export default function MapEdit() {
         </button>
       </div>
       <PointSelection />
+      <Modal modalIsActive={modalIsActive} closeModal={() => closeModal()} />
     </div>
   );
 }
