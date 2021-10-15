@@ -11,14 +11,14 @@ export default function PointSelection() {
     <rect data-name="element2" width="100" height="100" fill="blue" />,
   ];
 
-  const handleClick = (evt: any) => {
+  const selectItem = (evt: any) => {
     dispatch(
       updateSelectedElement({ selectedElement: evt.target.dataset.name }),
     );
   };
 
   const selectList = elementList.map((element) => (
-    <MapSelectionItem element={element} handleClick={handleClick} />
+    <MapSelectionItem element={element} selectItem={selectItem} />
   ));
   return (
     <div className="map-edit-selection">
