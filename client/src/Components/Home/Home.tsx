@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Login from '../Login/Login';
 import { IRootState } from '../../reducers';
 import { loginAction } from '../../actions/user';
+import CharacterSheet from '../CharacterSheet/CharacterSheet';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function Home() {
       {user.name && (
       <p>{user.name}</p>
       )}
+      <CharacterSheet />
     </div>
   );
 }

@@ -12,7 +12,7 @@ interface IProps {
   options?: string[] | undefined
 }
 
-export default function EditableTextComponent({
+export default function EditableDisplayComponent({
   action, initialVal, inputType, options,
 }: IProps) {
   const [textfieldValue, setTextfieldValue] = useState(initialVal);
