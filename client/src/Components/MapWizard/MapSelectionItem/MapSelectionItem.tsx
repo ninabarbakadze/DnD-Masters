@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { useState, useEffect, useRef } from 'react';
 
 export default function MapSelectionItem({ element, selectItem }: any) {
@@ -9,11 +10,10 @@ export default function MapSelectionItem({ element, selectItem }: any) {
   };
 
   const outsideClick = (e: any) => {
+    // console.log(e.target.classList.contains('main-svg'));
     if (!node.current) return;
     // @ts-expect-error
-    if (node.current.contains(e.target)) {
-      return;
-    }
+    if (node.current.contains(e.target)) return;
     setIsSelected(false);
   };
 
@@ -25,13 +25,13 @@ export default function MapSelectionItem({ element, selectItem }: any) {
   }, []);
 
   return (
-    <div>
+    <div className="element-presentation">
       <svg
         ref={node}
         onClick={handleClick}
         className={isSelected ? 'isSelected' : ''}
-        width="100%"
-        height="100%"
+        width="100"
+        height="100"
       >
         {element}
       </svg>

@@ -63,6 +63,12 @@ export default function MapEdit() {
 
   function onPointerUp() {
     setIsPointerDown(false);
+    setViewBox({
+      x: newViewBox.x,
+      y: newViewBox.y,
+      width: newViewBox.width,
+      height: newViewBox.height,
+    });
   }
 
   // Zoom
@@ -151,7 +157,6 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
-      {console.log(JSON.stringify(mapReducer.selectedElement))}
       <div className="map-edit-image">
         <svg
           className="main-svg"
@@ -167,7 +172,10 @@ export default function MapEdit() {
           height="100%"
           viewBox={viewBoxString}
         >
-          <image href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg" />
+          <image
+            className="map-image"
+            href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg"
+          />
           {locationArr}
         </svg>
         <button onClick={() => zoom(0.8)} type="button">
@@ -178,7 +186,11 @@ export default function MapEdit() {
         </button>
       </div>
       <PointSelection />
-      <Modal modalIsActive={modalIsActive} closeModal={() => closeModal()} />
+      <Modal
+        modalIsActive={modalIsActive}
+        setModalIsActive={setModalIsActive}
+        closeModal={() => closeModal()}
+      />
     </div>
   );
 }
