@@ -1,21 +1,23 @@
-const initialState = {
-  imgURL: '',
-  location: SVGSVGElement,
-};
+import { iMap } from '../interfaces/map.interface';
+import { iAction } from '../interfaces/reduxInterfaces';
 
-const mapCreationReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case 'UPDATE_NAME':
+const initialState: iMap = {};
+
+const mapCreationReducer = (
+  state: iMap = initialState,
+  { type, payload }: iAction<iMap>,
+) => {
+  switch (type) {
+    case 'UPDATE_SELECTED_ITEM':
       return {
         ...state,
-        name: action.payload.name,
-        tags: action.payload.tags,
+        selectedElement: payload.selectedElement,
+        // tags: action.payload.tags,
       };
-    case 'UPDATE_MAP':
+    case 'UPDATE_ELEMENT_ARR':
       return {
         ...state,
-        mapName: action.payload.mapName,
-        mapTags: action.payload.mapTags,
+        elementArr: payload.elementArr,
       };
     default:
       return state;

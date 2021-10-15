@@ -22,3 +22,14 @@
 .location-item {
   overflow: visible;
 }
+
+.element-presentation {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  padding: 25px;
+}
+
+.svg-element-presentation {
+  border: 5px solid black;
+}

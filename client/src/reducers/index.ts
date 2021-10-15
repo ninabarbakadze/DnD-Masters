@@ -5,10 +5,12 @@ import {
 } from './CharacterCreation.reducer';
 import userReducer from './user';
 import gameReducer, { iGameWizardState } from './game';
+import mapCreationReducer from './mapCreation.reducer';
 import {
   iCharacter,
   iCharacterWizardState,
 } from '../interfaces/character.interface';
+import { iMap } from '../interfaces/map.interface';
 
 // interface prop name and reducer name must be an EXACT MATCH
 export interface IRootState {
@@ -16,6 +18,7 @@ export interface IRootState {
   game: iGameWizardState;
   characterWizardStateReducer: iCharacterWizardState;
   characterCreationReducer: iCharacter;
+  mapCreationReducer: iMap;
 }
 
 const allReducer = combineReducers({
@@ -23,6 +26,7 @@ const allReducer = combineReducers({
   game: gameReducer,
   characterCreationReducer,
   characterWizardStateReducer,
+  mapCreationReducer,
 });
 
 export default allReducer;

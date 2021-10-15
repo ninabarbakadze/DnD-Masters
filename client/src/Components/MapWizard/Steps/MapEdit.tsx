@@ -1,10 +1,16 @@
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../../reducers';
 import PointSelection from '../PointSelection/PointSelection';
 import MapItem from '../MapItem/MapItem';
+import getMapElements from '../../../assets/mapElements/mapData';
 
 export default function MapEdit() {
   const svgRef = useRef(null);
+  const mapReducer = useSelector(
+    (state: IRootState) => state.mapCreationReducer,
+  );
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
@@ -92,11 +98,17 @@ export default function MapEdit() {
       pt.y = evt.clientY;
       // @ts-expect-error
       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+      const element = getMapElements(
+        cursorPoint.x,
+        cursorPoint.y,
+        mapReducer.selectedElement,
+      );
       setLocationArr([
         ...locationArr,
         <MapItem
           xCoord={cursorPoint.x}
           yCoord={cursorPoint.y}
+          element={element}
           getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
         />,
       ]);
@@ -122,24 +134,9 @@ export default function MapEdit() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   Draggable.create('.test', {
-  //     onDragEnd: (e) => {
-  //       const svg = document.querySelector('.main-svg');
-  //       if (!svg) return;
-  //       // @ts-expect-error
-  //       const pt = svg.createSVGPoint();
-  //       pt.x = e.x;
-  //       pt.y = e.y;
-  //       // @ts-expect-error
-  //       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
-  //       console.log(cursorPoint);
-  //     },
-  //   });
-  // }, [locationArr]);
-
   return (
     <div className="map-edit-container">
+      {console.log(JSON.stringify(mapReducer.selectedElement))}
       <div className="map-edit-image">
         <svg
           className="main-svg"
