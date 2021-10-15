@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 import { loginAction } from '../../actions/user';
 import { registerUser, logIn, getUser } from '../../services/user.services';
 import './Login.scss';
@@ -20,12 +21,13 @@ export default function Login() {
     formState: { errors },
     handleSubmit,
   } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (isLogin) {
       await logIn({ username: data.username, password: data.password });
       const user = await getUser();
+      Cookies.set('user', user.username);
       dispatch(loginAction(user.username));
-      console.log(user, 'user loggedin');
     } else {
       registerUser({
         username: data.username,
@@ -33,6 +35,10 @@ export default function Login() {
         password: data.password,
       });
     }
+  };
+
+  const logOut = (): void => {
+    Cookies.remove('user');
   };
 
   return (
@@ -70,6 +76,9 @@ export default function Login() {
         onClick={() => setIsLogin(!isLogin)}
       >
         {isLogin ? 'Not Signed up yet? Sign up' : 'Already Signed up? Login'}
+      </button>
+      <button type="button" onClick={() => logOut()}>
+        log out
       </button>
     </div>
   );

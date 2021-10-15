@@ -1,7 +1,8 @@
-import { iCharacterRace } from './externalData.interfaces';
+import { iCharacterRace, iCharacterSubrace } from './externalData.interfaces';
 
 export interface iCharacter {
   race?: iCharacterRace;
+  subrace?: iCharacterSubrace;
 }
 
 export interface iCharacterWizardState {
