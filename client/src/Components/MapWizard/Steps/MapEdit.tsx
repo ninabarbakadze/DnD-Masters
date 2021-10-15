@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import gsap from 'gsap';
 import { IRootState } from '../../../reducers';
 import PointSelection from '../PointSelection/PointSelection';
 import MapItem from '../MapItem/MapItem';
@@ -66,13 +67,15 @@ export default function MapEdit() {
 
   // Zoom
 
-  function zoom(level: number) {
+  async function zoom(level: number) {
     const { width, height } = newViewBox;
     const zoomedViewBox = {
       ...newViewBox,
       width: width * level,
       height: height * level,
     };
+    const test = `${zoomedViewBox.x} ${zoomedViewBox.y} ${zoomedViewBox.width} ${zoomedViewBox.height}`;
+    await gsap.to('.main-svg', 0.3, { attr: { viewBox: test } });
     setNewViewBox(zoomedViewBox);
     setViewBox(zoomedViewBox);
   }
@@ -167,10 +170,10 @@ export default function MapEdit() {
           <image href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg" />
           {locationArr}
         </svg>
-        <button onClick={() => zoom(0.5)} type="button">
+        <button onClick={() => zoom(0.8)} type="button">
           Zoom In
         </button>
-        <button onClick={() => zoom(2)} type="button">
+        <button onClick={() => zoom(1.25)} type="button">
           Zoom Out
         </button>
       </div>
