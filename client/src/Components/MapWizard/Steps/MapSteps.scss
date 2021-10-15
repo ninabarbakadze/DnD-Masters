@@ -4,8 +4,21 @@
   background-color: saddlebrown;
 }
 
+.map-edit-image {
+  width: 1200px;
+  height: 600px;
+  border: 2px solid saddlebrown;
+}
 
+.map-edit-container {
+  display: flex;
+  justify-content: space-around;
+}
 
-/* .box-container {
-  padding: 2%;
-} */
+.map-edit-selection {
+  border: 2px solid salmon;
+}
+
+.location-item {
+  overflow: visible;
+}
