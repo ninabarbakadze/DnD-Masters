@@ -1,44 +1,58 @@
 /* eslint-disable */
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent,Dispatch, SetStateAction } from 'react';
 import { iCharacterChoice } from '../../interfaces/externalData.interfaces';
 
-export
+interface CharacterChoiceProps<T> {
+  choices:Pick<iCharacterChoice<T>,"choose"|"from">,
+  selected: any[], 
+  setSelected: Dispatch<SetStateAction<any[]>>
+}
 
-function CharacterChoice<T>({ choose,from }:iCharacterChoice<T>) {
-  const [selected,setSelected] = useState<any[]>([]);
+function CharacterChoice<T>({
+  choices,
+  selected,
+  setSelected
+}:CharacterChoiceProps<T>,
+) {
+  const {choose,from} = choices
   
   function choiceValue( choice:any):string{
-    const name = choice.name||choice.ability_score.name||choice
-    return name
+    return choice?.name||choice?.ability_score?.name||choice?.desc||choice
   }
 
-  const handleChange = (e:ChangeEvent<HTMLInputElement>)=> {
-    selected.includes((choice:T) =>  choiceValue(choice) == e.target.value)
+  const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
+    const choice = JSON.stringify(e.target.value)
 
-  }
+    if(selected.includes(choice)){
+      console.log('yippy')
+      setSelected(selected.filter(choices => choices !=choice));
+    } else{
+      selected.length>= choose? e.target.checked = false:
+      setSelected([...selected,choice]);
+    }
+  };
   
-  const text = `Choose ${choose} from:`;
-  const options = from.map((choice) => {
+  const options = from.map((choice,index) => {
     const val = choiceValue(choice)
     return (
-      <input
-        type="checkbox"
-        key={val}
-        name={val}
-        value={val}
-        id={val}
-        onChange={handleChange}
-      />
+      <div key={`${val}${index}`}>
+        <label htmlFor={val}>{val}</label>
+        <input
+          type="checkbox"
+          name={val}
+          value={JSON.stringify(choice)}
+          id={val}
+          onChange={handleChange}
+          // disabled={selected.length>=choose}
+        />
+      </div>
     )
   })
   
   return (
     <>
-      <p>{text}</p>
-      <form>
-    
-
-      </form>
+      <p>{`Choose ${choose} from:`}</p> 
+      {options}
     </>
   )
 }
