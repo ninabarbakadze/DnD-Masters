@@ -2,6 +2,7 @@
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import mockAbilities from '../../mockData/mockCharacter';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
+import CharacterSheetProficiency from './CharacterSheetProficiency';
 
 export default function CharacterSheet() {
   return (
@@ -19,7 +20,7 @@ export default function CharacterSheet() {
           <div className="character-sheet-background-info">
             <div className="character-sheet-CLB">
               <div>Class</div>
-              <div>Level</div>
+              <div>Level 1</div>
               <div>Background</div>
             </div>
             <div className="character-sheet-RAX">
@@ -40,17 +41,18 @@ export default function CharacterSheet() {
             />
           ))}
         </div>
-        <div className="character-sheet-ins-pb-st-s">
+        <div className="character-sheet-proficiency">
           <div className="character-sheet-inspiration">
             <EditableDisplayComponent action={null} initialVal={1} inputType="number" />
             INSPIRATION
           </div>
           <div className="character-sheet-proficiency-bonus">
-            <div className="character-sheet-PB">+3</div>
+            <div className="character-sheet-PB">+2</div>
             PROFICIENCY BONUS
           </div>
           <div className="character-sheet-saving-throws">
-            SAVING THROWS
+            SAVING THROWS :
+            <CharacterSheetProficiency name="std" modifier={2} action={null} />
           </div>
           <div className="character-sheet-skills">
             skills
