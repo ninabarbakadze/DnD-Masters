@@ -1,5 +1,4 @@
 import {
-  // ChangeEvent,
   ReactElement, useState,
 } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -31,7 +30,6 @@ export default function EditableTextComponent({
     reset({ textfieldValue });
   };
 
-  // const handleChange = (e: ChangeEvent<HTMLInputElement>)
   const handleChange = (e: any) => {
     setTextfieldValue(e.target.value);
   };
@@ -84,8 +82,7 @@ export default function EditableTextComponent({
                 onChange={handleChange}
                 value={textfieldValue}
               >
-                {/* eslint-disable-next-line react/no-array-index-key */}
-                  {options?.map((option, i) => (<option key={i}>{option}</option>))}
+                  {options?.map((option) => (<option key={`header-${option}`}>{option}</option>))}
               </select>
               ))}
         <button
