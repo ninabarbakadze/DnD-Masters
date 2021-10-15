@@ -1,6 +1,7 @@
 .editable-text-field{
     display: flex;
     flex-direction: row;
+    white-space: pre-line;
 }
 .editable-text-button{
     margin-left:10px;

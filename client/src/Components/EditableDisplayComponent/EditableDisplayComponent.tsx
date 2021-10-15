@@ -1,17 +1,20 @@
 import {
-  ChangeEvent,
   ReactElement, useState,
 } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import './EditableTextComponent.scss';
+import './EditableDisplayComponent.scss';
 
-type Input= {textfieldValue: string };
+type Input= {textfieldValue: string | number };
 interface IProps {
   action:any
-  initialVal: string
+  initialVal: string | number
+  inputType:string | number
+  options?: string[] | undefined
 }
 
-export default function EditableTextComponent({ action, initialVal }: IProps) {
+export default function EditableTextComponent({
+  action, initialVal, inputType, options,
+}: IProps) {
   const [textfieldValue, setTextfieldValue] = useState(initialVal);
   const [isInEditMode, setEditMode] = useState(false);
 
@@ -27,7 +30,7 @@ export default function EditableTextComponent({ action, initialVal }: IProps) {
     reset({ textfieldValue });
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     setTextfieldValue(e.target.value);
   };
 
@@ -40,12 +43,48 @@ export default function EditableTextComponent({ action, initialVal }: IProps) {
   const renderEditView = (): ReactElement => (
     <div>
       <form className="editable-text-field" onSubmit={handleSubmit(onSubmit)}>
+        {((inputType === 'input')
+        && (
         <input
           {...register('textfieldValue')}
           onChange={handleChange}
           value={textfieldValue}
           type="text"
         />
+        ))
+        || (
+          (inputType === 'textarea')
+          && (
+          <textarea
+            {...register('textfieldValue')}
+            onChange={handleChange}
+            value={textfieldValue}
+            cols={20}
+            rows={10}
+            wrap="hard"
+          />
+          ))
+          || (
+            (inputType === 'number')
+            && (
+            <input
+              {...register('textfieldValue')}
+              onChange={handleChange}
+              value={textfieldValue}
+              type="number"
+            />
+            ))
+            || (
+              (inputType === 'options')
+              && (
+              <select
+                {...register('textfieldValue')}
+                onChange={handleChange}
+                value={textfieldValue}
+              >
+                  {options?.map((option) => (<option key={`header-${option}`}>{option}</option>))}
+              </select>
+              ))}
         <button
           className="editable-text-button"
           type="button"
