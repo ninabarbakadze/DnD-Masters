@@ -1,7 +1,11 @@
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { Draggable } from 'gsap/Draggable';
 import PointSelection from '../PointSelection/PointSelection';
 import MapItem from '../MapItem/MapItem';
+
+gsap.registerPlugin(Draggable);
 
 export default function MapEdit() {
   const svgRef = useRef(null);
@@ -20,29 +24,10 @@ export default function MapEdit() {
     height: 600,
   });
   const [viewBoxString, setViewBoxString] = useState('0 0 1200 600');
-  const [pt, setPt] = useState({ x: 0, y: 0 });
-  const [location, setLocation] = useState(<circle r="40" fill="red" />);
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
 
-  const setPoint = (evt: any) => {
-    if (keyCode !== 'Space') {
-      const dim = evt.target.getBoundingClientRect();
-      const x = evt.clientX - dim.left;
-      const y = evt.clientY - dim.top;
-      setPt({ x, y });
-      console.log(pt);
-      const svg = (
-        <svg className="location-item" x={x} y={y}>
-          {location}
-        </svg>
-      );
-      const locationArrCopy = [...locationArr];
-      locationArrCopy.push(svg);
-      setLocationArr(locationArrCopy);
-      setLocation(<circle r="40" fill="blue" />);
-    }
-  };
+  // Panning
 
   function getPointFromEvent(evt: any) {
     const point = { x: 0, y: 0 };
@@ -81,6 +66,8 @@ export default function MapEdit() {
     });
   }
 
+  // Zoom
+
   function zoom(level: number) {
     const { width, height } = newViewBox;
     const zoomedViewBox = {
@@ -91,6 +78,25 @@ export default function MapEdit() {
     setNewViewBox(zoomedViewBox);
     setViewBox(zoomedViewBox);
   }
+
+  // Point
+
+  const setPoint = (evt: any) => {
+    if (keyCode !== 'Space') {
+      const svg = document.querySelector('.main-svg');
+      if (!svg) return;
+      // @ts-expect-error
+      const pt = svg.createSVGPoint();
+      pt.x = evt.clientX;
+      pt.y = evt.clientY;
+      // @ts-expect-error
+      const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+      setLocationArr([
+        ...locationArr,
+        <MapItem xCoord={cursorPoint.x} yCoord={cursorPoint.y} />,
+      ]);
+    }
+  };
 
   useLayoutEffect(() => {
     setViewBoxString(
@@ -111,6 +117,14 @@ export default function MapEdit() {
     });
   }, []);
 
+  useEffect(() => {
+    Draggable.create('.test', {
+      onDragEnd: (e) => {
+        console.log(e.x, e.y);
+      },
+    });
+  }, [locationArr]);
+
   return (
     <div className="map-edit-container">
       <div className="map-edit-image">
@@ -130,7 +144,6 @@ export default function MapEdit() {
         >
           <image href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg" />
           {locationArr}
-          <MapItem x="50" y="50" />
         </svg>
         <button onClick={() => zoom(0.5)} type="button">
           Zoom In
