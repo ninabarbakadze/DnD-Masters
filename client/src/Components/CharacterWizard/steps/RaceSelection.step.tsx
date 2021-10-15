@@ -20,7 +20,7 @@ type Inputs = {
 const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [races, setRaces] = useState<iCharacterRace[]>([]);
   const [raceOptionsList, setRaceListOptions] = useState<JSX.Element[]>([
-    <option>...Loading</option>,
+    <option key={0}>...Loading</option>,
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { register, handleSubmit, getValues } = useForm<Inputs>();

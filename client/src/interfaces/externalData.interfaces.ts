@@ -1,3 +1,4 @@
+/* eslint-disable */
 export interface iResourceListItem {
   index: string;
   name: string;
@@ -13,58 +14,65 @@ export interface iAbilityScore extends iResourceListItem {}
 
 export interface iAbilityBonus {
   bonus: number;
-  abilityScore: iAbilityScore;
+  ability_score: iAbilityScore;
 }
 
 export interface iCharacterProficiency extends iResourceListItem {
   type: string;
 }
 
-export interface iCharacterChoice {
+export interface iCharacterChoice<T> {
   choose: number;
   type: string;
-  from: iAbilityScore[] | iResourceListItem[] | string[] | { desc: string }[];
+  from: T[];
 }
 
 export interface iBackgroundFeature {
   name: string;
   desc: string[];
 }
+export interface idealChoice {
+  desc:string
+}
 
 export interface iCharacterBackground extends iResourceListItem {
   startingProficiencies: iCharacterProficiency[];
-  languageOptions: iCharacterChoice;
-  startingEquipment: iResourceListItem[];
-  startingEquipmentOptions: iCharacterChoice;
+  languageOptions: iCharacterChoice<iResourceListItem>;
+  starting_equipment: iResourceListItem[];
+  starting_equipment_opptions: iCharacterChoice<iResourceListItem>;
   feature: iBackgroundFeature;
-  personalityTraits: iCharacterChoice;
-  ideals: iCharacterChoice;
-  bonds: iCharacterChoice;
-  flaws: iCharacterChoice;
+  personality_traits: iCharacterChoice<string>;
+  chosen_personality_trait?:string;
+  ideals: iCharacterChoice<Extract<string,idealChoice>>;
+  chosen_ideal?:string;
+  bonds: iCharacterChoice<string>;
+  chosen_bond?: string;
+  flaws: iCharacterChoice<string>;
+  chosen_flaw?: string;
 }
 
 export interface iCharacterSubrace extends iResourceListItem {
   desc: string;
-  abilityBonuses: iAbilityBonus;
-  startingProficiencies: iCharacterProficiency[];
+  ability_bonuses: iAbilityBonus;
+  starting_proficiencies: iCharacterProficiency[];
   languages: iResourceListItem[];
-  languageOptions: iCharacterChoice;
+  language_options: iCharacterChoice<iResourceListItem>;
   traits: iResourceListItem[];
 }
 
 export interface iCharacterRace extends iResourceListItem {
   speed: number;
-  abilityBonuses: iAbilityBonus[];
-  abilityBonusOptions?: iCharacterChoice[];
+  ability_bonuses: iAbilityBonus[];
+  ability_bonus_options?: iCharacterChoice<iAbilityBonus>;
   alignment: string;
   age: string;
   size: string;
-  sizeDescription: string;
-  startingProficiencies: iCharacterProficiency[];
-  startingProficiencyOptions?: iCharacterChoice[];
+  size_description: string;
+  starting_proficiencies: iCharacterProficiency[];
+  starting_proficiency_options?: iCharacterChoice<iResourceListItem>;
   languages: iResourceListItem[];
-  languageOptions: iCharacterChoice;
-  languageDesc: string;
+  language_options: iCharacterChoice<iResourceListItem>;
+  language_desc: string;
   traits: iResourceList[];
   subraces: iResourceListItem[];
 }

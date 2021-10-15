@@ -22,6 +22,11 @@ export const characterCreationReducer = (
         ...state,
         subrace: payload.subrace,
       };
+    case 'UPDATE_BACKGROUND':
+      return {
+        ...state,
+        background: payload.background,
+      };
     default:
       return state;
   }

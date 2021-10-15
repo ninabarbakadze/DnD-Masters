@@ -19,7 +19,7 @@ type Inputs = {
 const SubRaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [subraces, setSubraces] = useState<iCharacterSubrace[]>([]);
   const [optionsList, setOptionsList] = useState<JSX.Element[]>([
-    <option>...Loading</option>,
+    <option key={0}>...Loading</option>,
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { register, handleSubmit } = useForm<Inputs>();
