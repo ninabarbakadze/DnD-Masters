@@ -1,3 +1,4 @@
+// @ts-nocheck
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { gsap } from 'gsap';
@@ -58,12 +59,6 @@ export default function MapEdit() {
 
   function onPointerUp() {
     setIsPointerDown(false);
-    setViewBox({
-      x: newViewBox.x,
-      y: newViewBox.y,
-      width: newViewBox.width,
-      height: newViewBox.height,
-    });
   }
 
   // Zoom
@@ -80,6 +75,17 @@ export default function MapEdit() {
   }
 
   // Point
+  function getSVGCoord(x: number, y: number): {} {
+    const svg = document.querySelector('.main-svg');
+    if (!svg) return {};
+    // @ts-expect-error
+    const pt = svg.createSVGPoint();
+    pt.x = x;
+    pt.y = y;
+    // @ts-expect-error
+    const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+    return cursorPoint;
+  }
 
   const setPoint = (evt: any) => {
     if (keyCode !== 'Space') {
@@ -93,7 +99,11 @@ export default function MapEdit() {
       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
       setLocationArr([
         ...locationArr,
-        <MapItem xCoord={cursorPoint.x} yCoord={cursorPoint.y} />,
+        <MapItem
+          xCoord={cursorPoint.x}
+          yCoord={cursorPoint.y}
+          getSVGCoord={(x, y) => getSVGCoord(x, y)}
+        />,
       ]);
     }
   };
@@ -117,13 +127,21 @@ export default function MapEdit() {
     });
   }, []);
 
-  useEffect(() => {
-    Draggable.create('.test', {
-      onDragEnd: (e) => {
-        console.log(e.x, e.y);
-      },
-    });
-  }, [locationArr]);
+  // useEffect(() => {
+  //   Draggable.create('.test', {
+  //     onDragEnd: (e) => {
+  //       const svg = document.querySelector('.main-svg');
+  //       if (!svg) return;
+  //       // @ts-expect-error
+  //       const pt = svg.createSVGPoint();
+  //       pt.x = e.x;
+  //       pt.y = e.y;
+  //       // @ts-expect-error
+  //       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+  //       console.log(cursorPoint);
+  //     },
+  //   });
+  // }, [locationArr]);
 
   return (
     <div className="map-edit-container">
