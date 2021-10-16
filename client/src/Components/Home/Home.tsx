@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import Login from '../Login/Login';
+// import Login from '../Login/Login';
 import { IRootState } from '../../reducers';
 import { loginAction } from '../../actions/user';
 import CharacterSheet from '../CharacterSheet/CharacterSheet';
@@ -12,11 +12,11 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
-      <Login />
+      {/* <Login /> */}
       <button type="button" onClick={() => dispatch(loginAction('Herbert'))}>
         Switch
       </button>
-      {user.isLoggedIn ? <p>Logged In </p> : <p>Logged Out</p>}
+      {}
       {user.name && (
       <p>{user.name}</p>
       )}

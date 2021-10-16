@@ -1,0 +1,86 @@
+.character-sheet,
+.character-sheet-initial-information,
+.character-sheet-header, 
+.character-sheet-CLB, 
+.character-sheet-RAX, 
+.character-sheet-action,
+.character-sheet-ability-score,
+.character-sheet-ability-proficiency,
+.character-sheet-armor-initiative-speed,
+.character-sheet-hit-death,
+.character-sheet-saving-throw-skills-tile,
+.character-sheet-equipment{
+    display:flex;
+
+}
+.character-sheet{
+    max-width: 75vh;
+    flex-direction: column;
+    margin:10px;
+    border: solid 2px ;
+    font-size: 0.6rem;
+}
+.character-sheet-ability-score,
+.character-sheet-initial-information
+{
+    flex-direction: column;
+}
+.character-sheet-saving-throw-skills-tile, 
+.character-sheet-header, 
+.character-sheet-CLB, 
+.character-sheet-RAX, 
+.character-sheet-action
+.character-sheet-equipment
+{
+    align-items:center;
+    flex-direction: row;
+    justify-content: center;
+    margin:3px;
+    padding:5px
+}
+.character-sheet-header,
+.character-sheet-ability-score{
+    align-items: center;
+    justify-content: space-around;}
+    
+.character-sheet-CLB, 
+.character-sheet-RAX{        
+   justify-content: space-between;
+}
+
+.character-sheet-ability-info,
+.character-sheet-inspiration,
+.character-sheet-proficiency-bonus,
+.character-sheet-saving-throws,
+.character-sheet-skills,
+.character-sheet-armor,
+.character-sheet-initiative,
+.character-sheet-speed,
+.character-sheet-hit-points,
+.character-sheet-hit-dice,
+.character-sheet-death-save,
+.character-sheet-coin,
+.character-sheet-attacks-spell-casting,
+.character-sheet-equipment-list,
+.character-sheet-personality-traits,
+.character-sheet-personality-ideals,
+.character-sheet-personality-bonds,
+.character-sheet-personality-flaws,
+.character-sheet-personality-features-traits{
+    justify-content: space-around;
+    border: solid 2px gray;
+    padding: 5px;
+    margin:3px;
+    max-width:  20vh;
+}
+.character-sheet-ability-modifier,
+.character-sheet-saving-throw-skills-tile{
+    border: solid 1px;
+}
+.character-sheet-action{
+    justify-content: space-around;
+}
+
+.character-sheet p{
+margin:1px
+}

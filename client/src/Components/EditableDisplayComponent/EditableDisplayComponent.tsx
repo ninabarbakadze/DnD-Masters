@@ -7,7 +7,7 @@ import './EditableDisplayComponent.scss';
 type Input= {textfieldValue: string | number };
 interface IProps {
   action:any
-  initialVal: string | number
+  initialVal?: string | number
   inputType:string | number
   options?: string[] | undefined
 }
