@@ -6,11 +6,12 @@ import { iCharacter } from '../../interfaces/externalData interfaces/character.i
 import SubRaceSelection from './steps/subRaceSelection.step';
 import { useWizardStepComplete } from '../../utilities/wizard.utilities';
 import BackgroundSelectionStep from './steps/backgroundSelection.step';
+import AttributeSelectionStep from './steps/attributeSelection/attributeSelection.step';
 
 const CharacterWizard: FC = () => {
   const onWizardComplete = () => console.log('finished');
 
-  const handleWizardStepSubmit = useWizardStepComplete<iCharacter>(onWizardComplete);
+  const submitfunc = useWizardStepComplete<iCharacter>(onWizardComplete);
 
   return (
     <div>
@@ -18,19 +19,25 @@ const CharacterWizard: FC = () => {
       <Switch>
         <Route path="/characterWizard/raceSelection">
           <RaceSelection
-            onSubmit={handleWizardStepSubmit}
+            onSubmit={submitfunc}
             path="/characterWizard/backgroundSelection"
           />
           {/* <RaceSelection onSubmit={handle} path="/gameWizard/step2" /> */}
         </Route>
         <Route path="/characterWizard/subRaceSelection">
           <SubRaceSelection
-            onSubmit={handleWizardStepSubmit}
+            onSubmit={submitfunc}
             path="/characterWizard/backgroundSelection"
           />
         </Route>
-        <Route path="/characterWizard/BackgroundSelection">
-          <BackgroundSelectionStep onSubmit={handleWizardStepSubmit} path="/gameWizard/step2" />
+        <Route path="/characterWizard/backgroundSelection">
+          <BackgroundSelectionStep
+            onSubmit={submitfunc}
+            path="/attributeSelection"
+          />
+        </Route>
+        <Route path="/characterWizard/attributeSelection">
+          <AttributeSelectionStep onSubmit={submitfunc} />
         </Route>
       </Switch>
     </div>
