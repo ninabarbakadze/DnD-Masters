@@ -3,12 +3,12 @@ import {
   characterCreationReducer,
   characterWizardStateReducer,
 } from './CharacterCreation.reducer';
-import userReducer from './user';
-import gameReducer, { iGameWizardState } from './game';
+import userReducer from './user.reducer';
+import gameReducer, { iGameWizardState } from './game.reducer';
 import {
   iCharacter,
   iCharacterWizardState,
-} from '../interfaces/character.interface';
+} from '../interfaces/externalData interfaces/character.interface';
 
 // interface prop name and reducer name must be an EXACT MATCH
 export interface IRootState {

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 // import { withRouter } from 'react-router-dom';
 import { updateName } from '../../../actions/gameWizard.actions';
 import { IRootState } from '../../../reducers';
-import { iGameWizardState } from '../../../reducers/game';
+import { iGameWizardState } from '../../../reducers/game.reducer';
 
 type Inputs = {
   name: string;

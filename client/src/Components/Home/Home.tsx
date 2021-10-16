@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Login from '../Login/Login';
 import { IRootState } from '../../reducers';
-import { loginAction } from '../../actions/user';
+import { loginAction } from '../../actions/user.actions';
 
 export default function Home() {
   const dispatch = useDispatch();

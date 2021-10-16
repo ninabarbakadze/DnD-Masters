@@ -1,7 +1,6 @@
 import {
   iCharacter,
-  // iCharacterWizardState,
-} from '../interfaces/character.interface';
+} from '../interfaces/externalData interfaces/character.interface';
 import { PayloadAction } from '../interfaces/reduxInterfaces';
 
 export const updateRace: PayloadAction<iCharacter> = (characterData) => ({

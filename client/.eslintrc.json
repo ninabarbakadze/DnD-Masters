@@ -24,6 +24,8 @@
         "tsx": "never"
       }
     ],
+    "react/jsx-props-no-spreading": "off",
+    "max-len": ["error", { "code": 120 }],
     "react/jsx-props-no-spreading": "off"
   },
   "globals": {

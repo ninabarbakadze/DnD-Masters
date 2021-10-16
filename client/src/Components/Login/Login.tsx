@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
-import { loginAction } from '../../actions/user';
+import { loginAction } from '../../actions/user.actions';
 import { registerUser, logIn, getUser } from '../../services/user.services';
 import './Login.scss';
 
