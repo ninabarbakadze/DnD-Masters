@@ -87,9 +87,11 @@ export default function MapEdit() {
   // Zoom
 
   async function zoom(level: number) {
-    const { width, height } = newViewBox;
+    // eslint-disable-next-line
+    const { width, height, x, y } = newViewBox;
     const zoomedViewBox = {
-      ...newViewBox,
+      x: x + (width - width * level) / 2,
+      y: y + (height - height * level) / 2,
       width: width * level,
       height: height * level,
     };
@@ -233,13 +235,6 @@ export default function MapEdit() {
               alt=""
             />
           </foreignObject>
-          {/* <image
-            ref={imgRef}
-            className="map-image"
-            height="1000px"
-            preserveAspectRatio="xMidYMid meet"
-            href="https://i.redd.it/pq61m18mmzp51.jpg"
-          /> */}
           {locationArr}
         </svg>
         <button onClick={() => zoom(0.8)} type="button">
@@ -254,9 +249,6 @@ export default function MapEdit() {
             <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
           </svg>
         </button>
-        <p>{dimensions.width}</p>
-        <p>{dimensions.height}</p>
-        {console.log(dimensions.width)}
       </div>
       <PointSelection />
       <Modal
