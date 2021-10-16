@@ -1,7 +1,7 @@
 import {
   iCharacterWizardState,
   iCharacter,
-} from '../interfaces/character.interface';
+} from '../interfaces/externalData interfaces/character.interface';
 
 import { iAction } from '../interfaces/reduxInterfaces';
 

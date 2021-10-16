@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { iCharacterRace } from '../../../interfaces/externalData.interfaces';
+import { iCharacterRace } from '../../../interfaces/externalData interfaces/externalData.interfaces';
 
 export function DataCleanUp<T extends { name: string }>(
   dataName: string,

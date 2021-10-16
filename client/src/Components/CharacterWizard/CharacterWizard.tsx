@@ -2,9 +2,8 @@ import { FC } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { PayloadAction } from '../../interfaces/reduxInterfaces';
-
 import RaceSelection from './steps/RaceSelection.step';
-import { iCharacter } from '../../interfaces/character.interface';
+import { iCharacter } from '../../interfaces/externalData interfaces/character.interface';
 import SubRaceSelection from './steps/subRaceSelection.step';
 
 const CharacterWizard: FC = () => {

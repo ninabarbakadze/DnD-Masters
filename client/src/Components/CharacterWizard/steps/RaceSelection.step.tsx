@@ -1,13 +1,9 @@
 /* eslint-disable */
-
-import { useCallback, useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { updateRace } from '../../../actions/characterCreationWizard.actions';
-import { iCharacter } from '../../../interfaces/character.interface';
-import { iCharacterRace } from '../../../interfaces/externalData.interfaces';
-// import { IRootState } from '../../../reducers';
-import { iGameWizardState } from '../../../reducers/game';
+import { iCharacter } from '../../../interfaces/externalData interfaces/character.interface';
+import { iCharacterRace } from '../../../interfaces/externalData interfaces/externalData.interfaces';
 import { getAllInList } from '../../../services/externalData.service';
 import { DataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
 import Options from '../helpers/selectOptions.helper';

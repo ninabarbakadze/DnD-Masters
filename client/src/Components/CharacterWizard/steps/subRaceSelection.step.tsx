@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { updateSubrace } from '../../../actions/characterCreationWizard.actions';
-import { iCharacterSubrace } from '../../../interfaces/externalData.interfaces';
+import { iCharacterSubrace } from '../../../interfaces/externalData interfaces/externalData.interfaces';
 import { IRootState } from '../../../reducers';
 
 import { getAllInList } from '../../../services/externalData.service';

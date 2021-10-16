@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Login from '../Login/Login';
 import { IRootState } from '../../reducers';
-import { loginAction } from '../../actions/user';
+import { loginAction } from '../../actions/user.actions';
 import EditableTextComponent from '../EditableTextComponent/EditableTextComponent';
 
 export default function Home() {
