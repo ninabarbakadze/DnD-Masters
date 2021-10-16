@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/all';
+import { updateElementArr } from '../../../actions/mapWizard.action';
+import { IRootState } from '../../../reducers';
 
 gsap.registerPlugin(Draggable);
 export default function MapItem({
@@ -12,7 +15,10 @@ export default function MapItem({
   locationDescription,
   id,
 }: any) {
-  const [coord, setCoord] = useState({ x: xCoord, y: yCoord });
+  const dispatch = useDispatch();
+  const { elementArr } = useSelector(
+    (state: IRootState) => state.mapCreationReducer,
+  );
   const [isHovered, setIsHovered] = useState(false);
 
   function showDescription() {
@@ -26,11 +32,17 @@ export default function MapItem({
   useEffect(() => {
     Draggable.create('.draggable', {
       onDragEnd: (e: any) => {
-        setCoord(getSVGCoord(e.x, e.y));
-        console.log(id);
+        const coords = getSVGCoord(e.x, e.y);
+        if (elementArr) {
+          const index = elementArr.findIndex((el) => el.id === id);
+          const elementArrCopy = [...elementArr];
+          elementArrCopy[index].x = coords.x;
+          elementArrCopy[index].y = coords.y;
+          dispatch(updateElementArr({ elementArr: elementArrCopy }));
+        }
       },
     });
-  }, [coord]);
+  }, [elementArr]);
 
   return (
     <g

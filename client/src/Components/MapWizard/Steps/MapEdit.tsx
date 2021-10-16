@@ -192,7 +192,7 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
-      {console.log('from edit', mapReducer)}
+      {console.log(mapReducer.elementArr)}
       <div className="map-edit-image">
         <svg
           className="main-svg"
