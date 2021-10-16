@@ -32,8 +32,10 @@ export interface iBackgroundFeature {
   desc: string[];
 }
 export interface idealChoice {
-  desc:string
+  desc: string;
 }
+
+export type tSelectedChoice = string[];
 
 export interface iCharacterBackground extends iResourceListItem {
   startingProficiencies: iCharacterProficiency[];
@@ -42,13 +44,13 @@ export interface iCharacterBackground extends iResourceListItem {
   starting_equipment_opptions: iCharacterChoice<iResourceListItem>;
   feature: iBackgroundFeature;
   personality_traits: iCharacterChoice<string>;
-  chosen_personality_trait?:string;
-  ideals: iCharacterChoice<Extract<string,idealChoice>>;
-  chosen_ideal?:string;
+  chosen_personality_trait?: tSelectedChoice;
+  ideals: iCharacterChoice<Extract<string, idealChoice>>;
+  chosen_ideal?: tSelectedChoice;
   bonds: iCharacterChoice<string>;
-  chosen_bond?: string;
+  chosen_bond?: tSelectedChoice;
   flaws: iCharacterChoice<string>;
-  chosen_flaw?: string;
+  chosen_flaw?: tSelectedChoice;
 }
 
 export interface iCharacterSubrace extends iResourceListItem {

@@ -1,60 +1,50 @@
 /* eslint-disable */
-import { ChangeEvent,Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { iCharacterChoice } from '../../interfaces/externalData.interfaces';
+import { choiceValue } from '../../utilities/choice.utilities';
 
 interface CharacterChoiceProps<T> {
-  choices:Pick<iCharacterChoice<T>,"choose"|"from">,
-  selected: any[], 
-  setSelected: Dispatch<SetStateAction<any[]>>
+  choices: Pick<iCharacterChoice<T>, 'choose' | 'from'>;
+  selected: T[];
+  setSelected: Dispatch<SetStateAction<T[]>>;
 }
 
 function CharacterChoice<T>({
   choices,
   selected,
-  setSelected
-}:CharacterChoiceProps<T>,
-) {
-  const {choose,from} = choices
-  
-  function choiceValue( choice:any):string{
-    return choice?.name||choice?.ability_score?.name||choice?.desc||choice
-  }
+  setSelected,
+}: CharacterChoiceProps<T>) {
+  const { choose, from } = choices;
 
-  const handleChange = (e:ChangeEvent<HTMLInputElement>) => {
-    const choice = JSON.stringify(e.target.value)
-
-    if(selected.includes(choice)){
-      console.log('yippy')
-      setSelected(selected.filter(choices => choices !=choice));
-    } else{
-      selected.length>= choose? e.target.checked = false:
-      setSelected([...selected,choice]);
+  const handleChange = (clickedChoice: T) => {
+    let newSelected: T[] = [];
+    if (selected.includes(clickedChoice)) {
+      console.log('already included');
+      newSelected = selected.filter((choices) => choices != clickedChoice);
+      console.log('new selected removed', newSelected);
+      setSelected(newSelected);
+    } else {
+      newSelected = [...selected, clickedChoice];
+      console.log('selected with the addition;');
+      selected.length < choose && setSelected([...selected, clickedChoice]);
     }
   };
-  
-  const options = from.map((choice,index) => {
-    const val = choiceValue(choice)
+
+  const options = from.map((choice, index) => {
+    const val = choiceValue(choice);
     return (
-      <div key={`${val}${index}`}>
-        <label htmlFor={val}>{val}</label>
-        <input
-          type="checkbox"
-          name={val}
-          value={JSON.stringify(choice)}
-          id={val}
-          onChange={handleChange}
-          // disabled={selected.length>=choose}
-        />
+      <div key={`${val}${index}`} onClick={(e) => handleChange(choice)}>
+        <p>{val}</p>
       </div>
-    )
-  })
-  
+    );
+  });
+
   return (
     <>
-      <p>{`Choose ${choose} from:`}</p> 
+      <p>{`Choose ${choose} from:`}</p>
       {options}
     </>
-  )
+  );
 }
 
-export default CharacterChoice
+export default CharacterChoice;
