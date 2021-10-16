@@ -25,7 +25,7 @@ const mockCharackter = {
     spellCasting: 'cha',
     features: [
       {
-        name: 'Spellcasting',
+        name: 'SpellCasting',
         description: "To cast a spell, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
       },
       {
@@ -158,3 +158,4 @@ const mockCharackter = {
     },
   ],
 };
+console.log(mockCharackter);
