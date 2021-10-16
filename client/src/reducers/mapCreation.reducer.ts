@@ -18,6 +18,11 @@ const mapCreationReducer = (
         ...state,
         elementArr: payload.elementArr,
       };
+    case 'UPDATE_URL':
+      return {
+        ...state,
+        mapUrl: payload.mapUrl,
+      };
     default:
       return state;
   }

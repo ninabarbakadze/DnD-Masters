@@ -10,3 +10,8 @@ export const updateElementArr: PayloadAction<iMap> = (mapData) => ({
   type: 'UPDATE_ELEMENT_ARR',
   payload: mapData,
 });
+
+export const updateUrl: PayloadAction<iMap> = (mapData) => ({
+  type: 'UPDATE_URL',
+  payload: mapData,
+});
