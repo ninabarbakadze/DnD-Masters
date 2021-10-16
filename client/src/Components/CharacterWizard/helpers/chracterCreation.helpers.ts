@@ -1,7 +1,6 @@
 /* eslint-disable */
-import { iCharacterRace } from '../../../interfaces/externalData interfaces/externalData.interfaces';
-
-export function DataCleanUp<T extends { name: string }>(
+import { iCharacterRace } from "../../../interfaces/externalData interfaces/externalData.interfaces";
+export function dataCleanUp<T extends { name: string }>(
   dataName: string,
   data: T[],
 ): T {
@@ -9,6 +8,6 @@ export function DataCleanUp<T extends { name: string }>(
 }
 
 export const hasSubraces = (raceName: string, races: iCharacterRace[]) => {
-  const selectedRace = DataCleanUp(raceName, races);
+  const selectedRace = dataCleanUp(raceName, races);
   return selectedRace.subraces.length > 0;
 };

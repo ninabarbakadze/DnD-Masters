@@ -1,6 +1,5 @@
 import {
   iCharacter,
-  iCharacterWizardState,
 } from '../interfaces/externalData interfaces/character.interface';
 import { PayloadAction } from '../interfaces/reduxInterfaces';
 
@@ -14,11 +13,16 @@ export const updateSubrace: PayloadAction<iCharacter> = (characterData) => ({
   payload: characterData,
 });
 
-export const populateRaces: PayloadAction<iCharacterWizardState> = (
-  wizardState,
-) => ({
-  type: 'POPULATE_RACES',
-  payload: wizardState,
+export const updateBackground: PayloadAction<iCharacter> = (characterData) => ({
+  type: 'UPDATE_BACKGROUND',
+  payload: characterData,
 });
+
+// export const populateRaces: PayloadAction<iCharacterWizardState> = (
+//   wizardState,
+// ) => ({
+//   type: 'POPULATE_RACES',
+//   payload: wizardState,
+// });
 
 export const A = {};
