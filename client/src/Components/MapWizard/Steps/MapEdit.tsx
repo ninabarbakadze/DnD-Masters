@@ -12,25 +12,27 @@ import { iElement } from '../../../interfaces/map.interface';
 
 export default function MapEdit() {
   const dispatch = useDispatch();
-  const svgRef = useRef(null);
+
+  const imgRef = useRef<any>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const mapReducer = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
-    x: 0,
-    y: 0,
+    x: -600,
+    y: -300,
     width: 1200,
     height: 600,
   });
   const [newViewBox, setNewViewBox] = useState({
-    x: 0,
-    y: 0,
+    x: -600,
+    y: -300,
     width: 1200,
     height: 600,
   });
-  const [viewBoxString, setViewBoxString] = useState('0 0 1200 600');
+  const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
   const [modalIsActive, setModalIsActive] = useState(false);
@@ -194,9 +196,17 @@ export default function MapEdit() {
     console.log('Map saved');
   }
 
+  useLayoutEffect(() => {
+    if (imgRef.current) {
+      setDimensions({
+        width: imgRef.current.offsetWidth,
+        height: imgRef.current.offsetHeight,
+      });
+    }
+  }, []);
+
   return (
     <div className="map-edit-container">
-      {console.log(mapReducer)}
       <div className="map-edit-image">
         <svg
           className="main-svg"
@@ -207,15 +217,29 @@ export default function MapEdit() {
           onMouseUp={onPointerUp}
           onMouseLeave={onPointerUp}
           onMouseMove={onPointerMove}
-          ref={svgRef}
           width="100%"
           height="100%"
           viewBox={viewBoxString}
         >
-          <image
+          <foreignObject
+            width={dimensions.width}
+            height={dimensions.height}
+            y={-dimensions.height / 2}
+            x={-dimensions.width / 2}
+          >
+            <img
+              ref={imgRef}
+              src="https://i.redd.it/pq61m18mmzp51.jpg"
+              alt=""
+            />
+          </foreignObject>
+          {/* <image
+            ref={imgRef}
             className="map-image"
-            href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg"
-          />
+            height="1000px"
+            preserveAspectRatio="xMidYMid meet"
+            href="https://i.redd.it/pq61m18mmzp51.jpg"
+          /> */}
           {locationArr}
         </svg>
         <button onClick={() => zoom(0.8)} type="button">
@@ -230,6 +254,9 @@ export default function MapEdit() {
             <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
           </svg>
         </button>
+        <p>{dimensions.width}</p>
+        <p>{dimensions.height}</p>
+        {console.log(dimensions.width)}
       </div>
       <PointSelection />
       <Modal

@@ -26,14 +26,20 @@
 }
 
 .map-edit-image {
-  width: 1200px;
+  width: 1000px;
   height: 600px;
-  border: 2px solid saddlebrown;
+  border-radius: 20px;
+}
+
+.main-svg {
+  border-radius: 20px;
 }
 
 .map-edit-container {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  height: 90vh;
 }
 
 .map-edit-selection {
