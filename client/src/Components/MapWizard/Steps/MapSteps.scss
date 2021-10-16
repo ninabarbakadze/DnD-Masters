@@ -87,7 +87,10 @@
 }
 
 .image-upload-preview {
-  max-width: 600px;
+  width: 600px;
+  height: 400px;
+  background-color: rgb(200, 166, 231);
+  border-radius: 20px;
   display: inline-block;
 }
 
@@ -95,6 +98,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .map-upload-container {
