@@ -119,6 +119,8 @@ export default function MapEdit() {
     setLocationArr([
       ...locationArr,
       <MapItem
+        locationName={locationName}
+        locationDescription={locationDescription}
         xCoord={svgCoord.x}
         yCoord={svgCoord.y}
         element={element}
