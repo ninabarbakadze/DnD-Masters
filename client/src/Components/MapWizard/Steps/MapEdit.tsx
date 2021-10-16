@@ -1,14 +1,17 @@
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import gsap from 'gsap';
 import { IRootState } from '../../../reducers';
 import PointSelection from '../PointSelection/PointSelection';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
 import getMapElements from '../../../assets/mapElements/mapData';
+import { updateElementArr } from '../../../actions/mapWizard.action';
+import { iElement } from '../../../interfaces/map.interface';
 
 export default function MapEdit() {
+  const dispatch = useDispatch();
   const svgRef = useRef(null);
   const mapReducer = useSelector(
     (state: IRootState) => state.mapCreationReducer,
@@ -32,6 +35,13 @@ export default function MapEdit() {
   const [keyCode, setKeyCode] = useState('');
   const [modalIsActive, setModalIsActive] = useState(false);
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
+  const [elementArr, setElmentArr] = useState<iElement[]>([]);
+
+  // Create Id
+  function generateId() {
+    const id = Math.random().toString(16).slice(2);
+    return id;
+  }
 
   // Panning
 
@@ -109,16 +119,20 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
-  function onModalSubmit(locationName: string, locationDescription: string) {
-    console.log(locationName, locationDescription);
+  async function onModalSubmit(
+    locationName: string,
+    locationDescription: string,
+  ) {
     const element = getMapElements(
       svgCoord.x,
       svgCoord.y,
       mapReducer.selectedElement,
     );
+    const id = generateId();
     setLocationArr([
       ...locationArr,
       <MapItem
+        id={id}
         locationName={locationName}
         locationDescription={locationDescription}
         xCoord={svgCoord.x}
@@ -127,6 +141,15 @@ export default function MapEdit() {
         getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
       />,
     ]);
+    const dataObj = {
+      id,
+      elementName: mapReducer.selectedElement,
+      x: svgCoord.x,
+      y: svgCoord.y,
+      title: locationName,
+      description: locationDescription,
+    };
+    setElmentArr([...elementArr, dataObj]);
   }
 
   const setPoint = (evt: any) => {
@@ -163,8 +186,13 @@ export default function MapEdit() {
     });
   }, []);
 
+  useEffect(() => {
+    dispatch(updateElementArr({ elementArr }));
+  }, [elementArr]);
+
   return (
     <div className="map-edit-container">
+      {console.log('from edit', mapReducer)}
       <div className="map-edit-image">
         <svg
           className="main-svg"

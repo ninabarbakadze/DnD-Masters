@@ -12,18 +12,11 @@ const mapCreationReducer = (
       return {
         ...state,
         selectedElement: payload.selectedElement,
-        // tags: action.payload.tags,
       };
     case 'UPDATE_ELEMENT_ARR':
       return {
         ...state,
         elementArr: payload.elementArr,
-      };
-    case 'UPDATE_TEXT':
-      return {
-        ...state,
-        currentTitle: payload.currentTitle,
-        currentDescription: payload.currentDescription,
       };
     default:
       return state;

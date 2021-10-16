@@ -10,6 +10,7 @@ export default function MapItem({
   element,
   locationName,
   locationDescription,
+  id,
 }: any) {
   const [coord, setCoord] = useState({ x: xCoord, y: yCoord });
   const [isHovered, setIsHovered] = useState(false);
@@ -26,6 +27,7 @@ export default function MapItem({
     Draggable.create('.draggable', {
       onDragEnd: (e: any) => {
         setCoord(getSVGCoord(e.x, e.y));
+        console.log(id);
       },
     });
   }, [coord]);
