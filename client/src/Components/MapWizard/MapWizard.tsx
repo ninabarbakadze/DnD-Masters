@@ -1,5 +1,4 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
-
 import MapSelection from './Steps/MapSelection';
 import MapUpload from './Steps/MapUpload';
 import MapEdit from './Steps/MapEdit';
@@ -15,7 +14,7 @@ export default function MapWizard() {
           <MapSelection history={history} />
         </Route>
         <Route path="/mapWizard/mapUpload">
-          <MapUpload />
+          <MapUpload history={history} />
         </Route>
         <Route path="/mapWizard/mapEdit">
           <MapEdit />

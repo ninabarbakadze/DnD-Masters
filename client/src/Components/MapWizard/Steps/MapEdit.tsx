@@ -1,27 +1,52 @@
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import gsap from 'gsap';
+import { IRootState } from '../../../reducers';
 import PointSelection from '../PointSelection/PointSelection';
+import ElementForm from '../Modal/ModalForms/ElementForm';
+import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
+import Modal from '../Modal/Modal';
+import getMapElements from '../../../assets/mapElements/mapData';
+import { updateElementArr } from '../../../actions/mapWizard.action';
+import { iElement } from '../../../interfaces/map.interface';
 
 export default function MapEdit() {
-  const svgRef = useRef(null);
+  const dispatch = useDispatch();
+
+  const imgRef = useRef<any>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const mapReducer = useSelector(
+    (state: IRootState) => state.mapCreationReducer,
+  );
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
-    x: 0,
-    y: 0,
+    x: -600,
+    y: -300,
     width: 1200,
     height: 600,
   });
   const [newViewBox, setNewViewBox] = useState({
-    x: 0,
-    y: 0,
+    x: -600,
+    y: -300,
     width: 1200,
     height: 600,
   });
-  const [viewBoxString, setViewBoxString] = useState('0 0 1200 600');
+  const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
+  const [elementModalIsActive, setElementModalIsActive] = useState(false);
+  const [saveModalIsActive, setSaveModalIsActive] = useState(false);
+  const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
+  const [elementArr, setElmentArr] = useState<iElement[]>([]);
+
+  // Create Id
+  function generateId() {
+    const id = Math.random().toString(16).slice(2);
+    return id;
+  }
 
   // Panning
 
@@ -54,19 +79,46 @@ export default function MapEdit() {
 
   function onPointerUp() {
     setIsPointerDown(false);
+    setViewBox({
+      x: newViewBox.x,
+      y: newViewBox.y,
+      width: newViewBox.width,
+      height: newViewBox.height,
+    });
   }
 
   // Zoom
 
-  function zoom(level: number) {
-    const { width, height } = newViewBox;
+  async function zoom(level: number) {
+    // eslint-disable-next-line
+    const { width, height, x, y } = newViewBox;
     const zoomedViewBox = {
-      ...newViewBox,
+      x: x + (width - width * level) / 2,
+      y: y + (height - height * level) / 2,
       width: width * level,
       height: height * level,
     };
+    const test = `${zoomedViewBox.x} ${zoomedViewBox.y} ${zoomedViewBox.width} ${zoomedViewBox.height}`;
+    await gsap.to('.main-svg', 0.3, { attr: { viewBox: test } });
     setNewViewBox(zoomedViewBox);
     setViewBox(zoomedViewBox);
+  }
+
+  // Create Modal for further information
+  function showElementModal() {
+    setElementModalIsActive(true);
+  }
+
+  function closeElementModal() {
+    setElementModalIsActive(false);
+  }
+
+  function showSaveModal() {
+    setSaveModalIsActive(true);
+  }
+
+  function closeSaveModal() {
+    setSaveModalIsActive(false);
   }
 
   // Point
@@ -82,6 +134,43 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
+  function onElementModalSubmit(
+    locationName: string,
+    locationDescription: string,
+  ) {
+    const element = getMapElements(
+      svgCoord.x,
+      svgCoord.y,
+      mapReducer.selectedElement,
+    );
+    const id = generateId();
+    setLocationArr([
+      ...locationArr,
+      <MapItem
+        id={id}
+        locationName={locationName}
+        locationDescription={locationDescription}
+        xCoord={svgCoord.x}
+        yCoord={svgCoord.y}
+        element={element}
+        getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+      />,
+    ]);
+    const dataObj = {
+      id,
+      elementName: mapReducer.selectedElement,
+      x: svgCoord.x,
+      y: svgCoord.y,
+      title: locationName,
+      description: locationDescription,
+    };
+    setElmentArr([...elementArr, dataObj]);
+  }
+
+  function onSaveModalSubmit() {
+    alert('saved');
+  }
+
   const setPoint = (evt: any) => {
     if (keyCode !== 'Space') {
       const svg = document.querySelector('.main-svg');
@@ -92,14 +181,8 @@ export default function MapEdit() {
       pt.y = evt.clientY;
       // @ts-expect-error
       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
-      setLocationArr([
-        ...locationArr,
-        <MapItem
-          xCoord={cursorPoint.x}
-          yCoord={cursorPoint.y}
-          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
-        />,
-      ]);
+      setSvgCoord(cursorPoint);
+      if (mapReducer.selectedElement) showElementModal();
     }
   };
 
@@ -122,21 +205,22 @@ export default function MapEdit() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   Draggable.create('.test', {
-  //     onDragEnd: (e) => {
-  //       const svg = document.querySelector('.main-svg');
-  //       if (!svg) return;
-  //       // @ts-expect-error
-  //       const pt = svg.createSVGPoint();
-  //       pt.x = e.x;
-  //       pt.y = e.y;
-  //       // @ts-expect-error
-  //       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
-  //       console.log(cursorPoint);
-  //     },
-  //   });
-  // }, [locationArr]);
+  useEffect(() => {
+    dispatch(updateElementArr({ elementArr }));
+  }, [elementArr]);
+
+  function handleSave() {
+    showSaveModal();
+  }
+
+  useLayoutEffect(() => {
+    if (imgRef.current) {
+      setDimensions({
+        width: imgRef.current.offsetWidth,
+        height: imgRef.current.offsetHeight,
+      });
+    }
+  }, []);
 
   return (
     <div className="map-edit-container">
@@ -150,22 +234,63 @@ export default function MapEdit() {
           onMouseUp={onPointerUp}
           onMouseLeave={onPointerUp}
           onMouseMove={onPointerMove}
-          ref={svgRef}
           width="100%"
           height="100%"
           viewBox={viewBoxString}
         >
-          <image href="https://i.pinimg.com/originals/43/b5/a8/43b5a812c80701bb83bd5da117d6fae2.jpg" />
+          <foreignObject
+            width={dimensions.width}
+            height={dimensions.height}
+            y={-dimensions.height / 2}
+            x={-dimensions.width / 2}
+          >
+            <img
+              ref={imgRef}
+              src="https://i.redd.it/pq61m18mmzp51.jpg"
+              alt=""
+            />
+          </foreignObject>
           {locationArr}
         </svg>
-        <button onClick={() => zoom(0.5)} type="button">
+        <button onClick={() => zoom(0.8)} type="button">
           Zoom In
         </button>
-        <button onClick={() => zoom(2)} type="button">
+        <button onClick={() => zoom(1.25)} type="button">
           Zoom Out
+        </button>
+        <button type="button" onClick={handleSave}>
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+          </svg>
         </button>
       </div>
       <PointSelection />
+      <Modal
+        heading="Name your Elements"
+        modalIsActive={elementModalIsActive}
+        // eslint-disable-next-line
+        // onModalSubmit={onElementModalSubmit}
+        setModalIsActive={setElementModalIsActive}
+        closeModal={() => closeElementModal()}
+      >
+        <ElementForm
+          // eslint-disable-next-line
+          onModalSubmit={onElementModalSubmit}
+          setModalIsActive={setElementModalIsActive}
+        />
+      </Modal>
+      <Modal
+        heading="Save your Map"
+        modalIsActive={saveModalIsActive}
+        closeModal={() => closeSaveModal()}
+      >
+        <SaveForm
+          setModalIsActive={setSaveModalIsActive}
+          // eslint-disable-next-line
+          onModalSubmit={onSaveModalSubmit}
+        />
+      </Modal>
     </div>
   );
 }

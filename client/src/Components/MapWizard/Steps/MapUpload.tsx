@@ -1,15 +1,16 @@
 /* eslint no-underscore-dangle: 0 */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ref, uploadBytes } from 'firebase/storage';
+import { useDispatch } from 'react-redux';
 import ImageUpload from '../../ImageUpload/ImageUpload';
-// @ts-ignore
 import storage from '../../../firebase';
+import { updateUrl } from '../../../actions/mapWizard.action';
 
-export default function MapUpload() {
+export default function MapUpload({ history }: any) {
+  const dispatch = useDispatch();
   const [file, setFile] = useState<File | undefined>();
   const [url, setUrl] = useState('');
-
-  console.log('url from firebase', url);
+  const [mapUploaded, setMapUploaded] = useState(false);
 
   function handleUpload() {
     if (!file) return;
@@ -26,17 +27,38 @@ export default function MapUpload() {
   }
 
   const handleSubmit = (): void => {
-    console.log('handlesubmit fired');
     handleUpload();
+    alert('Image Uploaded');
+    setMapUploaded(true);
   };
 
+  useEffect(() => {
+    dispatch(updateUrl({ mapUrl: url }));
+  }, [url]);
+
   return (
-    <div>
-      <ImageUpload setFile={setFile} />
-      <h1>Upload Image</h1>
-      <button type="submit" onClick={() => handleSubmit()}>
-        submit
-      </button>
+    <div className="map-upload-container">
+      <div>
+        <h1>Image Upload</h1>
+        <p>Select an Image and edit your Map</p>
+      </div>
+      <div>
+        <ImageUpload setFile={setFile} />
+        <button
+          className={mapUploaded ? 'not-visible' : ''}
+          type="submit"
+          onClick={() => handleSubmit()}
+        >
+          Upload
+        </button>
+        <button
+          className={mapUploaded ? '' : 'not-visible'}
+          type="button"
+          onClick={() => history.push('/mapWizard/mapEdit')}
+        >
+          Edit Map
+        </button>
+      </div>
     </div>
   );
 }

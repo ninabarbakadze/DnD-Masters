@@ -1,21 +1,67 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/all';
+import { updateElementArr } from '../../../actions/mapWizard.action';
+import { IRootState } from '../../../reducers';
 
 gsap.registerPlugin(Draggable);
-// eslint-disable-next-line
-export default function MapItem({ xCoord, yCoord, getSVGCoord }: any) {
-  const [coord, setCoord] = useState({ x: xCoord, y: yCoord });
-  useEffect(() => {
-    Draggable.create('.test', {
-      onDragEnd: (e: any) => {
-        setCoord(getSVGCoord(e.x, e.y));
-      },
-    });
-  }, [coord]);
+export default function MapItem({
+  xCoord,
+  yCoord,
+  getSVGCoord,
+  element,
+  locationName,
+  locationDescription,
+  id,
+}: any) {
+  const dispatch = useDispatch();
+  const { elementArr } = useSelector(
+    (state: IRootState) => state.mapCreationReducer,
+  );
+  const [isHovered, setIsHovered] = useState(false);
+
+  function showDescription() {
+    setIsHovered(true);
+  }
+
+  function hideDescription() {
+    setIsHovered(false);
+  }
 
   useEffect(() => {
-    console.log('second', coord);
-  }, [coord]);
-  return <circle className="test" r="50" cx={xCoord} cy={yCoord} fill="red" />;
+    Draggable.create('.draggable', {
+      onDragEnd: (e: any) => {
+        const coords = getSVGCoord(e.x, e.y);
+        if (elementArr) {
+          const index = elementArr.findIndex((el) => el.id === id);
+          const elementArrCopy = [...elementArr];
+          elementArrCopy[index].x = coords.x;
+          elementArrCopy[index].y = coords.y;
+          dispatch(updateElementArr({ elementArr: elementArrCopy }));
+        }
+      },
+    });
+  }, [elementArr]);
+
+  return (
+    <g
+      onMouseEnter={showDescription}
+      onMouseLeave={hideDescription}
+      transform={`translate(${xCoord} ${yCoord})`}
+      className="draggable"
+    >
+      {element}
+      <text>{locationName}</text>
+      <foreignObject width="100" height="50">
+        <div
+          className={
+            isHovered ? 'description-text' : 'not-visible description-text'
+          }
+        >
+          {locationDescription}
+        </div>
+      </foreignObject>
+    </g>
+  );
 }
