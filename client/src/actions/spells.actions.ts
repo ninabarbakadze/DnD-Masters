@@ -1,8 +1,10 @@
-import { PayloadAction } from '../interfaces/reduxInterfaces';
-import { iResourceListItem } from '../interfaces/externalData interfaces/externalData.interfaces';
-import { iSpellItem } from '../interfaces/externalData interfaces/spells.interface';
+import { PayloadAction } from '../interfaces/redux.interface';
+import { iResourceListItem } from '../interfaces/externalData/externalData.interface';
+import { iSpellItem } from '../interfaces/externalData/spells.interface';
 
-export const populateSpells: PayloadAction<iResourceListItem[]> = (spellsData) => ({
+export const populateSpells: PayloadAction<iResourceListItem[]> = (
+  spellsData,
+) => ({
   type: 'POPULATE_SPELLS',
   payload: spellsData,
 });

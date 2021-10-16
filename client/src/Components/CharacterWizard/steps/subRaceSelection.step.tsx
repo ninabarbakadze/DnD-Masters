@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { updateSubrace } from '../../../actions/characterCreationWizard.actions';
-import { iCharacter } from '../../../interfaces/externalData interfaces/character.interface';
-import { iCharacterSubrace } from '../../../interfaces/externalData interfaces/externalData.interfaces';
+import { iCharacter } from '../../../interfaces/character.interface';
+import { iCharacterSubrace } from '../../../interfaces/externalData/externalData.interface';
 import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { IRootState } from '../../../reducers';
 

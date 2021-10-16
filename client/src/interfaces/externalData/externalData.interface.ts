@@ -57,8 +57,9 @@ export interface iCharacterSubrace extends iResourceListItem {
   desc: string;
   ability_bonuses: iAbilityBonus;
   starting_proficiencies: iCharacterProficiency[];
+  ability_bonus_options?: iCharacterChoice<iAbilityBonus>;
   languages: iResourceListItem[];
-  language_options: iCharacterChoice<iResourceListItem>;
+  language_options?: iCharacterChoice<iResourceListItem>;
   traits: iResourceListItem[];
 }
 
@@ -73,7 +74,7 @@ export interface iCharacterRace extends iResourceListItem {
   starting_proficiencies: iCharacterProficiency[];
   starting_proficiency_options?: iCharacterChoice<iResourceListItem>;
   languages: iResourceListItem[];
-  language_options: iCharacterChoice<iResourceListItem>;
+  language_options?: iCharacterChoice<iResourceListItem>;
   language_desc: string;
   traits: iResourceList[];
   subraces: iResourceListItem[];

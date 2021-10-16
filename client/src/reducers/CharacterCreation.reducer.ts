@@ -1,9 +1,9 @@
 import {
   iCharacterWizardState,
   iCharacter,
-} from '../interfaces/externalData interfaces/character.interface';
+} from '../interfaces/character.interface';
 
-import { iAction } from '../interfaces/reduxInterfaces';
+import { iAction } from '../interfaces/redux.interface';
 
 const initialState: iCharacter = {};
 
@@ -26,6 +26,11 @@ export const characterCreationReducer = (
       return {
         ...state,
         background: payload.background,
+      };
+    case 'UPDATE_ATTRIBUTES':
+      return {
+        ...state,
+        abilityArray: payload.abilityArray,
       };
     default:
       return state;

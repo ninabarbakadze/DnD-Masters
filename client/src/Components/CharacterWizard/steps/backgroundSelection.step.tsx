@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react';
 import { iCharacter } from '../../../interfaces/character.interface';
-import { iCharacterBackground } from '../../../interfaces/externalData.interfaces';
+import { iCharacterBackground } from '../../../interfaces/externalData/externalData.interface';
 import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
 import Options from '../helpers/selectOptions.helper';

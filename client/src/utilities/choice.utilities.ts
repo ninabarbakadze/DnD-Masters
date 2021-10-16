@@ -1,4 +1,4 @@
-import { tSelectedChoice } from '../interfaces/externalData.interfaces';
+import { tSelectedChoice } from '../interfaces/externalData/externalData.interface';
 
 export function choiceValue(choice: any): string {
   return choice?.name || choice?.ability_score?.name || choice?.desc || choice;

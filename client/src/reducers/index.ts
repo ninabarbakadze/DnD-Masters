@@ -8,7 +8,7 @@ import gameReducer, { iGameWizardState } from './game.reducer';
 import {
   iCharacter,
   iCharacterWizardState,
-} from '../interfaces/externalData interfaces/character.interface';
+} from '../interfaces/character.interface';
 
 // interface prop name and reducer name must be an EXACT MATCH
 export interface IRootState {
