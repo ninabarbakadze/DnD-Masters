@@ -33,7 +33,7 @@ const CharacterWizard: FC = () => {
         <Route path="/characterWizard/backgroundSelection">
           <BackgroundSelectionStep
             onSubmit={submitfunc}
-            path="/attributeSelection"
+            path="/characterWizard/attributeSelection"
           />
         </Route>
         <Route path="/characterWizard/attributeSelection">

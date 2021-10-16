@@ -9,6 +9,7 @@ import {
 import { IRootState } from '../../../../reducers';
 import { iWizardStepProps } from '../../../../interfaces/wizard.interface';
 import AttributePointBuy from './attributePointBuy.component';
+import { addRaceBonus } from './attributeSelection.helpers';
 
 const startArray: iAbilityArray = {
   str: { score: 10, bonus: 0 },
@@ -30,6 +31,10 @@ const AttributeSelectionStep = ({
     (state: IRootState) => state.characterCreationReducer,
   );
 
+  useEffect(() => {
+    setAbilityArray(addRaceBonus(character, abilityArray));
+  }, []);
+
   function increment(direction, value) {
     let score = abilityArray[value].score;
     if (direction == '-') {
@@ -43,23 +48,10 @@ const AttributeSelectionStep = ({
     newAbilityArray[value].score = score;
     setAbilityArray(newAbilityArray);
   }
-
   const abilityKeys = Object.keys(abilityArray);
 
   const pointBuyArray = abilityKeys.map((key) => {
     return (
-      // <div>
-      //   {key}
-      //   <button type="button" onClick={() => {}}>
-      //     -
-      //   </button>
-      //   <p>{abilityArray[key].score}</p>
-      //   <button type="button" onClick={() => {}}>
-      //     +
-      //   </button>
-      //   <p>Bonus</p>
-      //   {abilityArray[key].bonus}
-      // </div>
       <AttributePointBuy
         value={abilityArray[key].score}
         key={key}
