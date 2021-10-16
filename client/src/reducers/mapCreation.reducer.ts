@@ -19,6 +19,12 @@ const mapCreationReducer = (
         ...state,
         elementArr: payload.elementArr,
       };
+    case 'UPDATE_TEXT':
+      return {
+        ...state,
+        currentTitle: payload.currentTitle,
+        currentDescription: payload.currentDescription,
+      };
     default:
       return state;
   }

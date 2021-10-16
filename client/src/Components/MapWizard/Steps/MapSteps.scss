@@ -35,14 +35,22 @@
 }
 
 .modal-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.hidden-modal {
+  display: none;
+}
+
+.modal-form-container {
   width: 500px;
   height: 300px;
   background-color: salmon;
   position: fixed;
   top: 200px;
   left: 500px;
-}
-
-.hidden-modal {
-  display: none;
 }

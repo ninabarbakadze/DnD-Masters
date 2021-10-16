@@ -31,6 +31,7 @@ export default function MapEdit() {
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
   const [modalIsActive, setModalIsActive] = useState(false);
+  const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
 
   // Panning
 
@@ -108,6 +109,24 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
+  function onModalSubmit(locationName: string, locationDescription: string) {
+    console.log(locationName, locationDescription);
+    const element = getMapElements(
+      svgCoord.x,
+      svgCoord.y,
+      mapReducer.selectedElement,
+    );
+    setLocationArr([
+      ...locationArr,
+      <MapItem
+        xCoord={svgCoord.x}
+        yCoord={svgCoord.y}
+        element={element}
+        getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+      />,
+    ]);
+  }
+
   const setPoint = (evt: any) => {
     if (keyCode !== 'Space') {
       const svg = document.querySelector('.main-svg');
@@ -118,21 +137,8 @@ export default function MapEdit() {
       pt.y = evt.clientY;
       // @ts-expect-error
       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
-      const element = getMapElements(
-        cursorPoint.x,
-        cursorPoint.y,
-        mapReducer.selectedElement,
-      );
+      setSvgCoord(cursorPoint);
       if (mapReducer.selectedElement) showModal();
-      setLocationArr([
-        ...locationArr,
-        <MapItem
-          xCoord={cursorPoint.x}
-          yCoord={cursorPoint.y}
-          element={element}
-          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
-        />,
-      ]);
     }
   };
 
@@ -188,6 +194,8 @@ export default function MapEdit() {
       <PointSelection />
       <Modal
         modalIsActive={modalIsActive}
+        // eslint-disable-next-line
+        onModalSubmit={onModalSubmit}
         setModalIsActive={setModalIsActive}
         closeModal={() => closeModal()}
       />

@@ -4,6 +4,7 @@ export default function Modal({
   closeModal,
   modalIsActive,
   setModalIsActive,
+  onModalSubmit,
 }: any) {
   const [locationName, setLocationName] = useState('');
   const [locationDescription, setLocationDescription] = useState('');
@@ -11,30 +12,34 @@ export default function Modal({
 
   const handleSubmit = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    console.log(locationName);
-    console.log(locationDescription);
     setModalIsActive(false);
+    onModalSubmit(locationName, locationDescription);
+    setLocationName('');
+    setLocationDescription('');
   };
 
   return (
     <div className={showHideClassName}>
-      <h1>Describe the location</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Name this Location"
-          value={locationName}
-          onChange={(evt) => setLocationName(evt.target.value)}
-        />
-        <textarea
-          placeholder="Describe this location"
-          value={locationDescription}
-          onChange={(evt) => setLocationDescription(evt.target.value)}
-        />
-        <input type="submit" value="Enter" />
-      </form>
-      <button onClick={closeModal} type="button">
-        Close
-      </button>
+      <div className="modal-form-container">
+        <h1>Describe the location</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            required
+            placeholder="Name this Location"
+            value={locationName}
+            onChange={(evt) => setLocationName(evt.target.value)}
+          />
+          <textarea
+            placeholder="Describe this location"
+            value={locationDescription}
+            onChange={(evt) => setLocationDescription(evt.target.value)}
+          />
+          <input type="submit" value="Enter" />
+        </form>
+        <button onClick={closeModal} type="button">
+          Close
+        </button>
+      </div>
     </div>
   );
 }
