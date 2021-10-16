@@ -3,13 +3,13 @@ import {
   characterCreationReducer,
   characterWizardStateReducer,
 } from './CharacterCreation.reducer';
-import userReducer from './user';
-import gameReducer, { iGameWizardState } from './game';
-import mapCreationReducer from './mapCreation.reducer';
+import userReducer from './user.reducer';
+import gameReducer, { iGameWizardState } from './game.reducer';
 import {
   iCharacter,
   iCharacterWizardState,
 } from '../interfaces/character.interface';
+import mapCreationReducer from './mapCreation.reducer';
 import { iMap } from '../interfaces/map.interface';
 
 // interface prop name and reducer name must be an EXACT MATCH
