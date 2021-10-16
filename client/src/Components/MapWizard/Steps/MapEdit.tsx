@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import gsap from 'gsap';
 import { IRootState } from '../../../reducers';
 import PointSelection from '../PointSelection/PointSelection';
+import ElementForm from '../Modal/ModalForms/ElementForm';
+import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
 import getMapElements from '../../../assets/mapElements/mapData';
@@ -35,7 +37,8 @@ export default function MapEdit() {
   const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
-  const [modalIsActive, setModalIsActive] = useState(false);
+  const [elementModalIsActive, setElementModalIsActive] = useState(false);
+  const [saveModalIsActive, setSaveModalIsActive] = useState(false);
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
   const [elementArr, setElmentArr] = useState<iElement[]>([]);
 
@@ -102,12 +105,20 @@ export default function MapEdit() {
   }
 
   // Create Modal for further information
-  function showModal() {
-    setModalIsActive(true);
+  function showElementModal() {
+    setElementModalIsActive(true);
   }
 
-  function closeModal() {
-    setModalIsActive(false);
+  function closeElementModal() {
+    setElementModalIsActive(false);
+  }
+
+  function showSaveModal() {
+    setSaveModalIsActive(true);
+  }
+
+  function closeSaveModal() {
+    setSaveModalIsActive(false);
   }
 
   // Point
@@ -123,7 +134,7 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
-  async function onModalSubmit(
+  function onElementModalSubmit(
     locationName: string,
     locationDescription: string,
   ) {
@@ -156,6 +167,10 @@ export default function MapEdit() {
     setElmentArr([...elementArr, dataObj]);
   }
 
+  function onSaveModalSubmit() {
+    alert('saved');
+  }
+
   const setPoint = (evt: any) => {
     if (keyCode !== 'Space') {
       const svg = document.querySelector('.main-svg');
@@ -167,7 +182,7 @@ export default function MapEdit() {
       // @ts-expect-error
       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
       setSvgCoord(cursorPoint);
-      if (mapReducer.selectedElement) showModal();
+      if (mapReducer.selectedElement) showElementModal();
     }
   };
 
@@ -195,7 +210,7 @@ export default function MapEdit() {
   }, [elementArr]);
 
   function handleSave() {
-    console.log('Map saved');
+    showSaveModal();
   }
 
   useLayoutEffect(() => {
@@ -252,12 +267,30 @@ export default function MapEdit() {
       </div>
       <PointSelection />
       <Modal
-        modalIsActive={modalIsActive}
+        heading="Name your Elements"
+        modalIsActive={elementModalIsActive}
         // eslint-disable-next-line
-        onModalSubmit={onModalSubmit}
-        setModalIsActive={setModalIsActive}
-        closeModal={() => closeModal()}
-      />
+        // onModalSubmit={onElementModalSubmit}
+        setModalIsActive={setElementModalIsActive}
+        closeModal={() => closeElementModal()}
+      >
+        <ElementForm
+          // eslint-disable-next-line
+          onModalSubmit={onElementModalSubmit}
+          setModalIsActive={setElementModalIsActive}
+        />
+      </Modal>
+      <Modal
+        heading="Save your Map"
+        modalIsActive={saveModalIsActive}
+        closeModal={() => closeSaveModal()}
+      >
+        <SaveForm
+          setModalIsActive={setSaveModalIsActive}
+          // eslint-disable-next-line
+          onModalSubmit={onSaveModalSubmit}
+        />
+      </Modal>
     </div>
   );
 }
