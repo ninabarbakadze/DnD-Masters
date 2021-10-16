@@ -1,15 +1,24 @@
 /* eslint-disable */
+import { useEffect, useRef } from 'react';
+import './attributesSelection.scss';
+
 interface props {
   name: string;
-  index: string;
-  handleClick: () => void;
+  handleClick: any;
   bonus: number;
   selected: boolean;
 }
 
-const AbilityBonusChoice = ({ name, index, handleClick, selected }: props) => {
+const AbilityBonusChoice = ({ name, handleClick, selected }: props) => {
+  const ref = useRef();
+
   return (
-    <div onClick={() => {}}>
+    <div
+      className="abilityBonusChoice"
+      onClick={() => {
+        handleClick(name);
+      }}
+    >
       <p>{name}</p>
     </div>
   );

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import RaceSelection from './steps/RaceSelection.step';
-import { iCharacter } from '../../interfaces/externalData interfaces/character.interface';
+import { iCharacter } from '../../interfaces/character.interface';
 import SubRaceSelection from './steps/subRaceSelection.step';
 import { useWizardStepComplete } from '../../utilities/wizard.utilities';
 import BackgroundSelectionStep from './steps/backgroundSelection.step';

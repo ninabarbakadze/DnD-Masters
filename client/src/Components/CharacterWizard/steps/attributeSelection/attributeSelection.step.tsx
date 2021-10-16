@@ -14,6 +14,7 @@ import {
   getAbilityBonusOptions,
 } from './attributeSelection.helpers';
 import AbilityBonusChoice from './attributeOptionChoice';
+import { updateAbilityArray } from '../../../../actions/characterCreationWizard.actions';
 
 const startArray: iAbilityArray = {
   str: { score: 10, bonus: 0 },
@@ -29,8 +30,9 @@ const AttributeSelectionStep = ({
   onSubmit,
 }: iWizardStepProps<iCharacter>) => {
   const [abilityArray, setAbilityArray] = useState<iAbilityArray>(startArray);
-  const [pool, setPool] = useState<number>(27);
-  const [bonusChoices, setBonusChoices] = useState();
+  const [pool, setPool] = useState<number>(18);
+  const [bonusChoices, setBonusChoices] = useState([]);
+  const [selectedBonuses, setSelectedBonuses] = useState([]);
 
   const character = useSelector(
     (state: IRootState) => state.characterCreationReducer,
@@ -40,6 +42,21 @@ const AttributeSelectionStep = ({
     setAbilityArray(addRaceBonus(character, abilityArray));
     setBonusChoices(getAbilityBonusOptions(character));
   }, []);
+
+  function handleBonusChoice(name: string) {
+    const bonuses = [...selectedBonuses];
+    if (bonuses.includes(name)) {
+      setSelectedBonuses(selectedBonuses.filter((choice) => choice != name));
+      const newAbilityArray = { ...abilityArray };
+      newAbilityArray[name].bonus--;
+      setAbilityArray(newAbilityArray);
+    } else if (selectedBonuses.length < bonusChoices.race.max) {
+      setSelectedBonuses([...selectedBonuses, name]);
+      const newAbilityArray = { ...abilityArray };
+      newAbilityArray[name].bonus++;
+      setAbilityArray(newAbilityArray);
+    }
+  }
 
   function increment(direction, value) {
     let score = abilityArray[value].score;
@@ -68,31 +85,10 @@ const AttributeSelectionStep = ({
     );
   });
 
-  // // const raceChoices = bonusChoices.race.choices.map((choice) => {
-  // //   return (
-  // //     <AbilityBonusChoice
-  // //       name={choice}
-  // //       index={choice}
-  // //       handleClick={() => {}}
-  // //       slected={false}
-  // //     />
-  // //   );
-  // // });
-
-  // const subraceChoices = bonusChoices.subrace.choices.map((choice) => {
-  //   return (
-  //     <AbilityBonusChoice
-  //       name={choice}
-  //       index={choice}
-  //       handleClick={() => {}}
-  //       slected={false}
-  //     />
-  //   );
-  // });
-
   return (
     <div>
       <h2>Attribute Selection</h2>
+      <p>{`${pool} points to spend`}</p>
       <div>
         {bonusChoices?.race && (
           <div>
@@ -104,8 +100,7 @@ const AttributeSelectionStep = ({
                 <AbilityBonusChoice
                   key={choice}
                   name={choice}
-                  index={choice}
-                  handleClick={() => {}}
+                  handleClick={handleBonusChoice}
                   slected={false}
                 />
               );
@@ -122,7 +117,6 @@ const AttributeSelectionStep = ({
                 <AbilityBonusChoice
                   key={choice}
                   name={choice}
-                  index={choice}
                   handleClick={() => {}}
                   slected={false}
                 />
@@ -132,6 +126,13 @@ const AttributeSelectionStep = ({
         )}
         {pointBuyArray}
       </div>
+      <button
+        type="button"
+        onClick={() => onSubmit({ abilityArray }, updateAbilityArray, path)}
+        disabled={pool == 0}
+      >
+        Submit
+      </button>
     </div>
   );
 };

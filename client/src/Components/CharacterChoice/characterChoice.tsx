@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Dispatch, SetStateAction } from 'react';
-import { iCharacterChoice } from '../../interfaces/externalData.interfaces';
+import { iCharacterChoice } from '../../interfaces/externalData/externalData.interface';
 import { choiceValue } from '../../utilities/choice.utilities';
 
 interface CharacterChoiceProps<T> {

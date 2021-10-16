@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { updateRace } from '../../../actions/characterCreationWizard.actions';
-import { iCharacter } from '../../../interfaces/externalData interfaces/character.interface';
-import { iCharacterRace } from '../../../interfaces/externalData interfaces/externalData.interfaces';
+import { iCharacter } from '../../../interfaces/character.interface';
+import { iCharacterRace } from '../../../interfaces/externalData/externalData.interface';
 import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
 import { dataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
@@ -45,8 +45,8 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
       <h2>Select Character Race</h2>
       <form
         onSubmit={handleSubmit((data) => {
-          const race = dataCleanUp(data.race,races);
-          onSubmit({race},updateRace,handleNextStep());
+          const race = dataCleanUp(data.race, races);
+          onSubmit({ race }, updateRace, handleNextStep());
         })}
       >
         <select

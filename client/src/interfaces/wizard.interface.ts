@@ -1,6 +1,5 @@
 /*eslint-disable*/
-import { PayloadAction } from './reduxInterfaces';
-
+import { PayloadAction } from './redux.interface';
 
 export type wizardStepOnSubmit<T> = (
   data: T,
@@ -10,5 +9,5 @@ export type wizardStepOnSubmit<T> = (
 
 export interface iWizardStepProps<T> {
   path?: string;
-  onSubmit: wizardStepOnSubmit<T>
+  onSubmit: wizardStepOnSubmit<T>;
 }
