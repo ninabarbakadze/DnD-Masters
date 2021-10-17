@@ -31,26 +31,31 @@ export default function Dashboard() {
         <DashboarMenuItem
           image="https://i.redd.it/pq61m18mmzp51.jpg"
           link="/mapWizard/mapSelection"
+          text="Create Map"
         />
         <DashboarMenuItem
           // eslint-disable-next-line
           image="https://media.dnd.wizards.com/styles/mosaic_thumbnail/public/images/mosaic/NEW_TO_DD_Classes_Fighter_T_140626.jpg"
           link="/characterWizard/raceSelection"
+          text="Create Character"
         />
         <DashboarMenuItem
           // eslint-disable-next-line
           image="https://images.squarespace-cdn.com/content/v1/5dadaf88e03a4e6bb69307dd/1579653459911-ZX5PPMR1RKA92HOGCUMY/Capture.jpg?format=1000w"
           link="/encounterWizard"
+          text="Create Encounter"
         />
         <DashboarMenuItem
           // eslint-disable-next-line
           image="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Android_TV_game_controller.jpg/1200px-Android_TV_game_controller.jpg"
           link="/gameWizard/step1"
+          text="Create Game"
         />
         <DashboarMenuItem
           // eslint-disable-next-line
           image="https://cdn.pixabay.com/photo/2017/03/13/04/25/play-button-2138735_1280.png"
           link="/play"
+          text="Play Game"
         />
       </div>
     </div>
