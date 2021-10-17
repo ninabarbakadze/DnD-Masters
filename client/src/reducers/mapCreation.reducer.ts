@@ -1,5 +1,5 @@
 import { iMap } from '../interfaces/map.interface';
-import { iAction } from '../interfaces/reduxInterfaces';
+import { iAction } from '../interfaces/redux.interface';
 
 const initialState: iMap = {};
 
