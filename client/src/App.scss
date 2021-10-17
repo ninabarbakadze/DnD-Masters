@@ -2,3 +2,50 @@
   box-sizing: border-box;
   margin: 0;
 }
+
+.main-button {
+  padding: 10px 40px;
+  border-radius: 10px;
+  background-color: blueviolet;
+  color: white;
+  border: 2px solid blueviolet;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.main-button:hover {
+  background-color: rgb(127, 25, 223);
+}
+
+.side-button {
+  padding: 10px 10px;
+  border-radius: 10px;
+  background-color: #FAFAFA;
+  border: 2px solid blueviolet;
+  cursor: pointer;
+  color: blueviolet;
+  margin: 10px;
+}
+
+.side-button:hover {
+  background-color: blueviolet;
+  color: #FAFAFA
+}
+
+.danger-button {
+  border: 2px solid #F03A47;
+  color: #F03A47;
+}
+
+.danger-button:hover {
+  background-color: #F03A47;
+}
+
+.success-button {
+  background-color: #558B6E;
+  border: 2px solid #558B6E;
+}
+
+.success-button:hover {
+  background-color: #3f8b63;
+}

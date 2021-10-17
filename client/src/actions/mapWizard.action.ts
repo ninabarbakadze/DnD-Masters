@@ -11,7 +11,17 @@ export const updateElementArr: PayloadAction<iMap> = (mapData) => ({
   payload: mapData,
 });
 
+export const updateLocationArr: PayloadAction<iMap> = (mapData) => ({
+  type: 'UPDATE_LOCATION_ARR',
+  payload: mapData,
+});
+
 export const updateUrl: PayloadAction<iMap> = (mapData) => ({
   type: 'UPDATE_URL',
+  payload: mapData,
+});
+
+export const setDelete: PayloadAction<iMap> = (mapData) => ({
+  type: 'SET_DELETE',
   payload: mapData,
 });
