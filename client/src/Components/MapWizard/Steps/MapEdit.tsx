@@ -139,6 +139,11 @@ export default function MapEdit() {
 
   function deleteLocation(id: string, arr: JSX.Element[]) {
     const index = arr.findIndex((location) => location.props.id === id);
+    dispatch(
+      updateLocationArr({
+        locationArr: [...arr.slice(0, index), ...arr.slice(index + 1)],
+      }),
+    );
     console.log(index);
   }
 
@@ -167,20 +172,6 @@ export default function MapEdit() {
         ],
       }),
     );
-    // setLocalLocationArr([
-    //   ...localLocationArr,
-    //   <MapItem
-    //     // eslint-disable-next-line
-    //     deleteLocation={deleteLocation}
-    //     id={id}
-    //     locationName={locationName}
-    //     locationDescription={locationDescription}
-    //     xCoord={svgCoord.x}
-    //     yCoord={svgCoord.y}
-    //     element={element}
-    //     getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
-    //   />,
-    // ]);
     const dataObj = {
       id,
       elementName: selectedElement,
