@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import './characterWizard.scss';
 
 import RaceSelection from './steps/RaceSelection.step';
 import { iCharacter } from '../../interfaces/character.interface';
@@ -15,7 +16,7 @@ const CharacterWizard: FC = () => {
   const submitfunc = useWizardStepComplete<iCharacter>(onWizardComplete);
 
   return (
-    <div>
+    <div className="character-wizard wizard">
       <h1>Character Wizard</h1>
       <Switch>
         <Route path="/characterWizard/raceSelection">
