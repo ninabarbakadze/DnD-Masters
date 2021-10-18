@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+// eslint-disable-next-line
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/all';
@@ -12,23 +13,24 @@ export default function MapItem({
   getSVGCoord,
   element,
   locationName,
-  locationDescription,
+  // locationDescription,
   id,
   deleteLocation,
 }: any) {
+  const [textWidth, setTextWidth] = useState(0);
   const dispatch = useDispatch();
   const { elementArr, shouldDelete, locationArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
-  const [isHovered, setIsHovered] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
 
-  function showDescription() {
-    setIsHovered(true);
-  }
+  // function showDescription() {
+  //   setIsHovered(true);
+  // }
 
-  function hideDescription() {
-    setIsHovered(false);
-  }
+  // function hideDescription() {
+  //   setIsHovered(false);
+  // }
 
   useEffect(() => {
     Draggable.create('.draggable', {
@@ -45,6 +47,14 @@ export default function MapItem({
     });
   }, [elementArr]);
 
+  useLayoutEffect(() => {
+    const textElement = document.querySelector(`text[data-id="${id}"]`);
+    // @ts-expect-error
+    const bbox = textElement?.getBBox();
+    setTextWidth(bbox.width);
+    console.log(bbox.width);
+  }, []);
+
   return (
     <g
       onClick={
@@ -53,14 +63,16 @@ export default function MapItem({
           shouldDelete && deleteLocation(id, locationArr, elementArr)
         // eslint-disable-next-line
       }
-      onMouseEnter={showDescription}
-      onMouseLeave={hideDescription}
+      // onMouseEnter={showDescription}
+      // onMouseLeave={hideDescription}
       transform={`translate(${xCoord} ${yCoord})`}
       className="draggable"
     >
       {element}
-      <text>{locationName}</text>
-      <foreignObject width="100" height="50">
+      <text data-id={id} x={-textWidth / 2} y="4%" fill="white" fontSize="24">
+        {locationName}
+      </text>
+      {/* <foreignObject width="100" height="50" x="-40" y="-70">
         <div
           className={
             isHovered ? 'description-text' : 'not-visible description-text'
@@ -68,7 +80,7 @@ export default function MapItem({
         >
           {locationDescription}
         </div>
-      </foreignObject>
+      </foreignObject> */}
     </g>
   );
 }
