@@ -10,10 +10,11 @@ interface IProps {
   initialVal?: string | number
   inputType:string | number
   options?: string[] | undefined
+  itemKey?: string
 }
 
 export default function EditableDisplayComponent({
-  action, initialVal, inputType, options,
+  action, initialVal, inputType, options, itemKey,
 }: IProps) {
   const [textfieldValue, setTextfieldValue] = useState(initialVal);
   const [isInEditMode, setEditMode] = useState(false);
@@ -36,8 +37,8 @@ export default function EditableDisplayComponent({
 
   const onSubmit: SubmitHandler<Input> = (data) => {
     setEditMode(false);
-    action(textfieldValue);
     setTextfieldValue(data.textfieldValue);
+    action(textfieldValue, itemKey);
   };
 
   const renderEditView = (): ReactElement => (
@@ -68,6 +69,7 @@ export default function EditableDisplayComponent({
             (inputType === 'number')
             && (
             <input
+              className="number-input"
               {...register('textfieldValue')}
               onChange={handleChange}
               value={textfieldValue}
@@ -90,13 +92,15 @@ export default function EditableDisplayComponent({
           type="button"
           onClick={switchEditMode}
         >
-          ❌
+          <p className="pencil"> ❌</p>
         </button>
         <button
           className="editable-text-button"
           type="submit"
         >
-          ✔️
+          <p className="pencil">
+            ✔️
+          </p>
         </button>
       </form>
     </div>
@@ -112,7 +116,7 @@ export default function EditableDisplayComponent({
         type="button"
         onClick={switchEditMode}
       >
-        ✏️
+        <p className="pencil">✏️</p>
       </button>
     </div>
   );

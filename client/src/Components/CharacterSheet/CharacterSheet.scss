@@ -66,10 +66,11 @@
 .character-sheet-personality-ideals,
 .character-sheet-personality-bonds,
 .character-sheet-personality-flaws,
-.character-sheet-personality-features-traits{
+.character-sheet-personality-features-traits,
+.character-sheet-perception{
     justify-content: space-around;
     border: solid 2px gray;
-    padding: 5px;
+    padding: 3px;
     margin:3px;
     max-width:  20vh;
 }

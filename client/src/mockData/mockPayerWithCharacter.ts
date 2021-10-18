@@ -1,8 +1,10 @@
-const mockCharackter = {
+const mockCharacter:any = {
   name: 'Sample Dragonborn Sorcerer',
   player: {
-    name: 'You',
+    name: ' Registered User Name',
   },
+  characterName: 'EDON',
+  xp: 1,
   race: {
     name: 'Dragonborn',
     subtype: 'Silver',
@@ -21,11 +23,11 @@ const mockCharackter = {
     name: 'Sorcerer',
     subtype: 'Draconic Ancestor',
     level: 1,
-    hit_die: 6,
+    hitDie: 6,
     spellCasting: 'cha',
     features: [
       {
-        name: 'SpellCasting',
+        name: 'Spellcasting',
         description: "To cast a spell, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
       },
       {
@@ -48,34 +50,52 @@ const mockCharackter = {
   }],
   alignment: 'neutral good',
   speed: {
-    Walk: 30,
+    walk: 30,
   },
-  hit_points: {
+  hitPoints: {
     max: 9,
     current: 5,
   },
-  ability_scores: {
-    str: 10,
-    dex: 13,
-    con: 14,
-    int: 10,
-    wis: 12,
-    cha: 16,
-  },
-  skills: {
-    Arcana: true,
-    Athletics: true,
-    Intimidation: true,
-    Survival: true,
-  },
-  armor_class: {
+  abilityScores: [
+    { name: 'Strength', scores: 11, proficient: true },
+    { name: 'Dexterity', scores: 19, proficient: false },
+    { name: 'Constitution', scores: 8, proficient: true },
+    { name: 'Intelligence', scores: 7, proficient: false },
+    { name: 'Wisdom', scores: 13, proficient: false },
+    { name: 'Charisma', scores: 15, proficient: false },
+  ],
+  skills: [
+    { name: 'Acrobatics', ability: 'Dexterity', proficient: false },
+    { name: 'Animal Handling', ability: 'Wisdom', proficient: false },
+    { name: 'Arcana', ability: 'Intelligence', proficient: true },
+    { name: 'Athletics', ability: 'Strength', proficient: true },
+    { name: 'Deception', ability: 'Charisma', proficient: false },
+    { name: 'History', ability: 'Intelligence', proficient: false },
+    { name: 'Insight', ability: 'Wisdom', proficient: false },
+    { name: 'Intimidation', ability: 'Charisma', proficient: false },
+    { name: 'Investigation', ability: 'Intelligence', proficient: false },
+    { name: 'Medicine', ability: 'Wisdom', proficient: false },
+    { name: 'Nature', ability: 'Intelligence', proficient: false },
+    { name: 'Perception', ability: 'Wisdom', proficient: true },
+    { name: 'Performance', ability: 'Charisma', proficient: false },
+    { name: 'Persuasion', ability: 'Charisma', proficient: false },
+    { name: 'Religion', ability: 'Intelligence', proficient: false },
+    { name: 'Sleight of Hand', ability: 'Dexterity', proficient: false },
+    { name: 'Stealth', ability: 'Dexterity', proficient: false },
+    { name: 'Survival', ability: 'Wisdom', proficient: false },
+  ],
+  armorClass: {
     value: 14,
     description: 'natural armor',
   },
-  saving_throws: {
-    con: true,
-    cha: true,
-  },
+  // savingThrows: [
+  //   { name: 'Strength', proficient: false },
+  //   { name: 'Dexterity', proficient: false },
+  //   { name: 'Constitution', proficient: true },
+  //   { name: 'Intelligence', proficient: false },
+  //   { name: 'Wisdom', proficient: false },
+  //   { name: 'Charisma', proficient: true },
+  // ],
   languages: ['Common', 'Draconic', 'Sylvan'],
   background: {
     name: 'Outlander',
@@ -158,4 +178,4 @@ const mockCharackter = {
     },
   ],
 };
-console.log(mockCharackter);
+export default mockCharacter;

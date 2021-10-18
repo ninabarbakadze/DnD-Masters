@@ -5,7 +5,15 @@
     white-space: pre-line;
 }
 .editable-text-button{
-    margin-left:10px;
+    // width:5px;
+    // height: 5px;
+    margin-left:0px;
     background-color: rgba(255, 255, 255, 0);
     border: none;
+}
+.pencil{
+    font-size: 8px;
+}
+.number-input{
+    width: 40px
 }
