@@ -7,7 +7,11 @@ import SubRaceSelection from './steps/subRaceSelection.step';
 import { useWizardStepComplete } from '../../utilities/wizard.utilities';
 import BackgroundSelectionStep from './steps/backgroundSelection.step';
 import AttributeSelectionStep from './steps/attributeSelection/attributeSelection.step';
+<<<<<<< HEAD
 import CharacterSheet from '../CharacterSheet/CharacterSheet';
+=======
+import ClassSelection from './steps/ClassSelection.step';
+>>>>>>> bb9be4d6626d4d9c4b6acf561648695e05a08c25
 
 const CharacterWizard: FC = () => {
   const onWizardComplete = () => console.log('finished');
@@ -33,6 +37,12 @@ const CharacterWizard: FC = () => {
         </Route>
         <Route path="/characterWizard/backgroundSelection">
           <BackgroundSelectionStep
+            onSubmit={submitfunc}
+            path="/characterWizard/classSelection"
+          />
+        </Route>
+        <Route path="/characterWizard/classSelection">
+          <ClassSelection
             onSubmit={submitfunc}
             path="/characterWizard/attributeSelection"
           />

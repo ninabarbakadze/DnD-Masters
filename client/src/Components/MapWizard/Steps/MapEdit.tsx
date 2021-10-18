@@ -10,7 +10,10 @@ import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
 import getMapElements from '../../../assets/mapElements/mapData';
-import { updateElementArr } from '../../../actions/mapWizard.action';
+import {
+  updateElementArr,
+  updateLocationArr,
+} from '../../../actions/mapWizard.action';
 import { iElement } from '../../../interfaces/map.interface';
 
 export default function MapEdit() {
@@ -18,7 +21,7 @@ export default function MapEdit() {
 
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const mapReducer = useSelector(
+  const { selectedElement, locationArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -36,7 +39,7 @@ export default function MapEdit() {
     height: 600,
   });
   const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
-  const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
+  // const [localLocationArr, setLocalLocationArr] = useState<JSX.Element[]>([]);
   const [keyCode, setKeyCode] = useState('');
   const [elementModalIsActive, setElementModalIsActive] = useState(false);
   const [saveModalIsActive, setSaveModalIsActive] = useState(false);
@@ -135,31 +138,44 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
+  function deleteLocation(id: string, arr: JSX.Element[]) {
+    const index = arr.findIndex((location) => location.props.id === id);
+    dispatch(
+      updateLocationArr({
+        locationArr: [...arr.slice(0, index), ...arr.slice(index + 1)],
+      }),
+    );
+    console.log(index);
+  }
+
   function onElementModalSubmit(
     locationName: string,
     locationDescription: string,
   ) {
-    const element = getMapElements(
-      svgCoord.x,
-      svgCoord.y,
-      mapReducer.selectedElement,
-    );
+    const element = getMapElements(svgCoord.x, svgCoord.y, selectedElement);
     const id = generateId();
-    setLocationArr([
-      ...locationArr,
-      <MapItem
-        id={id}
-        locationName={locationName}
-        locationDescription={locationDescription}
-        xCoord={svgCoord.x}
-        yCoord={svgCoord.y}
-        element={element}
-        getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
-      />,
-    ]);
+    dispatch(
+      updateLocationArr({
+        locationArr: [
+          // @ts-expect-error
+          ...locationArr,
+          <MapItem
+            // eslint-disable-next-line
+            deleteLocation={deleteLocation}
+            id={id}
+            locationName={locationName}
+            locationDescription={locationDescription}
+            xCoord={svgCoord.x}
+            yCoord={svgCoord.y}
+            element={element}
+            getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+          />,
+        ],
+      }),
+    );
     const dataObj = {
       id,
-      elementName: mapReducer.selectedElement,
+      elementName: selectedElement,
       x: svgCoord.x,
       y: svgCoord.y,
       title: locationName,
@@ -183,7 +199,7 @@ export default function MapEdit() {
       // @ts-expect-error
       const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
       setSvgCoord(cursorPoint);
-      if (mapReducer.selectedElement) showElementModal();
+      if (selectedElement) showElementModal();
     }
   };
 
@@ -209,6 +225,10 @@ export default function MapEdit() {
   useEffect(() => {
     dispatch(updateElementArr({ elementArr }));
   }, [elementArr]);
+
+  // useEffect(() => {
+  //   dispatch(updateLocationArr({ locationArr: localLocationArr }));
+  // }, [localLocationArr]);
 
   function handleSave() {
     showSaveModal();
@@ -261,11 +281,14 @@ export default function MapEdit() {
         </button>
         <button type="button" onClick={handleSave}>
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            {/* eslint-disable-next-line */}
             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+            {/* eslint-disable-next-line */}
             <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
           </svg>
         </button>
       </div>
+      {/* eslint-disable-next-line */}
       <PointSelection />
       <Modal
         heading="Name your Elements"

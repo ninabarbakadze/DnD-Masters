@@ -14,9 +14,10 @@ export default function MapItem({
   locationName,
   locationDescription,
   id,
+  deleteLocation,
 }: any) {
   const dispatch = useDispatch();
-  const { elementArr } = useSelector(
+  const { elementArr, shouldDelete, locationArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
   const [isHovered, setIsHovered] = useState(false);
@@ -46,6 +47,7 @@ export default function MapItem({
 
   return (
     <g
+      onClick={() => shouldDelete && deleteLocation(id, locationArr)}
       onMouseEnter={showDescription}
       onMouseLeave={hideDescription}
       transform={`translate(${xCoord} ${yCoord})`}
