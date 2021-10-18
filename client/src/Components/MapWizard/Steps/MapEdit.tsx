@@ -203,7 +203,8 @@ export default function MapEdit() {
   }
 
   function onSaveModalSubmit() {
-    alert('saved');
+    const dataString = JSON.stringify(elementArr);
+    return dataString;
   }
 
   const setPoint = (evt: any) => {
