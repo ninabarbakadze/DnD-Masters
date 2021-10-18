@@ -27,6 +27,11 @@ export const characterCreationReducer = (
         ...state,
         background: payload.background,
       };
+    case 'UPDATE_CLASS':
+      return {
+        ...state,
+        class: payload.class,
+      };
     case 'UPDATE_ATTRIBUTES':
       return {
         ...state,

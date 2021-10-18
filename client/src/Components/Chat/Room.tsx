@@ -25,6 +25,9 @@ export default function Room() {
      <h3>Join A Chat</h3>
      <input type="text" placeholder="You name" onChange={(e) => {setUsername(e.target.value)}} />
      <input type="text" placeholder="Room ID" onChange={(e) => {setRoom(e.target.value)}}
+      onKeyPress={(event) => (
+        /*     @ts-ignore */
+      event.key === 'Enter' && joinRoom())}
       />
      <button onClick={() => joinRoom()}>Join A Room</button>
      </div>
