@@ -28,28 +28,10 @@ const mockCharacter:any = {
     level: 1,
     hitDie: 6,
     spellCasting: 'cha',
-    features: [
-      {
-        name: 'Spellcasting',
-        description: "To cast a spell, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
-      },
-      {
-        name: 'Draconic Resilience',
-        description: "As magic flows through your body, it causes physical traits of your dragon ancestor to emerge. Your hit point maximum increases by 1 at 1st level and whenever you gain a sorcerer level.\nAdditionally, parts of your body are covered by a thin sheen of dragonlike scales. When you aren't wearing armor, your AC equals 13 + your Dexterity modifier.",
-      },
-      {
-        name: 'Elemental Affinity',
-        description: 'Starting at 6th level, when you cast a spell that deals damage of the type associated with your draconic ancestry, you can add your Charisma modifier to one damage roll of that spell. At the same time, you can spend 1 sorcery point to gain resistance to that damage type for 1 hour.',
-      },
-      {
-        name: 'Dragon Wings',
-        description: "At 14th level, you gain the ability to sprout a pair of dragon wings from your back, gaining a flying speed equal to your current speed. You can create these wings as a bonus action on your turn. They last until you dismiss them as a bonus action on your turn.\nYou can't manifest your wings while wearing armor unless the armor is made to accommodate them, and clothing not made to accommodate your wings might be destroyed when you manifest them.",
-      },
-      {
-        name: 'Draconic Presence',
-        description: 'Beginning at 18th level, you can channel the dread presence of your dragon ancestor, causing those around you to become awestruck or frightened. As an action, you can spend 5 sorcery points to draw on this power and exude an aura of awe or fear (your choice) to a distance of 60 feet. For 1 minute or until you lose your concentration (as if you were casting a concentration spell), each hostile creature that starts its turn in this aura must succeed on a Wisdom saving throw or be charmed (if you chose awe) or frightened (if you chose fear) until the aura ends. A creature that succeeds on this saving throw is immune to your aura for 24 hours.',
-      },
-    ],
+    features: {
+      desc: ['As an acolyte, you command the respect of those wh…support you (but only you) at a modest lifestyle.', 'You might also have ties to a specific temple dedi…and you remain in good standing with your temple.'],
+      name: 'Shelter of the Faithful',
+    },
   },
   alignment: 'neutral good',
   speed: {

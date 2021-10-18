@@ -1,25 +1,24 @@
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
-import mockCharacter from '../../mockData/mockPayerWithCharacter';
-import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
+/* eslint-disable no-unused-vars */
 import './CharacterSheet.scss';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IRootState } from '../../reducers';
-
-import {
-  mod,
-  proficiencyBonusCalc,
-  positivePrecursor,
-} from './helper';
-import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
-import CharacterSheetSkills from './CharacterSheetSkills';
-import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
-import CharacterSheetFeatures from './CharacterSheetFeatures';
 import CharacterSheetNotes from './CharacterSheetNotes';
+import mockCharacter from '../../mockData/mockCharackter';
+import CharacterSheetSkills from './CharacterSheetSkills';
+import CharacterSheetFeatures from './CharacterSheetFeatures';
+import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
+import formatCharacter from '../../mockData/mockPayerWithCharacter';
+import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
+import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
+import { mod, proficiencyBonusCalc, positivePrecursor } from './helper';
+import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
 
 export default function CharacterSheet() {
   const newcharacter = useSelector((state:IRootState) => state.characterCreationReducer);
-  const [character, setCharacter] = useState({ ...mockCharacter });
+
+  const formated = formatCharacter(newcharacter);
+  const [character, setCharacter] = useState({ ...formated });
   const { success, fails } = character.deathSaves;
   const modifyPassiveWisdom = (perception:number) => {
     // setCharacter((preVal:any) => ({ ...preVal, passiveWisdom: perception }));
@@ -38,7 +37,7 @@ export default function CharacterSheet() {
     });
     setCharacter((prevVal:any) => ({ ...prevVal, abilityScores: updateAbilityScrList }));
   };
-  console.log(character);
+  console.log('formated', formated);
 
   const updateDeathSaves = (result:string) => {
     // eslint-disable-next-line no-unused-expressions
@@ -179,8 +178,8 @@ export default function CharacterSheet() {
               <b>Languages</b>
               <br />
               {character.languages.map((attribute:any) => (
-                <b key={attribute}>
-                  {attribute}
+                <b key={attribute.name}>
+                  {attribute.name}
                   &nbsp;
                 </b>
               ))}

@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 /* eslint-disable max-len */
-import { Link } from 'react-router-dom';
-=======
->>>>>>> bb9be4d6626d4d9c4b6acf561648695e05a08c25
+// import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../reducers';
 // import { getUser } from '../../services/user.services';
