@@ -69,7 +69,14 @@ export default function MapItem({
       className="draggable"
     >
       {element}
-      <text data-id={id} x={-textWidth / 2} y="4%" fill="white" fontSize="24">
+      <text
+        data-id={id}
+        x={-textWidth / 2}
+        y="40"
+        fill="white"
+        fontSize="24"
+        fontWeight="bold"
+      >
         {locationName}
       </text>
       {/* <foreignObject width="100" height="50" x="-40" y="-70">
