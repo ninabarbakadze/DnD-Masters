@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import RaceSelection from './steps/RaceSelection.step';
 import { iCharacter } from '../../interfaces/character.interface';
@@ -7,9 +8,11 @@ import SubRaceSelection from './steps/subRaceSelection.step';
 import { useWizardStepComplete } from '../../utilities/wizard.utilities';
 import BackgroundSelectionStep from './steps/backgroundSelection.step';
 import AttributeSelectionStep from './steps/attributeSelection/attributeSelection.step';
+import { IRootState } from '../../reducers';
 
 const CharacterWizard: FC = () => {
-  const onWizardComplete = () => console.log('finished');
+  const character = useSelector((state: IRootState) => state.characterCreationReducer);
+  const onWizardComplete = () => console.log('finished', character);
 
   const submitfunc = useWizardStepComplete<iCharacter>(onWizardComplete);
 
