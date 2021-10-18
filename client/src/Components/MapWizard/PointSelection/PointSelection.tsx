@@ -54,14 +54,19 @@ export default function PointSelection() {
     />,
   ];
 
-  const selectItem = (evt: any) => {
-    dispatch(
-      updateSelectedElement({ selectedElement: evt.target.dataset.name }),
-    );
+  const elementNames = ['element1', 'element2', 'element3'];
+
+  const selectItem = (elementName: string) => {
+    // console.log(evt.target.firstChild);
+    dispatch(updateSelectedElement({ selectedElement: elementName }));
   };
 
-  const selectList = elementList.map((element) => (
-    <MapSelectionItem element={element} selectItem={selectItem} />
+  const selectList = elementList.map((element, index) => (
+    <MapSelectionItem
+      element={element}
+      selectItem={selectItem}
+      elementName={elementNames[index]}
+    />
   ));
   return (
     <div className="map-edit-selection">

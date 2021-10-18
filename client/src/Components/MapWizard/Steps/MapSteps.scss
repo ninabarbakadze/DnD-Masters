@@ -59,6 +59,12 @@
   width: 100px;
   height: 100px;
   margin: 25px;
+  cursor: pointer;
+  position: relative;
+}
+
+.non-click-layer {
+  pointer-events: none;
 }
 
 .isSelected {
@@ -126,6 +132,3 @@
   fill: white;
 }
 
-.selection-icon {
-  cursor: pointer;
-}
