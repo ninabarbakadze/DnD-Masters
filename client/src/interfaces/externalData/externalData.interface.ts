@@ -18,7 +18,7 @@ export interface iAbilityBonus {
 }
 
 export interface iCharacterProficiency extends iResourceListItem {
-  type: string;
+  type?: string;
 }
 
 export interface iCharacterChoice<T> {
@@ -36,6 +36,15 @@ export interface idealChoice {
 }
 
 export type tSelectedChoice = string[];
+
+export interface iClassCastingInfo {
+  spellcasting_ability: iAbilityScore;
+  info: {
+    name: string;
+    desc: string[];
+  }[];
+  url: string;
+}
 
 export interface iCharacterBackground extends iResourceListItem {
   startingProficiencies: iCharacterProficiency[];
@@ -78,4 +87,13 @@ export interface iCharacterRace extends iResourceListItem {
   language_desc: string;
   traits: iResourceList[];
   subraces: iResourceListItem[];
+}
+
+export interface iCharacterClass extends iResourceListItem {
+  hit_die: number;
+  proficiency_choices: iCharacterChoice<iResourceListItem>;
+  proficiencies: iCharacterProficiency[];
+  saving_throws: iResourceListItem[];
+  starting_equipmnet: iResourceListItem[];
+  spellcasting: iClassCastingInfo;
 }
