@@ -16,6 +16,11 @@ export const updateBackground: PayloadAction<iCharacter> = (characterData) => ({
   payload: characterData,
 });
 
+export const updateClass: PayloadAction<iCharacter> = (characterData) => ({
+  type: 'UPDATE_CLASS',
+  payload: characterData,
+});
+
 export const updateAbilityArray: PayloadAction<iCharacter> = (
   characterData,
 ) => ({
