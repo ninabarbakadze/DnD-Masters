@@ -7,7 +7,7 @@ interface props {
   content?: JSX.Element;
 }
 
-const DetailsCard = ({ name, imgPath }: props) => {
+const DetailsCard = ({ name, imgPath, content }: props) => {
   return (
     <div>
       <div>
@@ -18,6 +18,7 @@ const DetailsCard = ({ name, imgPath }: props) => {
         )}
         <h1>{name}</h1>
       </div>
+      {content && content}
     </div>
   );
 };

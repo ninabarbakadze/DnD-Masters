@@ -6,10 +6,10 @@ import { iCharacter } from '../../../interfaces/character.interface';
 import { iCharacterRace } from '../../../interfaces/externalData/externalData.interface';
 import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
-import { dataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
 import Carousel from '../../Carousel/Carousel';
 import DetailsCard from '../../DetailsCard/detailsCard.component';
 import photos from '../../../assets/racePhotos/racePhotos';
+import RaceDetails from '../../raceDetails/raceDetails';
 
 const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [races, setRaces] = useState<iCharacterRace[]>([]);
@@ -18,10 +18,9 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleNextStep = () => {
-    console.log('handling step');
-    const x = hasSubraces(getValues('race'), races);
-    console.log('hassubRace', x);
-    return x ? '/characterWizard/subRaceSelection' : path;
+    return selectedRace?.subraces?.length
+      ? '/characterWizard/subRaceSelection'
+      : path;
   };
 
   const getAllRaceOptions = () => {
@@ -29,10 +28,6 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
       setRaces(results);
       setIsLoading(false);
     });
-  };
-  const handleSubmit = () => {
-    const race = dataCleanUp(selectedRace, races);
-    onSubmit({ race }, updateRace, handleNextStep());
   };
 
   const createRaceOptions = (races: iCharacterRace[]) => {
@@ -42,6 +37,7 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
           key={JSON.stringify(race)}
           name={race.name}
           imgPath={photos[race.index.replace('-', '')]}
+          content={<RaceDetails race={race} />}
         />
       );
     });
@@ -53,7 +49,6 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
 
   useEffect(() => {
     setSelectedRace(races[selectedIndex]);
-    console.log();
   }, [races, selectedIndex]);
 
   return (
@@ -66,8 +61,14 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
       ) : (
         <h2>...Loading</h2>
       )}
-      <button type="button" onClick={() => handleSubmit()} disabled={isLoading}>
-        {selectedRace?.subraces?.length ? `Subrace` : 'Class'}
+      <button
+        type="button"
+        onClick={() =>
+          onSubmit({ race: selectedRace }, updateRace, handleNextStep())
+        }
+        disabled={isLoading}
+      >
+        {selectedRace?.subraces?.length ? `Subrace` : 'Background'}
       </button>
     </div>
   );
