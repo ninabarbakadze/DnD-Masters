@@ -15,6 +15,7 @@
 
 .main-button:hover {
   background-color: rgb(127, 25, 223);
+  transition: 0.3s;
 }
 
 .side-button {
@@ -29,7 +30,8 @@
 
 .side-button:hover {
   background-color: blueviolet;
-  color: #FAFAFA
+  color: #FAFAFA;
+  transition: 0.3s;
 }
 
 .danger-button {

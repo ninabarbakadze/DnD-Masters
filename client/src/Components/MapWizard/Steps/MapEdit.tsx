@@ -20,7 +20,7 @@ export default function MapEdit() {
 
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const { selectedElement, locationArr } = useSelector(
+  const { selectedElement, locationArr, elementArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -43,7 +43,7 @@ export default function MapEdit() {
   const [elementModalIsActive, setElementModalIsActive] = useState(false);
   const [saveModalIsActive, setSaveModalIsActive] = useState(false);
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
-  const [elementArr, setElmentArr] = useState<iElement[]>([]);
+  // const [elementArr, setElmentArr] = useState<iElement[]>([]);
 
   // Create Id
   function generateId() {
@@ -137,20 +137,38 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
-  function deleteLocation(id: string, arr: JSX.Element[]) {
-    const index = arr.findIndex((location) => location.props.id === id);
+  function deleteLocation(
+    id: string,
+    locArr: JSX.Element[],
+    elArr: iElement[],
+  ) {
+    const locationArrIndex = locArr.findIndex(
+      (location) => location.props.id === id,
+    );
+    const elementArrIndex = elArr.findIndex((element) => element.id === id);
     dispatch(
       updateLocationArr({
-        locationArr: [...arr.slice(0, index), ...arr.slice(index + 1)],
+        locationArr: [
+          ...locArr.slice(0, locationArrIndex),
+          ...locArr.slice(locationArrIndex + 1),
+        ],
       }),
     );
-    console.log(index);
+    dispatch(
+      updateElementArr({
+        elementArr: [
+          ...elArr.slice(0, elementArrIndex),
+          ...elArr.slice(elementArrIndex + 1),
+        ],
+      }),
+    );
   }
 
   function onElementModalSubmit(
     locationName: string,
     locationDescription: string,
   ) {
+    if (!elementArr) return;
     const element = getMapElements(svgCoord.x, svgCoord.y, selectedElement);
     const id = generateId();
     dispatch(
@@ -180,7 +198,8 @@ export default function MapEdit() {
       title: locationName,
       description: locationDescription,
     };
-    setElmentArr([...elementArr, dataObj]);
+    dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
+    // setElmentArr([...elementArr, dataObj]);
   }
 
   function onSaveModalSubmit() {
@@ -220,14 +239,6 @@ export default function MapEdit() {
       }
     });
   }, []);
-
-  useEffect(() => {
-    dispatch(updateElementArr({ elementArr }));
-  }, [elementArr]);
-
-  // useEffect(() => {
-  //   dispatch(updateLocationArr({ locationArr: localLocationArr }));
-  // }, [localLocationArr]);
 
   function handleSave() {
     showSaveModal();
@@ -293,7 +304,6 @@ export default function MapEdit() {
         heading="Name your Elements"
         modalIsActive={elementModalIsActive}
         // eslint-disable-next-line
-        // onModalSubmit={onElementModalSubmit}
         setModalIsActive={setElementModalIsActive}
         closeModal={() => closeElementModal()}
       >

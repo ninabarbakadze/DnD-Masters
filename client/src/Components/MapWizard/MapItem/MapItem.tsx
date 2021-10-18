@@ -47,7 +47,12 @@ export default function MapItem({
 
   return (
     <g
-      onClick={() => shouldDelete && deleteLocation(id, locationArr)}
+      onClick={
+        () =>
+          // eslint-disable-next-line
+          shouldDelete && deleteLocation(id, locationArr, elementArr)
+        // eslint-disable-next-line
+      }
       onMouseEnter={showDescription}
       onMouseLeave={hideDescription}
       transform={`translate(${xCoord} ${yCoord})`}

@@ -1,7 +1,11 @@
 import { iMap } from '../interfaces/map.interface';
 import { iAction } from '../interfaces/redux.interface';
 
-const initialState: iMap = { shouldDelete: false, locationArr: [] };
+const initialState: iMap = {
+  shouldDelete: false,
+  locationArr: [],
+  elementArr: [],
+};
 
 const mapCreationReducer = (
   state: iMap = initialState,
