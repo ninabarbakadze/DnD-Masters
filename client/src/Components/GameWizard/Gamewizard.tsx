@@ -1,8 +1,8 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { PayloadAction } from '../../interfaces/reduxInterfaces';
+import { PayloadAction } from '../../interfaces/redux.interface';
 
-import { iGameWizardState } from '../../reducers/game';
+import { iGameWizardState } from '../../reducers/game.reducer';
 import Name from './Steps/Name.step';
 import SelectMap from './Steps/SelectMap.step';
 import Invitation from './Steps/Invitation.step';

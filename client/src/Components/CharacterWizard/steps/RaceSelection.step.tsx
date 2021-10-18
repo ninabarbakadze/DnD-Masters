@@ -1,30 +1,22 @@
 /* eslint-disable */
-
-import { useCallback, useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { updateRace } from '../../../actions/characterCreationWizard.actions';
 import { iCharacter } from '../../../interfaces/character.interface';
-import { iCharacterRace } from '../../../interfaces/externalData.interfaces';
-// import { IRootState } from '../../../reducers';
-import { iGameWizardState } from '../../../reducers/game';
+import { iCharacterRace } from '../../../interfaces/externalData/externalData.interface';
+import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
-import { DataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
+import { dataCleanUp, hasSubraces } from '../helpers/chracterCreation.helpers';
 import Options from '../helpers/selectOptions.helper';
 
 type Inputs = {
   race: string;
 };
 
-interface iRaceSelectionProps {
-  path?: string;
-  onSubmit: any;
-}
-
-const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
+const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [races, setRaces] = useState<iCharacterRace[]>([]);
   const [raceOptionsList, setRaceListOptions] = useState<JSX.Element[]>([
-    <option>...Loading</option>,
+    <option key={0}>...Loading</option>,
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { register, handleSubmit, getValues } = useForm<Inputs>();
@@ -53,11 +45,8 @@ const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
       <h2>Select Character Race</h2>
       <form
         onSubmit={handleSubmit((data) => {
-          onSubmit(
-            { race: DataCleanUp(data.race, races) },
-            updateRace,
-            handleNextStep(),
-          );
+          const race = dataCleanUp(data.race, races);
+          onSubmit({ race }, updateRace, handleNextStep());
         })}
       >
         <select
@@ -73,7 +62,5 @@ const RaceSelection = ({ path, onSubmit }: iRaceSelectionProps) => {
     </div>
   );
 };
-
-// RaceSelection.defaultProps = { path: undefined };
 
 export default RaceSelection;

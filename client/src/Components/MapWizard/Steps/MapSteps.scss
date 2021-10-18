@@ -1,11 +1,119 @@
-.box {
-  width: 400px;
-  height: 150px;
-  background-color: saddlebrown;
+.map-carousel-item-container {
+  max-width: 300px;
+  max-height: 200px;
+  margin: 0 10px;
 }
 
+.map-carousel-preview-container {
+  height: 400px;
+  width: 600px;
+  display: inline-block;
+}
 
+.map-carousel-item, .map-carousel-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+}
 
-/* .box-container {
-  padding: 2%;
-} */
+.map-selection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 90vh;
+}
+
+.map-edit-image {
+  width: 1000px;
+  height: 600px;
+  border-radius: 20px;
+}
+
+.main-svg {
+  border-radius: 20px;
+}
+
+.map-edit-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 90vh;
+}
+
+.map-edit-selection {
+  height: 600px;
+  width: 400px;
+  border-radius: 20px;
+  background-color: rgb(230, 208, 250);
+  border-radius: 20px;
+}
+
+.location-item {
+  overflow: visible;
+}
+
+.element-presentation {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin: 25px;
+}
+
+.isSelected {
+  border: 5px solid black;
+}
+
+.modal-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.hidden-modal {
+  display: none;
+}
+
+.modal-form-container {
+  width: 500px;
+  height: 300px;
+  background-color: salmon;
+  position: fixed;
+  top: 200px;
+  left: 500px;
+}
+
+.not-visible {
+  display: none;
+}
+
+.description-text {
+  background-color: sienna;
+  width: 100px;
+  height: 50px;
+}
+
+.image-upload-preview {
+  width: 600px;
+  height: 400px;
+  background-color: rgb(200, 166, 231);
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.image-upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.map-upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 90vh;
+}
