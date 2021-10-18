@@ -2,6 +2,7 @@ import {
   iCharacterRace,
   iCharacterSubrace,
   iCharacterBackground,
+  iCharacterClass,
 } from './externalData/externalData.interface';
 
 export interface iAbilityArrayScore {
@@ -23,6 +24,7 @@ export interface iCharacter {
   subrace?: iCharacterSubrace;
   background?: iCharacterBackground;
   abilityArray?: iAbilityArray;
+  class?: iCharacterClass;
 }
 
 export interface iCharacterWizardState {
