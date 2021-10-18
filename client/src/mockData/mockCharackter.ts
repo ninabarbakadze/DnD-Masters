@@ -1,10 +1,4 @@
 /* eslint-disable max-len */
-// import { useSelector } from 'react-redux';
-// import { IRootState } from '../reducers';
-
-// const newCharacter = useSelector((state:IRootState) => state.characterCreationReducer);
-// const {background} = newCharacter;
-
 const mockCharacter:any = {
   note: 'note goes here',
   name: 'Sample Dragonborn Sorcerer',

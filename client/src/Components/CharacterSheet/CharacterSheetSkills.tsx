@@ -34,8 +34,7 @@ export default function CharacterSheetSkills({
           {ability.map((ab) => (
             (ab.name === skill.ability)
               ? (skill.proficient && positivePrecursor(mod(ab.scores) + bonus)
-              && skill.name === 'Perception'
-              && pasWisdom(mod(ab.scores) + bonus))
+              && skill.name === 'Perception' && pasWisdom(mod(ab.scores) + bonus))
                || positivePrecursor(mod(ab.scores)) : null
           ))}
                 &nbsp;

@@ -1,9 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-// import Login from '../Login/Login';
+import Login from '../Login/Login';
 import { IRootState } from '../../reducers';
 import { loginAction } from '../../actions/user.actions';
-import CharacterSheet from '../CharacterSheet/CharacterSheet';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -12,7 +11,7 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
-      {/* <Login /> */}
+      <Login />
       <button type="button" onClick={() => dispatch(loginAction('Herbert'))}>
         Switch
       </button>
@@ -20,7 +19,6 @@ export default function Home() {
       {user.name && (
       <p>{user.name}</p>
       )}
-      <CharacterSheet />
     </div>
   );
 }

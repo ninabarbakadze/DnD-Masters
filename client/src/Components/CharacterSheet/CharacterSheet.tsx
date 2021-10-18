@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-
 import { useState } from 'react';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import mockCharacter from '../../mockData/mockPayerWithCharacter';
@@ -19,40 +18,53 @@ import CharacterSheetFeatures from './CharacterSheetFeatures';
 import CharacterSheetNotes from './CharacterSheetNotes';
 
 export default function CharacterSheet() {
-  const [character] = useState({ ...mockCharacter });
-  const [abilityScr, setAbilityScr] = useState([...mockCharacter.abilityScores]);
-  const [passiveWisdom, setPassiveWisdom] = useState(10);
-  const [initiative, setInitiative] = useState(10);
-  const [currentHitPoints, setCurrentHitPoints] = useState(character.hitPoints.current);
-  const [temporaryHitPoints, setTemporaryHitPoints] = useState(10);
-  const [success, setSuccess] = useState<number>(3);
-  const [fails, setFails] = useState<number>(3);
-  const [note, setNote] = useState<string>('Notes goes here...');
   const newcharacter = useSelector((state:IRootState) => state.characterCreationReducer);
+  const [character, setCharacter] = useState({ ...mockCharacter });
+  const { success, fails } = character.deathSaves;
   const modifyPassiveWisdom = (perception:number) => {
-    setPassiveWisdom(10 + perception);
+    // setCharacter((preVal:any) => ({ ...preVal, passiveWisdom: perception }));
+    console.log('passWis', perception + character.passiveWisdom);
   };
   const updateCharacterAbility = (updateValue: number, attributeName:string) => {
-    const updateAbilityScrList = abilityScr.map((item) => {
+    const updateAbilityScrList = character.abilityScores.map((item:any) => {
       if (item.name === attributeName) {
         const updateAbility = {
           ...item,
-          scores: updateValue,
+          scores: Number(updateValue),
         };
         return updateAbility;
       }
       return item;
     });
-    setAbilityScr(updateAbilityScrList);
+    setCharacter((prevVal:any) => ({ ...prevVal, abilityScores: updateAbilityScrList }));
   };
+  console.log(character);
+
   const updateDeathSaves = (result:string) => {
     // eslint-disable-next-line no-unused-expressions
-    (result === 'success' && success > 0 && setSuccess((succes:number) => succes - 1))
-    || (result === 'fails' && fails > 0 && setFails((fail:number) => fail - 1));
+    (result === 'success'
+    && success > 0
+    && setCharacter((prevVal:any) => ({
+      ...prevVal,
+      deathSaves:
+      {
+        ...prevVal.deathSaves,
+        success:
+        success - 1,
+      },
+    })))
+    || (result === 'fails' && fails > 0
+    && setCharacter((prevVal:any) => ({
+      ...prevVal,
+      deathSaves:
+      {
+        ...prevVal.deathSaves,
+        fails:
+        fails - 1,
+      },
+    })));
   };
-  const updateMyNotes = (myNote:string) => {
-    setNote(myNote);
-  };
+
   console.log(newcharacter);
   return (
     <div className="character-sheet">
@@ -74,12 +86,12 @@ export default function CharacterSheet() {
               <div>
                 Class
                 <br />
-                <span>{character.classes[0].name}</span>
+                <span>{character.classes.name}</span>
               </div>
               <div>
                 Level
                 <br />
-                <span>{character.classes[0].level}</span>
+                <span>{character.classes.level}</span>
               </div>
               <div>
                 Background
@@ -111,7 +123,7 @@ export default function CharacterSheet() {
         <div className="character-sheet-action-row-1">
           <div className="character-sheet-ability-proficiency">
             <div className="character-sheet-ability">
-              {abilityScr.map((ability:any) => (
+              {character.abilityScores.map((ability:any) => (
                 <CharacterSheetAbilityInfo
                   key={ability.name}
                   dispatchAction={updateCharacterAbility}
@@ -129,7 +141,7 @@ export default function CharacterSheet() {
               </div>
               <div className="character-sheet-perception">
                 <h5>
-                  {positivePrecursor(passiveWisdom)}
+                  {positivePrecursor(character.passiveWisdom)}
                   &nbsp;
                   Passive Wisdom (perception)
                 </h5>
@@ -137,7 +149,7 @@ export default function CharacterSheet() {
               <div className="character-sheet-proficiency-bonus">
                 <div className="character-sheet-PB">
                   <h4>
-                    {positivePrecursor(proficiencyBonusCalc(character.classes[0].level))}
+                    {positivePrecursor(proficiencyBonusCalc(character.classes.level))}
                     &nbsp;
                     PROFICIENCY BONUS
                   </h4>
@@ -146,16 +158,16 @@ export default function CharacterSheet() {
               <div className="character-sheet-saving-throws">
                 <h4>SAVING THROWS :</h4>
                 <CharacterSheetSavingThrows
-                  ability={abilityScr}
-                  bonus={proficiencyBonusCalc(character.classes[0].level)}
+                  ability={character.abilityScores}
+                  bonus={proficiencyBonusCalc(character.classes.level)}
                 />
               </div>
               <div className="character-sheet-skills">
                 <h4>  SKILLS:</h4>
                 <CharacterSheetSkills
                   skills={character.skills}
-                  ability={abilityScr}
-                  bonus={proficiencyBonusCalc(character.classes[0].level)}
+                  ability={character.abilityScores}
+                  bonus={proficiencyBonusCalc(character.classes.level)}
                   pasWisdom={modifyPassiveWisdom}
                 />
               </div>
@@ -193,8 +205,8 @@ export default function CharacterSheet() {
             </div>
             <div className="character-sheet-initiative">
               <EditableDisplayComponent
-                action={setInitiative}
-                initialVal={initiative}
+                action={(val:number) => { setCharacter((prevVal:any) => ({ ...prevVal, initiative: val })); }}
+                initialVal={character.initiative}
                 inputType="number"
               />
               Initiative
@@ -215,8 +227,10 @@ export default function CharacterSheet() {
               <div>
                 Current:
                 <EditableDisplayComponent
-                  action={setCurrentHitPoints}
-                  initialVal={currentHitPoints}
+                  action={(val:number) => {
+                    setCharacter((prevVal:any) => ({ ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
+                  }}
+                  initialVal={character.hitPoints.current}
                   inputType="number"
                 />
               </div>
@@ -224,8 +238,10 @@ export default function CharacterSheet() {
             <div className="character-sheet-temporary-hit-points">
               Temporary:
               <EditableDisplayComponent
-                action={setTemporaryHitPoints}
-                initialVal={temporaryHitPoints}
+                action={(val:any) => {
+                  setCharacter((prevVal:any) => ({ ...prevVal, hitPoints: { ...prevVal.hitPoints, temporary: val } }));
+                }}
+                initialVal={character.hitPoints.temporary}
                 inputType="number"
               />
             </div>
@@ -234,7 +250,7 @@ export default function CharacterSheet() {
             <div className="character-sheet-hit-dice">
               <span>
                 d
-                {character.classes[0].hitDie}
+                {character.classes.hitDie}
               </span>
               <br />
               Hit Dice
@@ -312,13 +328,16 @@ export default function CharacterSheet() {
           <div className="character-sheet-personality-features-traits">
             Features & traits
             <br />
-            <CharacterSheetFeatures features={character.classes[0].features} />
+            <CharacterSheetFeatures features={character.classes.features} />
 
           </div>
         </div>
         <div>
           <h6>notes</h6>
-          <CharacterSheetNotes note={note} updateNote={updateMyNotes} />
+          <CharacterSheetNotes
+            note={character.note}
+            updateNote={(note:string) => { setCharacter((prevVal:any) => ({ ...prevVal, note })); }}
+          />
         </div>
       </div>
     </div>
