@@ -28,12 +28,17 @@ export default function MapItem({
 
   function showDescription() {
     dispatch(
-      setCurrentDescription({ currentDescription: locationDescription }),
+      setCurrentDescription({
+        currentDescription: locationDescription,
+        currentName: locationName,
+      }),
     );
   }
 
   function hideDescription() {
-    dispatch(setCurrentDescription({ currentDescription: '' }));
+    dispatch(
+      setCurrentDescription({ currentDescription: '', currentName: '' }),
+    );
   }
 
   useEffect(() => {

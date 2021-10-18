@@ -41,6 +41,7 @@ const mapCreationReducer = (
       return {
         ...state,
         currentDescription: payload.currentDescription,
+        currentName: payload.currentName,
       };
     default:
       return state;

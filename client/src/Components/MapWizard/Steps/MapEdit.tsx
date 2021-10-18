@@ -20,7 +20,7 @@ export default function MapEdit() {
   const dispatch = useDispatch();
 
   const imgRef = useRef<any>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
   const { selectedElement, locationArr, elementArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
@@ -39,12 +39,11 @@ export default function MapEdit() {
     height: 600,
   });
   const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
-  // const [localLocationArr, setLocalLocationArr] = useState<JSX.Element[]>([]);
+
   const [keyCode, setKeyCode] = useState('');
   const [elementModalIsActive, setElementModalIsActive] = useState(false);
   const [saveModalIsActive, setSaveModalIsActive] = useState(false);
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
-  // const [elementArr, setElmentArr] = useState<iElement[]>([]);
 
   // Create Id
   function generateId() {
@@ -245,14 +244,14 @@ export default function MapEdit() {
     showSaveModal();
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (imgRef.current) {
       setDimensions({
         width: imgRef.current.offsetWidth,
         height: imgRef.current.offsetHeight,
       });
     }
-  }, []);
+  }, [imgRef.current]);
 
   return (
     <div className="map-edit-container">
