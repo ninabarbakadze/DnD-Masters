@@ -45,14 +45,16 @@ export default function MapUpload({ history }: any) {
       <div>
         <ImageUpload setFile={setFile} />
         <button
-          className={mapUploaded ? 'not-visible' : ''}
+          className={mapUploaded ? 'not-visible' : 'main-button'}
           type="submit"
           onClick={() => handleSubmit()}
         >
           Upload
         </button>
         <button
-          className={mapUploaded ? '' : 'not-visible'}
+          className={
+            mapUploaded ? 'main-button success-button' : 'not-visible '
+          }
           type="button"
           onClick={() => history.push('/mapWizard/mapEdit')}
         >
