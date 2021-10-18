@@ -76,7 +76,7 @@ export default function CharacterSheet() {
           <div className="character-sheet-initial-information">
             <h5 className="character-sheet-username">
               User Name
-              <span>{character.player.name}</span>
+              <span>{character.name}</span>
             </h5>
             <h4 className="character-sheet-campaign">Campaign Name</h4>
           </div>

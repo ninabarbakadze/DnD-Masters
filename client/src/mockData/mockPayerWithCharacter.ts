@@ -47,7 +47,7 @@ const formatCharacter = (charFromWizard:iCharacter) => {
     },
     classes: {
       name: charFromWizard.class?.name,
-      subtype: subclasses,
+      subtype: subclasses[0]?.name,
       level: 1,
       hitDie: hit_die,
       spellCasting: spellcasting?.spellcasting_ability,
@@ -66,7 +66,7 @@ const formatCharacter = (charFromWizard:iCharacter) => {
       success: 3,
       fails: 3,
     },
-
+    proficiencyBonus: 2,
     passiveWisdom: 10,
     abilityScores: [
       { name: 'Strength', scores: str.score + str.bonus, proficient: true },
