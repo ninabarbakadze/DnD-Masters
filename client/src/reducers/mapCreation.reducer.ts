@@ -5,6 +5,7 @@ const initialState: iMap = {
   shouldDelete: false,
   locationArr: [],
   elementArr: [],
+  mapName: 'just a test',
 };
 
 const mapCreationReducer = (

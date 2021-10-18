@@ -14,6 +14,10 @@ type Inputs = {
 };
 
 export default function Login() {
+  // const [username, setUsername] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const dispatch = useDispatch();
   const {
@@ -26,7 +30,9 @@ export default function Login() {
     if (isLogin) {
       await logIn({ username: data.username, password: data.password });
       const user = await getUser();
+      // @ts-expect-error
       Cookies.set('user', user.username);
+      // @ts-expect-error
       dispatch(loginAction(user.username));
     } else {
       registerUser({

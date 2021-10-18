@@ -15,13 +15,15 @@ import {
   updateLocationArr,
 } from '../../../actions/mapWizard.action';
 import { iElement } from '../../../interfaces/map.interface';
+// import { saveMap } from '../../../services/map.service';
 
 export default function MapEdit() {
   const dispatch = useDispatch();
 
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
-  const { selectedElement, locationArr, elementArr } = useSelector(
+  // eslint-disable-next-line
+  const { selectedElement, locationArr, elementArr, mapUrl } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -199,12 +201,12 @@ export default function MapEdit() {
       description: locationDescription,
     };
     dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
-    // setElmentArr([...elementArr, dataObj]);
   }
 
-  function onSaveModalSubmit() {
-    const dataString = JSON.stringify(elementArr);
-    return dataString;
+  async function onSaveModalSubmit(name: string) {
+    // const data = { mapName: name, mapUrl, locationData: elementArr };
+    // await saveMap(username, data);
+    console.log(name, elementArr);
   }
 
   const setPoint = (evt: any) => {
