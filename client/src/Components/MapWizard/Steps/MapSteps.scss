@@ -43,11 +43,24 @@
 }
 
 .map-edit-selection {
-  height: 600px;
+  height: 400px;
   width: 400px;
   border-radius: 20px;
   background-color: rgb(230, 208, 250);
   border-radius: 20px;
+}
+
+.map-edit-menu {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.map-edit-description {
+  background-color: salmon;
+  border-radius: 20px;
+  height: 150px;
 }
 
 .location-item {

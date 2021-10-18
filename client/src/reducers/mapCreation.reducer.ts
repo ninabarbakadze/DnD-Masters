@@ -37,6 +37,11 @@ const mapCreationReducer = (
         ...state,
         shouldDelete: !state.shouldDelete,
       };
+    case 'SET_CURRENT_DESCRIPTION':
+      return {
+        ...state,
+        currentDescription: payload.currentDescription,
+      };
     default:
       return state;
   }

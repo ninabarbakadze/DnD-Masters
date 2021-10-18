@@ -8,6 +8,7 @@ import ElementForm from '../Modal/ModalForms/ElementForm';
 import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
+import DescriptionPreview from '../DescriptionPreview/DescriptionPreview';
 import getMapElements from '../../../assets/mapElements/mapData';
 import {
   updateElementArr,
@@ -299,7 +300,10 @@ export default function MapEdit() {
         </button>
       </div>
       {/* eslint-disable-next-line */}
-      <PointSelection />
+      <div className="map-edit-menu">
+        <PointSelection />
+        <DescriptionPreview />
+      </div>
       <Modal
         heading="Name your Elements"
         modalIsActive={elementModalIsActive}

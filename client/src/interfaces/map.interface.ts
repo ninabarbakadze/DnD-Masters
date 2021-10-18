@@ -14,4 +14,5 @@ export interface iMap {
   elementArr?: iElement[];
   locationArr?: JSX.Element[];
   shouldDelete?: boolean;
+  currentDescription?: string;
 }

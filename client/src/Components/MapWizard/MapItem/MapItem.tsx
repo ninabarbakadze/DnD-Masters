@@ -3,7 +3,10 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/all';
-import { updateElementArr } from '../../../actions/mapWizard.action';
+import {
+  updateElementArr,
+  setCurrentDescription,
+} from '../../../actions/mapWizard.action';
 import { IRootState } from '../../../reducers';
 
 gsap.registerPlugin(Draggable);
@@ -13,7 +16,7 @@ export default function MapItem({
   getSVGCoord,
   element,
   locationName,
-  // locationDescription,
+  locationDescription,
   id,
   deleteLocation,
 }: any) {
@@ -22,15 +25,16 @@ export default function MapItem({
   const { elementArr, shouldDelete, locationArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
-  // const [isHovered, setIsHovered] = useState(false);
 
-  // function showDescription() {
-  //   setIsHovered(true);
-  // }
+  function showDescription() {
+    dispatch(
+      setCurrentDescription({ currentDescription: locationDescription }),
+    );
+  }
 
-  // function hideDescription() {
-  //   setIsHovered(false);
-  // }
+  function hideDescription() {
+    dispatch(setCurrentDescription({ currentDescription: '' }));
+  }
 
   useEffect(() => {
     Draggable.create('.draggable', {
@@ -52,7 +56,6 @@ export default function MapItem({
     // @ts-expect-error
     const bbox = textElement?.getBBox();
     setTextWidth(bbox.width);
-    console.log(bbox.width);
   }, []);
 
   return (
@@ -63,11 +66,12 @@ export default function MapItem({
           shouldDelete && deleteLocation(id, locationArr, elementArr)
         // eslint-disable-next-line
       }
-      // onMouseEnter={showDescription}
-      // onMouseLeave={hideDescription}
+      onMouseEnter={showDescription}
+      onMouseLeave={hideDescription}
       transform={`translate(${xCoord} ${yCoord})`}
       className="draggable"
     >
+      <rect width="100" height="150" opacity="0.0" x="-50" y="-100" />
       {element}
       <text
         data-id={id}
