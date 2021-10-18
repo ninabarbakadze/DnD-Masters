@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const mockCharacter:any = {
   name: 'Sample Dragonborn Sorcerer',
   player: {
@@ -15,6 +16,7 @@ const mockCharacter:any = {
       },
       {
         name: 'Dragon Ancestor',
+        // eslint-disable-next-line max-len
         description: 'Whenever you make a Charisma check when interacting with dragons, your proficiency is doubled if it applies to the check.',
       },
     ],
@@ -28,6 +30,7 @@ const mockCharacter:any = {
     features: [
       {
         name: 'Spellcasting',
+        // eslint-disable-next-line max-len
         description: "To cast a spell, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
       },
       {
@@ -175,6 +178,53 @@ const mockCharacter:any = {
       damage_effect: 'Foreknowledge',
       components: ['S'],
       school: 'Divination',
+    },
+  ],
+  proficiencies: [
+    {
+      index: 'light-armor',
+      name: 'Light Armor',
+    },
+    {
+      index: 'medium-armor',
+      name: 'Medium Armor',
+    },
+    {
+      index: 'shields',
+      name: 'Shields',
+    },
+    {
+      index: 'simple-weapons',
+      name: 'Simple Weapons',
+    },
+    {
+      index: 'martial-weapons',
+      name: 'Martial Weapons',
+    },
+  ],
+  equipments: [
+    {
+      equipment: {
+        index: 'explorers-pack',
+        name: "Explorer's Pack",
+      },
+      quantity: 1,
+    },
+    {
+      equipment: {
+        index: 'javelin',
+        name: 'Javelin',
+      },
+      quantity: 4,
+    },
+
+    {
+      equipment: {
+        index: 'greataxe',
+        name: 'Greataxe',
+
+      },
+      quantity: 1,
     },
   ],
 };

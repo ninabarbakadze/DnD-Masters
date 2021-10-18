@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
+
 import { useState } from 'react';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import mockCharacter from '../../mockData/mockPayerWithCharacter';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
 import './CharacterSheet.scss';
+import { IRootState } from '../../reducers';
+
 import {
   mod,
   proficiencyBonusCalc,
@@ -11,6 +15,8 @@ import {
 import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
 import CharacterSheetSkills from './CharacterSheetSkills';
 import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
+import CharacterSheetFeatures from './CharacterSheetFeatures';
+import CharacterSheetNotes from './CharacterSheetNotes';
 
 export default function CharacterSheet() {
   const [character] = useState({ ...mockCharacter });
@@ -19,9 +25,10 @@ export default function CharacterSheet() {
   const [initiative, setInitiative] = useState(10);
   const [currentHitPoints, setCurrentHitPoints] = useState(character.hitPoints.current);
   const [temporaryHitPoints, setTemporaryHitPoints] = useState(10);
-  const [success, setSuccess] = useState(['']);
-  const [fails, setFails] = useState(['']);
-
+  const [success, setSuccess] = useState<number>(3);
+  const [fails, setFails] = useState<number>(3);
+  const [note, setNote] = useState<string>('Notes goes here...');
+  const newcharacter = useSelector((state:IRootState) => state.characterCreationReducer);
   const modifyPassiveWisdom = (perception:number) => {
     setPassiveWisdom(10 + perception);
   };
@@ -40,10 +47,13 @@ export default function CharacterSheet() {
   };
   const updateDeathSaves = (result:string) => {
     // eslint-disable-next-line no-unused-expressions
-    (result === 'success' && success.length < 4 && setSuccess((arr:string[]) => [...arr, 'Y']))
-    || (result === 'fails' && fails.length < 4 && setFails((arr:string[]) => [...arr, 'N']));
+    (result === 'success' && success > 0 && setSuccess((succes:number) => succes - 1))
+    || (result === 'fails' && fails > 0 && setFails((fail:number) => fail - 1));
   };
-
+  const updateMyNotes = (myNote:string) => {
+    setNote(myNote);
+  };
+  console.log(newcharacter);
   return (
     <div className="character-sheet">
       <div className="character-sheet-header">
@@ -119,7 +129,7 @@ export default function CharacterSheet() {
               </div>
               <div className="character-sheet-perception">
                 <h5>
-                  {passiveWisdom}
+                  {positivePrecursor(passiveWisdom)}
                   &nbsp;
                   Passive Wisdom (perception)
                 </h5>
@@ -153,11 +163,22 @@ export default function CharacterSheet() {
           </div>
           <div>
             <div className="character-sheet-languages">
-              <h5> Other Proficiencies & languages</h5>
+              <h4> Other Proficiencies & languages</h4>
+              <b>Languages</b>
+              <br />
               {character.languages.map((attribute:any) => (
                 <b key={attribute}>
                   {attribute}
                   &nbsp;
+                </b>
+              ))}
+              <br />
+              <b>Other</b>
+              <br />
+              {character.proficiencies.map((item:any) => (
+                <b key={item.name}>
+                  {item.name}
+                &nbsp;
                 </b>
               ))}
             </div>
@@ -232,7 +253,7 @@ export default function CharacterSheet() {
           </div>
           <div className="character-sheet-equipment">
             <div className="character-sheet-currency">
-              <div className="character-sheet-coin">
+              {/* <div className="character-sheet-coin">
                 CP:
                 <EditableDisplayComponent action={null} initialVal={10} inputType="number" />
               </div>
@@ -251,9 +272,21 @@ export default function CharacterSheet() {
               <div className="character-sheet-coin">
                 PP:
                 <EditableDisplayComponent action={null} initialVal={0} inputType="number" />
-              </div>
+              </div> */}
             </div>
-            <div className="character-sheet-equipment-list">Equipments</div>
+            <div className="character-sheet-equipment-list">
+              Equipments
+              <br />
+              {character.equipments.map((item:any) => (
+                <b key={item.equipment.name}>
+                  {item.equipment.name}
+                &nbsp;
+                  {item.quantity}
+
+                  <br />
+                </b>
+              ))}
+            </div>
           </div>
         </div>
         <div className="character-sheet-action-row-3">
@@ -278,14 +311,14 @@ export default function CharacterSheet() {
           </div>
           <div className="character-sheet-personality-features-traits">
             Features & traits
-            { character.classes[0].features.map((feature:any) => (
-              <div key={feature.name}>
-                <EditableDisplayComponent action={null} initialVal={feature.name} inputType="input" />
-                <EditableDisplayComponent action={null} initialVal={feature.description} inputType="textarea" />
-                <br />
-              </div>
-            ))}
+            <br />
+            <CharacterSheetFeatures features={character.classes[0].features} />
+
           </div>
+        </div>
+        <div>
+          <h6>notes</h6>
+          <CharacterSheetNotes note={note} updateNote={updateMyNotes} />
         </div>
       </div>
     </div>

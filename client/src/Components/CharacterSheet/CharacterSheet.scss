@@ -25,6 +25,9 @@
 {
     flex-direction: column;
 }
+// .character-sheet-death-save,
+// .character-sheet-fails,
+.character-sheet-success,
 .character-sheet-saving-throw-skills-tile, 
 .character-sheet-header, 
 .character-sheet-CLB, 
@@ -84,4 +87,7 @@
 
 .character-sheet p{
 margin:1px
+}
+.character-sheet-death-save{
+    width: 100px;
 }

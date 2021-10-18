@@ -1,5 +1,5 @@
 import { iMap } from '../interfaces/map.interface';
-import { PayloadAction } from '../interfaces/reduxInterfaces';
+import { PayloadAction } from '../interfaces/redux.interface';
 
 export const updateSelectedElement: PayloadAction<iMap> = (mapData) => ({
   type: 'UPDATE_SELECTED_ITEM',

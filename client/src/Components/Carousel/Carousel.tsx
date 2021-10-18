@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useState, useEffect } from 'react';
 import './Carousel.scss';
 
