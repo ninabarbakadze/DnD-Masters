@@ -25,3 +25,8 @@ export const setDelete: PayloadAction<iMap> = (mapData) => ({
   type: 'SET_DELETE',
   payload: mapData,
 });
+
+export const setCurrentDescription: PayloadAction<iMap> = (mapData) => ({
+  type: 'SET_CURRENT_DESCRIPTION',
+  payload: mapData,
+});

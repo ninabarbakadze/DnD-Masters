@@ -8,6 +8,7 @@ import ElementForm from '../Modal/ModalForms/ElementForm';
 import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
+import DescriptionPreview from '../DescriptionPreview/DescriptionPreview';
 import getMapElements from '../../../assets/mapElements/mapData';
 import {
   updateElementArr,
@@ -19,8 +20,8 @@ export default function MapEdit() {
   const dispatch = useDispatch();
 
   const imgRef = useRef<any>(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const { selectedElement, locationArr } = useSelector(
+  const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
+  const { selectedElement, locationArr, elementArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -38,12 +39,11 @@ export default function MapEdit() {
     height: 600,
   });
   const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
-  // const [localLocationArr, setLocalLocationArr] = useState<JSX.Element[]>([]);
+
   const [keyCode, setKeyCode] = useState('');
   const [elementModalIsActive, setElementModalIsActive] = useState(false);
   const [saveModalIsActive, setSaveModalIsActive] = useState(false);
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
-  const [elementArr, setElmentArr] = useState<iElement[]>([]);
 
   // Create Id
   function generateId() {
@@ -137,20 +137,38 @@ export default function MapEdit() {
     return cursorPoint;
   }
 
-  function deleteLocation(id: string, arr: JSX.Element[]) {
-    const index = arr.findIndex((location) => location.props.id === id);
+  function deleteLocation(
+    id: string,
+    locArr: JSX.Element[],
+    elArr: iElement[],
+  ) {
+    const locationArrIndex = locArr.findIndex(
+      (location) => location.props.id === id,
+    );
+    const elementArrIndex = elArr.findIndex((element) => element.id === id);
     dispatch(
       updateLocationArr({
-        locationArr: [...arr.slice(0, index), ...arr.slice(index + 1)],
+        locationArr: [
+          ...locArr.slice(0, locationArrIndex),
+          ...locArr.slice(locationArrIndex + 1),
+        ],
       }),
     );
-    console.log(index);
+    dispatch(
+      updateElementArr({
+        elementArr: [
+          ...elArr.slice(0, elementArrIndex),
+          ...elArr.slice(elementArrIndex + 1),
+        ],
+      }),
+    );
   }
 
   function onElementModalSubmit(
     locationName: string,
     locationDescription: string,
   ) {
+    if (!elementArr) return;
     const element = getMapElements(svgCoord.x, svgCoord.y, selectedElement);
     const id = generateId();
     dispatch(
@@ -180,7 +198,8 @@ export default function MapEdit() {
       title: locationName,
       description: locationDescription,
     };
-    setElmentArr([...elementArr, dataObj]);
+    dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
+    // setElmentArr([...elementArr, dataObj]);
   }
 
   function onSaveModalSubmit() {
@@ -221,26 +240,18 @@ export default function MapEdit() {
     });
   }, []);
 
-  useEffect(() => {
-    dispatch(updateElementArr({ elementArr }));
-  }, [elementArr]);
-
-  // useEffect(() => {
-  //   dispatch(updateLocationArr({ locationArr: localLocationArr }));
-  // }, [localLocationArr]);
-
   function handleSave() {
     showSaveModal();
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (imgRef.current) {
       setDimensions({
         width: imgRef.current.offsetWidth,
         height: imgRef.current.offsetHeight,
       });
     }
-  }, []);
+  }, [imgRef.current]);
 
   return (
     <div className="map-edit-container">
@@ -288,12 +299,14 @@ export default function MapEdit() {
         </button>
       </div>
       {/* eslint-disable-next-line */}
-      <PointSelection />
+      <div className="map-edit-menu">
+        <PointSelection />
+        <DescriptionPreview />
+      </div>
       <Modal
         heading="Name your Elements"
         modalIsActive={elementModalIsActive}
         // eslint-disable-next-line
-        // onModalSubmit={onElementModalSubmit}
         setModalIsActive={setElementModalIsActive}
         closeModal={() => closeElementModal()}
       >
