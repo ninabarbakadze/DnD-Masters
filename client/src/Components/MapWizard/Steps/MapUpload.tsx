@@ -36,6 +36,7 @@ export default function MapUpload({ history }: any) {
 
   useEffect(() => {
     dispatch(updateUrl({ mapUrl: url }));
+    console.log(url);
   }, [url]);
 
   const toggleModal = () => {

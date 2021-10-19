@@ -63,6 +63,7 @@ export default function PointSelection() {
 
   const selectList = elementList.map((element, index) => (
     <MapSelectionItem
+      key={JSON.stringify(index)}
       element={element}
       selectItem={selectItem}
       elementName={elementNames[index]}

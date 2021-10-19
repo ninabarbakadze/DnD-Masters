@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllMaps, deleteMap } from '../../../services/map.service';
+import { getAllMaps, deleteMap, getMap } from '../../../services/map.service';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../MapCarouselItem/MapCarouselItem';
+import InfoModal from '../../InfoModal/InfoModal';
 import './MapSteps.scss';
-import { updateMapNameAndId } from '../../../actions/mapWizard.action';
+import {
+  updateMapNameAndId,
+  updateElementArr,
+} from '../../../actions/mapWizard.action';
 
 export default function MapSelection({ history }: any) {
   const [refresh, doRefresh] = useState(0);
@@ -15,19 +19,28 @@ export default function MapSelection({ history }: any) {
     'https://endlessicons.com/wp-content/uploads/2012/12/add-icon-614x460.png',
   ]);
   const [items, setItems] = useState<JSX.Element[]>([]);
+  const [isModal, setIsModal] = useState(false);
 
-  const nextPage = () => {
+  const nextPage = async () => {
     if (mapIndex === 0) {
       history.push('/mapWizard/mapUpload');
     } else {
+      // eslint-disable-next-line
+      const { mapName, mapId, mapUrl, locationData } = await getMap(
+        'ruso',
+        // eslint-disable-next-line
+        mapArr[mapIndex - 1]._id,
+      );
       dispatch(
         updateMapNameAndId({
-          mapName: mapArr[mapIndex - 1].mapName,
+          mapName,
           // eslint-disable-next-line
-          mapId: mapArr[mapIndex - 1]._id,
-          mapUrl: mapArr[mapIndex - 1].mapUrl,
+          mapId,
+          mapUrl,
         }),
       );
+      // console.log(JSON.parse(locationData));
+      dispatch(updateElementArr({ elementArr: JSON.parse(locationData) }));
       history.push('/mapWizard/mapEdit');
     }
   };
@@ -42,6 +55,7 @@ export default function MapSelection({ history }: any) {
     // eslint-disable-next-line
     const id = mapArr[mapIndex - 1]._id;
     await deleteMap('ruso', id);
+    setIsModal(!isModal);
     doRefresh((prev) => prev + 1);
     await getMaps();
   };
@@ -54,6 +68,10 @@ export default function MapSelection({ history }: any) {
     const itemArr = images.map((image) => <MapCarouselItem url={image} />);
     setItems(itemArr);
   }, [images]);
+
+  const toggleModal = () => {
+    setIsModal(!isModal);
+  };
 
   return (
     <div className="map-selection-container">
@@ -84,6 +102,12 @@ export default function MapSelection({ history }: any) {
       <Carousel setIndex={setMapIndex} refresh={refresh} show={5}>
         {items}
       </Carousel>
+      <InfoModal
+        message="Map deleted"
+        type="success"
+        isVisible={isModal}
+        setIsVisible={toggleModal}
+      />
     </div>
   );
 }
