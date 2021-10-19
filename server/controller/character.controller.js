@@ -14,6 +14,7 @@ const getUsersCharacters = async (req, res) => {
 };
 
 const createCharacter = async (req, res) => {
+  console.log(req.body);
   try {
     const user = await User.findOne({ username: req.params.username });
     const character = await new Map({ ...req.body, user: user._id });
@@ -42,6 +43,7 @@ const getCharacter = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
 const updateCharacter = async (req, res) => {
   try {
     const updatedChar = await Character.findByIdAndUpdate(
