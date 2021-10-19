@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../reducers';
 import { createSocket } from '../../services/socket.service';
 
-const PlayerJoin = () => {
+const PlayerJoin = ({ activateGame }: any) => {
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState<string>('');
   const [roomCode, setRoomCode] = useState<string>('');
@@ -26,6 +26,7 @@ const PlayerJoin = () => {
   function handleClick() {
     console.log('clicked');
     dispatch(createSocket());
+    activateGame(true);
     // if (!socket) {
     // const sock = createSocket();
 
