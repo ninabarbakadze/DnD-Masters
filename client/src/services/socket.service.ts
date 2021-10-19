@@ -5,7 +5,7 @@ export function joinGame(socket, roomCode: string) {
   socket.emit('join_room', roomCode);
 }
 
-export function createSocket() {
+export async function createSocket() {
   console.log('this is happening');
   const socket = io.connect(process.env.REACT_APP_SERVER_URL);
   console.log('socket is in the service', socket);
