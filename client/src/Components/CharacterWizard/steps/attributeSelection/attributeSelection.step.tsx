@@ -88,45 +88,52 @@ const AttributeSelectionStep = ({
   return (
     <div>
       <h2>Attribute Selection</h2>
-      <p>{`${pool} points to spend`}</p>
       <div>
         {bonusChoices?.race && (
-          <div>
+          <div className="my-4">
             <h3>
               {`choose ${bonusChoices.race.max} from ${character?.race?.name} bonuses:`}{' '}
             </h3>
-            {bonusChoices.race.choices.map((choice) => {
-              return (
-                <AbilityBonusChoice
-                  key={choice}
-                  name={choice}
-                  handleClick={handleBonusChoice}
-                  slected={false}
-                />
-              );
-            })}
+            <div className="space-x-4">
+              {bonusChoices.race.choices.map((choice) => {
+                return (
+                  <AbilityBonusChoice
+                    key={choice}
+                    name={choice}
+                    handleClick={handleBonusChoice}
+                    slected={selectedBonuses.includes(choice)}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
         {bonusChoices?.subrace && (
-          <div>
+          <div className="my-4">
             <h3>
               {`choose ${bonusChoices.subrace.max} from ${character?.subrace?.name} bonuses:`}{' '}
             </h3>
-            {bonusChoices.race.choices.map((choice) => {
-              return (
-                <AbilityBonusChoice
-                  key={choice}
-                  name={choice}
-                  handleClick={() => {}}
-                  slected={false}
-                />
-              );
-            })}
+            <div className="space-x-4">
+              {bonusChoices.race.choices.map((choice) => {
+                return (
+                  <AbilityBonusChoice
+                    key={choice}
+                    name={choice}
+                    handleClick={() => {}}
+                    slected={false}
+                  />
+                );
+              })}
+            </div>
           </div>
         )}
-        {pointBuyArray}
+        <div className="my-4">
+          <h3>{`${pool} points to spend`}</h3>
+          {pointBuyArray}
+        </div>
       </div>
       <button
+        className="main-button"
         type="button"
         onClick={() => onSubmit({ abilityArray }, updateAbilityArray, path)}
         disabled={pool == 0}

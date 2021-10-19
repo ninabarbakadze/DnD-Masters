@@ -3,6 +3,7 @@ import {
   characterCreationReducer,
   characterWizardStateReducer,
 } from './CharacterCreation.reducer';
+import socketReducer from './Socketl.reducer';
 import userReducer from './user.reducer';
 import gameReducer, { iGameWizardState } from './game.reducer';
 import {
@@ -20,6 +21,7 @@ export interface IRootState {
   characterWizardStateReducer: iCharacterWizardState;
   characterCreationReducer: iCharacter;
   mapCreationReducer: iMap;
+  socketReducer: any;
 }
 
 const allReducer = combineReducers({
@@ -28,6 +30,7 @@ const allReducer = combineReducers({
   characterCreationReducer,
   characterWizardStateReducer,
   mapCreationReducer,
+  socketReducer,
 });
 
 export default allReducer;
