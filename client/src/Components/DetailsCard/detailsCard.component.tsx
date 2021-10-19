@@ -9,14 +9,14 @@ interface props {
 
 const DetailsCard = ({ name, imgPath, content }: props) => {
   return (
-    <div>
-      <div>
+    <div className="flex-row flex rounded-2xl bg-gray-300 drop-shadow-2xl">
+      <div className="bg-gray-400">
         {imgPath && (
-          <figure>
+          <figure className=" wizard-image h-3/4">
             <img src={imgPath} alt={`${name}`} />
           </figure>
         )}
-        <h1>{name}</h1>
+        <h1 className="text-5xl text-yellow-100 font-bold">{name}</h1>
       </div>
       {content && content}
     </div>

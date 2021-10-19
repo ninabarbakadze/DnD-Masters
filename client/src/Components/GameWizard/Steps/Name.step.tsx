@@ -1,36 +1,35 @@
-import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
-import { updateName } from '../../../actions/gameWizard.actions';
+import { useState } from 'react';
+import { updateNameAndTag } from '../../../actions/gameWizard.actions';
 import { IRootState } from '../../../reducers';
-import { iGameWizardState } from '../../../reducers/game.reducer';
-
-type Inputs = {
-  name: string;
-  tags: string;
-};
 
 function Name({ path, onSubmit }: any) {
+  const [name, setName] = useState('');
+  const [tags, setTags] = useState('');
   const gameWizard = useSelector((state: IRootState) => state.game);
-  const { register, handleSubmit } = useForm<Inputs>();
+
+  const handleSubmit = () => {
+    onSubmit({ name, tags }, updateNameAndTag, path);
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit((data: iGameWizardState) => {
-        onSubmit(data, updateName, path);
-      })}
-    >
+    <form onSubmit={handleSubmit}>
       <input
-        {...register('name', { required: true })}
+        value={name}
+        placeholder="Name of the Game"
         id="name"
+        onChange={(e) => { setName(e.target.value); }}
         defaultValue={gameWizard.name}
+        required
       />
       <input
-        {...register('tags', { required: true })}
+        value={tags}
+        placeholder="Tags"
         id="tags"
+        onChange={(e) => { setTags(e.target.value); }}
         defaultValue={gameWizard.tags}
       />
-      <input type="submit" />
+      <button type="submit">Submit</button>
     </form>
   );
 }
