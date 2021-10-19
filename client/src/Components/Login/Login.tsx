@@ -3,26 +3,14 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useHistory } from 'react-router';
 import { loginAction } from '../../actions/user.actions';
-import { registerUser, logIn /* getUser */ } from '../../services/user.services';
+import {
+  registerUser,
+  logIn /* getUser */,
+} from '../../services/user.services';
 import './Login.scss';
 
-<<<<<<< HEAD
-type Inputs = {
-  username: string;
-  password: string;
-  email: string;
-  passwordConfirm?: string;
-};
-
-export default function Login() {
-  // const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
-=======
 /* eslint-disable
- */export default function Login() {
->>>>>>> ab08ef741af5c87a8421c61957e5218ed8ba0219
+ */ export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -31,38 +19,20 @@ export default function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-
-<<<<<<< HEAD
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (isLogin) {
-      await logIn({ username: data.username, password: data.password });
-      const user = await getUser();
-      // @ts-expect-error
-      Cookies.set('user', user.username);
-      // @ts-expect-error
-      dispatch(loginAction(user.username));
-    } else {
-      registerUser({
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      });
-=======
   const handleSubmit = async (data: object, e: MouseEvent) => {
-    e.preventDefault()
-      if (isLogin) {
-        const user = await logIn({ username, password });
-        console.log(user);
-        Cookies.set('user', user.username);
-        dispatch(loginAction(user.username));
-        history.push('/Dashboard')
-      } else {
-        await registerUser({
-          username,
-          email,
-          password,
-        });
->>>>>>> ab08ef741af5c87a8421c61957e5218ed8ba0219
+    e.preventDefault();
+    if (isLogin) {
+      const user = await logIn({ username, password });
+      console.log(user);
+      Cookies.set('user', user.username);
+      dispatch(loginAction(user.username));
+      history.push('/Dashboard');
+    } else {
+      await registerUser({
+        username,
+        email,
+        password,
+      });
     }
   };
 
@@ -80,7 +50,9 @@ export default function Login() {
           placeholder="Username"
           value={username}
           id="username"
-          onChange={(e) => { setUsername(e.target.value); }}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         />
         {!isLogin && (
           <input
@@ -88,7 +60,9 @@ export default function Login() {
             placeholder="Email"
             value={email}
             id="email"
-            onChange={(e) => { setEmail(e.target.value); }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         )}
         <input
@@ -96,7 +70,9 @@ export default function Login() {
           type="password"
           value={password}
           id="password"
-          onChange={(e) => { setPassword(e.target.value); }}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
         {!isLogin && (
           <input
@@ -104,7 +80,9 @@ export default function Login() {
             type="password"
             value={passwordConfirm}
             id="password"
-            onChange={(e) => { setPasswordConfirm(e.target.value); }}
+            onChange={(e) => {
+              setPasswordConfirm(e.target.value);
+            }}
           />
         )}
         <button className="submit-btn" type="submit">
