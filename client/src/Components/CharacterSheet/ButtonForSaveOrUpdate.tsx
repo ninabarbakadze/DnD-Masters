@@ -1,0 +1,38 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-underscore-dangle */
+import { saveCharacter, updateCharacter } from '../../services/character.sevices';
+
+interface IProps{
+  username:string,
+  // service:any,
+  body: any
+  set:any
+}
+
+export default function ButtonForSaveOrUpdate({
+  username, body, set,
+}:IProps) {
+  const handleClick = () => {
+    console.log('saved', body.saved);
+    if (body.saved) {
+      // const { _id, ...updatedCharacter } = body;
+      return updateCharacter(username, body._id, body).then((res) => {
+        set({ ...res });
+        console.log('updated');
+      });
+    }
+    if (!body.saved) {
+      set((prevVal:any) => ({ ...prevVal, saved: true }));
+      // @ts-ignore
+      return saveCharacter(username, body).then((res) => { set((prevVal:any) => ({ ...prevVal, _id: res._id })); });
+    }
+  };
+  return (
+    <div>
+      <button type="button" onClick={() => { handleClick(); }}>
+        {!body.saved ? 'Save' : 'Update'}
+      </button>
+    </div>
+  );
+}

@@ -4,23 +4,30 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../reducers';
 import CharacterSheetNotes from './CharacterSheetNotes';
-import mockCharacter from '../../mockData/mockCharackter';
+// import mockCharacter from '../../mockData/mockCharackter';
 import CharacterSheetSkills from './CharacterSheetSkills';
 import CharacterSheetFeatures from './CharacterSheetFeatures';
 import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
-import formatCharacter from '../../mockData/mockPayerWithCharacter';
+import formatCharacter from './CharacterFormater';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
 import { mod, proficiencyBonusCalc, positivePrecursor } from './helper';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
-import { saveCharacter } from '../../services/character.sevices';
+// import { saveCharacter } from '../../services/character.sevices';
+import ButtonForSaveOrUpdate from './ButtonForSaveOrUpdate';
 
-export default function CharacterSheet() {
-  const newcharacter = useSelector((state:IRootState) => state.characterCreationReducer);
+interface IProps{
+  fetched:any |undefined
+}
+export default function CharacterSheet({ fetched }:IProps) {
+  // const username = useSelector((state:IRootState) => state.user.name);
+  const newCharacter = useSelector((state:IRootState) => state.characterCreationReducer);
+  // const formatted = fetched || formatCharacter(newCharacter);
+  const formatted = formatCharacter(newCharacter);
 
-  const formated = formatCharacter(newcharacter);
-  const [character, setCharacter] = useState({ ...formated });
+  const [character, setCharacter] = useState({ ...formatted });
   const { success, fails } = character.deathSaves;
+
   const modifyPassiveWisdom = (perception:number) => {
     // setCharacter((preVal:any) => ({ ...preVal, passiveWisdom: perception }));
     console.log('passWis', perception + character.passiveWisdom);
@@ -38,7 +45,7 @@ export default function CharacterSheet() {
     });
     setCharacter((prevVal:any) => ({ ...prevVal, abilityScores: updateAbilityScrList }));
   };
-  console.log('formated', formated);
+  console.log('Character', character);
 
   const updateDeathSaves = (result:string) => {
     // eslint-disable-next-line no-unused-expressions
@@ -65,13 +72,17 @@ export default function CharacterSheet() {
     })));
   };
 
-  console.log(newcharacter);
   return (
     <div className="character-sheet">
       <div className="character-sheet-header">
         <div className="character-sheet-avatar-container">
           <img src="" alt="character avatar" />
           <h3>Character Name</h3>
+          <EditableDisplayComponent
+            inputType="input"
+            action={(val:string) => { setCharacter((prevVal:any) => ({ ...prevVal, characterName: val })); }}
+            initialVal="Enter Your CharacterName"
+          />
         </div>
         <div>
           <div className="character-sheet-initial-information">
@@ -136,7 +147,11 @@ export default function CharacterSheet() {
             </div>
             <div className="character-sheet-proficiency">
               <div className="character-sheet-inspiration">
-                <EditableDisplayComponent action={null} initialVal={0} inputType="number" />
+                <EditableDisplayComponent
+                  action={(val:string) => { setCharacter((prevVal:any) => ({ ...prevVal, inspiration: val })); }}
+                  initialVal={0}
+                  inputType="number"
+                />
                 <h4> INSPIRATION</h4>
               </div>
               <div className="character-sheet-perception">
@@ -309,20 +324,27 @@ export default function CharacterSheet() {
           <div className="character-sheet-personality">
             <div className="character-sheet-personality-traits">
               Personality
-              <EditableDisplayComponent action={null} initialVal={character.details.personality} inputType="textarea" />
+              {character.details.personality}
+              {/* <EditableDisplayComponent action={null}
+              initialVal={character.details.personality} inputType="textarea" /> */}
             </div>
             <div className="character-sheet-personality-ideals">
               Ideals
-
-              <EditableDisplayComponent action={null} initialVal={character.details.ideal} inputType="textarea" />
+              {character.details.ideal}
+              {/* <EditableDisplayComponent action={null}
+               initialVal={character.details.ideal} inputType="textarea" /> */}
             </div>
             <div className="character-sheet-personality-bonds">
               Bonds
-              <EditableDisplayComponent action={null} initialVal={character.details.bond} inputType="textarea" />
+              {character.details.bond}
+              {/* <EditableDisplayComponent action={null}
+              initialVal={character.details.bond} inputType="textarea" /> */}
             </div>
             <div className="character-sheet-personality-flaws">
               Flaws
-              <EditableDisplayComponent action={null} initialVal={character.details.flaw} inputType="textarea" />
+              {character.details.flaw}
+              {/* <EditableDisplayComponent action={null}
+              initialVal={character.details.flaw} inputType="textarea" /> */}
             </div>
           </div>
           <div className="character-sheet-personality-features-traits">
@@ -334,11 +356,13 @@ export default function CharacterSheet() {
         </div>
         <div>
           <h6>notes</h6>
-          <CharacterSheetNotes
-            note={character.note}
-            updateNote={(note:string) => { setCharacter((prevVal:any) => ({ ...prevVal, note })); }}
+
+          {/* <button type="button" onClick={() => { saveCharacter('David', character); }}>Save</button> */}
+          <ButtonForSaveOrUpdate
+            username="David"
+            body={character}
+            set={setCharacter}
           />
-          <button type="button" onClick={() => { saveCharacter('asd', character); }}>Save</button>
         </div>
       </div>
     </div>
