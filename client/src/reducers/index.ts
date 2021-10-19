@@ -12,6 +12,7 @@ import {
 import mapCreationReducer from './mapCreation.reducer';
 import { iMap } from '../interfaces/map.interface';
 
+// mapCreationReducer: any;
 // interface prop name and reducer name must be an EXACT MATCH
 export interface IRootState {
   user: { isLoggedIn: boolean; name: string };

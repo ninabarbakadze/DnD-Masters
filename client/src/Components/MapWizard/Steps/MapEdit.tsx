@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -203,7 +204,8 @@ export default function MapEdit() {
   }
 
   function onSaveModalSubmit() {
-    alert('saved');
+    const dataString = JSON.stringify(elementArr);
+    return dataString;
   }
 
   const setPoint = (evt: any) => {

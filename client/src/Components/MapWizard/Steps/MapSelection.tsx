@@ -45,7 +45,7 @@ export default function MapSelection({ history }: any) {
           </button>
         )}
       </div>
-      <Carousel setMapIndex={setMapIndex} show={5}>
+      <Carousel setIndex={setMapIndex} show={5}>
         {maps}
       </Carousel>
     </div>

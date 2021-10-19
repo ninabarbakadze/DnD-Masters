@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import './characterWizard.scss';
 
 import RaceSelection from './steps/RaceSelection.step';
 import { iCharacter } from '../../interfaces/character.interface';
@@ -7,6 +8,7 @@ import SubRaceSelection from './steps/subRaceSelection.step';
 import { useWizardStepComplete } from '../../utilities/wizard.utilities';
 import BackgroundSelectionStep from './steps/backgroundSelection.step';
 import AttributeSelectionStep from './steps/attributeSelection/attributeSelection.step';
+import CharacterSheet from '../CharacterSheet/CharacterSheet';
 import ClassSelection from './steps/ClassSelection.step';
 
 const CharacterWizard: FC = () => {
@@ -15,7 +17,7 @@ const CharacterWizard: FC = () => {
   const submitfunc = useWizardStepComplete<iCharacter>(onWizardComplete);
 
   return (
-    <div>
+    <div className="character-wizard wizard">
       <h1>Character Wizard</h1>
       <Switch>
         <Route path="/characterWizard/raceSelection">
@@ -44,7 +46,13 @@ const CharacterWizard: FC = () => {
           />
         </Route>
         <Route path="/characterWizard/attributeSelection">
-          <AttributeSelectionStep onSubmit={submitfunc} />
+          <AttributeSelectionStep
+            onSubmit={submitfunc}
+            path="/characterWizard/characterSheet"
+          />
+        </Route>
+        <Route path="/characterWizard/characterSheet">
+          <CharacterSheet />
         </Route>
       </Switch>
     </div>
