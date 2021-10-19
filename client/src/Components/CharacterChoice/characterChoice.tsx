@@ -33,8 +33,14 @@ function CharacterChoice<T>({
   const options = from.map((choice, index) => {
     const val = choiceValue(choice);
     return (
-      <div key={`${val}${index}`} onClick={(e) => handleChange(choice)}>
-        <p>{val}</p>
+      <div
+        className="h-20 w-50"
+        key={`${val}${index}`}
+        onClick={(e) => handleChange(choice)}
+      >
+        <div className="main-button bg-color-gray-400">
+          <p>{val}</p>
+        </div>
       </div>
     );
   });
@@ -42,7 +48,7 @@ function CharacterChoice<T>({
   return (
     <>
       <p>{`Choose ${choose} from:`}</p>
-      {options}
+      <div className="grid grid-cols-3 gap-3">{options}</div>
     </>
   );
 }
