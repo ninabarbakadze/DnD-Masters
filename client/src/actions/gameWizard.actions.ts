@@ -1,8 +1,8 @@
 import { iGameWizardState } from '../reducers/game.reducer';
 import { PayloadAction } from '../interfaces/redux.interface';
 
-export const updateName: PayloadAction<iGameWizardState> = (wizardData) => ({
-  type: 'UPDATE_NAME',
+export const updateNameAndTag: PayloadAction<iGameWizardState> = (wizardData) => ({
+  type: 'UPDATE_NAME_AND_TAG',
   payload: wizardData,
 });
 

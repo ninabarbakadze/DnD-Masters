@@ -10,7 +10,7 @@ const logIn = (req, res, next) => {
       else {
         req.logIn(user, (error) => {
           if (error) throw error;
-          res.send({ status: 'Successfully Authenticated' });
+          res.send(user);
         });
       }
     })(req, res, next);
@@ -33,7 +33,7 @@ const register = (req, res) => {
         });
         await newUser.save();
         res.status(200);
-        res.send({ status: 'User created' });
+        res.send(user);
       }
     });
   } catch (err) {
