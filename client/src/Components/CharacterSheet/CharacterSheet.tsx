@@ -13,6 +13,7 @@ import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
 import { mod, proficiencyBonusCalc, positivePrecursor } from './helper';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
+import { saveCharacter } from '../../services/character.sevices';
 
 export default function CharacterSheet() {
   const newcharacter = useSelector((state:IRootState) => state.characterCreationReducer);
@@ -337,6 +338,7 @@ export default function CharacterSheet() {
             note={character.note}
             updateNote={(note:string) => { setCharacter((prevVal:any) => ({ ...prevVal, note })); }}
           />
+          <button type="button" onClick={() => { saveCharacter('asd', character); }}>Save</button>
         </div>
       </div>
     </div>
