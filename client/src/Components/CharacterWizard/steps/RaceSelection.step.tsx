@@ -53,7 +53,7 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
 
   return (
     <div>
-      <h2>Select Character Race</h2>
+      <h2 className="text-2xl">Select Character Race</h2>
       {races.length ? (
         <Carousel setIndex={setSelectedIndex} show={1}>
           {createRaceOptions(races)}

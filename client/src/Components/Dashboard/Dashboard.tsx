@@ -1,6 +1,6 @@
+/* eslint-disable max-len */
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../reducers';
-// import { getUser } from '../../services/user.services';
 import DashboarMenuItem from './DashboardMenuItem/DashboarMenuItem';
 import './Dashboard.scss';
 

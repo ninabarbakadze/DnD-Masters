@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // eslint-disable-next-line
 import { useRef, useState, useLayoutEffect, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';

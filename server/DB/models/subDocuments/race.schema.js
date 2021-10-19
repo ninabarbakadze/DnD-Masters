@@ -1,18 +1,18 @@
 const { mongoose } = require('../../connection');
-const abilities = require('./abilities.schema');
+const traitSchema = require('./traits.scema');
+// const abilities = require('./abilities.schema');
 
 const { Schema } = mongoose;
 const raceSchema = new Schema({
   name: String,
-  speed: Number,
-  age: String,
   size: String,
-  sizeDescription: String,
-  abilityModifier: abilities,
-  languages: [String],
-  features: [String],
-  languageDesc: String,
-  traits: [String],
-  subRaces: [String],
+  traits: [traitSchema],
+  subRaces: String,
+  // age: String,
+  // speed: Number,
+  // sizeDescription: String,
+  // languages: [String],
+  // features: [String],
+  // languageDesc: String,
 });
 module.exports = raceSchema;

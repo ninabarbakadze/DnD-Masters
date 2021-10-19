@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useState, useRef } from 'react';
 import './ImageUpload.scss';
 

@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useState, MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
+import { useHistory } from 'react-router';
 import { loginAction } from '../../actions/user.actions';
-import { registerUser, logIn, getUser } from '../../services/user.services';
+import { registerUser, logIn /* getUser */ } from '../../services/user.services';
 import './Login.scss';
 
+<<<<<<< HEAD
 type Inputs = {
   username: string;
   password: string;
@@ -18,14 +19,20 @@ export default function Login() {
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   // const [confirmPassword, setConfirmPassword] = useState('');
+=======
+/* eslint-disable
+ */export default function Login() {
+>>>>>>> ab08ef741af5c87a8421c61957e5218ed8ba0219
   const [isLogin, setIsLogin] = useState(true);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
   const dispatch = useDispatch();
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<Inputs>();
+  const history = useHistory();
 
+
+<<<<<<< HEAD
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (isLogin) {
       await logIn({ username: data.username, password: data.password });
@@ -40,36 +47,64 @@ export default function Login() {
         email: data.email,
         password: data.password,
       });
+=======
+  const handleSubmit = async (data: object, e: MouseEvent) => {
+    e.preventDefault()
+      if (isLogin) {
+        const user = await logIn({ username, password });
+        console.log(user);
+        Cookies.set('user', user.username);
+        dispatch(loginAction(user.username));
+        history.push('/Dashboard')
+      } else {
+        await registerUser({
+          username,
+          email,
+          password,
+        });
+>>>>>>> ab08ef741af5c87a8421c61957e5218ed8ba0219
     }
   };
 
   const logOut = (): void => {
     Cookies.remove('user');
+    window.location.reload();
   };
 
   return (
     <div className="form-container">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* @ts-ignore */}
+      <form onSubmit={(e) => handleSubmit({ username, email, password }, e)}>
         <input
+          type="text"
           placeholder="Username"
-          {...register('username', { required: true })}
+          value={username}
+          id="username"
+          onChange={(e) => { setUsername(e.target.value); }}
         />
-        {errors.username?.type === 'required' && 'Username must be filled out'}
         {!isLogin && (
           <input
+            type="text"
             placeholder="Email"
-            {...register('email', { required: true })}
+            value={email}
+            id="email"
+            onChange={(e) => { setEmail(e.target.value); }}
           />
         )}
         <input
           placeholder="Password"
-          {...register('password', { required: true })}
+          type="password"
+          value={password}
+          id="password"
+          onChange={(e) => { setPassword(e.target.value); }}
         />
-        {errors.password?.type === 'required' && 'Password must be filled out'}
         {!isLogin && (
           <input
             placeholder="Confirm Password"
-            {...register('passwordConfirm', { required: true })}
+            type="password"
+            value={passwordConfirm}
+            id="password"
+            onChange={(e) => { setPasswordConfirm(e.target.value); }}
           />
         )}
         <button className="submit-btn" type="submit">

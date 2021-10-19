@@ -1,11 +1,13 @@
 const { mongoose } = require('../connection');
-const abilities = require('./subDocuments/abilities.schema');
 const skills = require('./subDocuments/skills.schema');
+const abilities = require('./subDocuments/abilities.schema');
 const weapon = require('./subDocuments/weapons.schema');
-const spell = require('./subDocuments/spell.schema');
+// const spell = require('./subDocuments/spell.schema');
 const characterRace = require('./subDocuments/race.schema');
 const characterClass = require('./subDocuments/class.schema');
 const equipment = require('./subDocuments/equipment.schema');
+const languages = require('./subDocuments/traits.scema');
+const charDetails = require('./subDocuments/pesonalDetails.Schema');
 
 const { Schema } = mongoose;
 const characterSchema = new Schema({
@@ -13,33 +15,23 @@ const characterSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  name: String,
   xp: {
     type: Number,
     default: 0,
-  },
-  level: {
-    type: Number,
-    default: 1,
   },
   characterName: {
     type: String,
     required: true,
   },
-  race: characterRace,
-  class: characterClass,
   alignment: {
     type: String,
     required: true,
   },
-  speedModifier: {
-    type: Number,
-    default: 0,
+  speed: {
+    walk: Number,
   },
-  initiativeModifier: {
-    type: Number,
-    default: 0,
-  },
-  initiativeAdjustment: {
+  initiative: {
     type: Number,
     default: 0,
   },
@@ -47,50 +39,48 @@ const characterSchema = new Schema({
     type: Number,
     default: 2,
   },
-  abilityScore: abilities,
-  abilityModifier: abilities,
-  savingThrow: [String],
+  background: { name: String },
   armorClass: {
+    value: {
+      type: Number,
+      default: 14,
+    },
+    description: String,
+  },
+
+  hitPoints: {
+    max: {
+      type: Number,
+      default: 0,
+    },
+    current: {
+      type: Number,
+      default: 0,
+    },
+    temporary: {
+      type: Number,
+      default: 0,
+    },
+  },
+  passiveWisdom: {
     type: Number,
     default: 0,
   },
-  hitPointsMax: {
-    type: Number,
-    default: 0,
-  },
-  hitPointsCurrent: {
-    type: Number,
-    default: 0,
-  },
-  hitPointsTemporary: {
-    type: Number,
-    default: 0,
-  },
-  hitDice: [String],
   deathSaves: {
     success: { type: Number, default: 0, max: [3, 'max successful saves reached'] },
-    failure: { type: Number, default: 0, max: [3, 'max failed saves reached'] },
+    fails: { type: Number, default: 0, max: [3, 'max failed saves reached'] },
   },
-  advantages: [String],
-  disadvantages: [String],
-  passivePerceptionAdjustment: {
-    type: Number,
-    default: 0,
-  },
-  initiative: {
-    type: Number,
-    default: 0,
-  },
+  languages: [languages],
+
   skills,
-  weaponsProficient: [String],
-  armorProficient: [String],
-  otherProficient: [String],
-  saves: [String],
-  equipments: [equipment],
-  weapons: [weapon],
-  damageDice: [String],
-  damage: { type: Number, default: 0 },
-  spells: [spell],
+  details: charDetails,
+  abilityScore: abilities,
+  savingThrow: [String],
+  weapons: [weapon], //
+  spells: {
+    name: String,
+    desc: [String],
+  },
   currency: {
     CP: Number,
     SP: Number,
@@ -98,6 +88,12 @@ const characterSchema = new Schema({
     GP: Number,
     PP: Number,
   },
+  equipments: [equipment],
+  race: characterRace,
+  classes: characterClass,
+  // armorProficient: [String],
+  // otherProficient: [String],
+  // saves: [String],
 });
 
 const character = mongoose.model('Character', characterSchema);

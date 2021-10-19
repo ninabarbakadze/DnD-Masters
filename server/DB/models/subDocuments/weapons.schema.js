@@ -2,9 +2,17 @@ const { mongoose } = require('../../connection');
 
 const { Schema } = mongoose;
 const weaponSchema = new Schema({
-  weapon: String,
-  damageType: String,
-  range: { type: Number, default: 5 },
-  attackBonus: { type: Number, default: 0 },
+  name: String,
+  damage: {
+    dice: {
+      sides: Number,
+      count: Number,
+    },
+    type: String,
+  },
+  equipped: Boolean,
+  properties: {
+    Versatile: Boolean,
+  },
 });
 module.exports = weaponSchema;

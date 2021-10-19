@@ -6,7 +6,8 @@ import CharacterWizard from './Components/CharacterWizard/CharacterWizard';
 import MapWizard from './Components/MapWizard/MapWizard';
 import Dashboard from './Components/Dashboard/Dashboard';
 import EncounterWizard from './Components/EncounterWizard/EncounterWizard';
-import Room from './Components/Chat/Room';
+// import Room from './Components/Chat/Room';
+import GameRoom from './Components/Game/GameRoom';
 
 function App() {
   return (
@@ -30,9 +31,12 @@ function App() {
         <Route path="/dashboard">
           <Dashboard />
         </Route>
-        <Route path="/chat">
-          <Room />
+        <Route path="/play">
+          <GameRoom />
         </Route>
+        {/* <Route path="/chat">
+          <Room />
+        </Route> */}
       </Switch>
     </Router>
   );
