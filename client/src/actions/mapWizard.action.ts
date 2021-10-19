@@ -30,3 +30,8 @@ export const setCurrentDescription: PayloadAction<iMap> = (mapData) => ({
   type: 'SET_CURRENT_DESCRIPTION',
   payload: mapData,
 });
+
+export const updateMapNameAndId: PayloadAction<iMap> = (mapData) => ({
+  type: 'UPDATE_MAP_NAME_AND_ID',
+  payload: mapData,
+});

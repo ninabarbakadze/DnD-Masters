@@ -1,5 +1,3 @@
-import { iElement } from '../interfaces/map.interface';
-
 const baseUrl = 'http://localhost:3001/';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
@@ -11,35 +9,47 @@ interface iData {
 }
 
 export async function getAllMaps(username: string) {
-  const maps = await fetch(`${baseUrl}${username}/maps`);
-  return maps.json();
+  try {
+    const maps = await fetch(`${baseUrl}${username}/maps`);
+    return maps.json();
+  } catch (err) {
+    return console.error(err);
+  }
 }
 
 export async function getMap(username: string, mapId: string) {
-  const map = await fetch(`${baseUrl}${username}/maps/${mapId}`);
-  return map.json();
+  try {
+    const map = await fetch(`${baseUrl}${username}/maps/${mapId}`);
+    return map.json();
+  } catch (err) {
+    return console.error(err);
+  }
 }
 
-export async function updateMap(
-  username: string,
-  mapId: string,
-  data: iElement,
-) {
-  const updatedMap = await fetch(`${baseUrl}${username}/maps/${mapId}`, {
-    method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(data),
-  });
-  return updatedMap.json();
+export async function updateMap(username: string, mapId: string, data: iData) {
+  try {
+    const updatedMap = await fetch(`${baseUrl}${username}/maps/${mapId}`, {
+      method: 'PUT',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    return updatedMap.json();
+  } catch (err) {
+    return console.error(err);
+  }
 }
 
 export async function deleteMap(username: string, mapId: string) {
-  const response = await fetch(`${baseUrl}${username}/maps/${mapId}`, {
-    method: 'DELETE',
-    headers,
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${baseUrl}${username}/maps/${mapId}`, {
+      method: 'DELETE',
+      headers,
+    });
+    return response.json();
+  } catch (err) {
+    return console.error(err);
+  }
 }
 
 export async function saveMap(username: string, data: iData) {
@@ -50,7 +60,6 @@ export async function saveMap(username: string, data: iData) {
       credentials: 'include',
       body: JSON.stringify(data),
     });
-    console.log(createdMap);
     return createdMap.json();
   } catch (err) {
     return console.error(err);

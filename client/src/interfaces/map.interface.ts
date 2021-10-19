@@ -9,6 +9,7 @@ export interface iElement {
 
 export interface iMap {
   mapName?: string;
+  mapId?: string;
   mapUrl?: string;
   selectedElement?: string;
   elementArr?: iElement[];

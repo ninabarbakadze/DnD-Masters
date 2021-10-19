@@ -15,7 +15,7 @@ import {
   updateLocationArr,
 } from '../../../actions/mapWizard.action';
 import { iElement } from '../../../interfaces/map.interface';
-import { saveMap } from '../../../services/map.service';
+import { saveMap, updateMap } from '../../../services/map.service';
 
 export default function MapEdit() {
   const dispatch = useDispatch();
@@ -23,8 +23,15 @@ export default function MapEdit() {
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
   // eslint-disable-next-line
-  const { selectedElement, locationArr, elementArr, mapUrl, username } =
-    useSelector((state: IRootState) => state.mapCreationReducer);
+  const {
+    selectedElement,
+    locationArr,
+    elementArr,
+    mapUrl,
+    username,
+    mapName,
+    mapId,
+  } = useSelector((state: IRootState) => state.mapCreationReducer);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
@@ -202,10 +209,20 @@ export default function MapEdit() {
     dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
   }
 
-  async function onSaveModalSubmit(mapName: string) {
+  async function onSaveModalSubmit(name: string) {
     if (!username || !mapUrl) return;
-    const data = { mapName, mapUrl, locationData: JSON.stringify(elementArr) };
-    await saveMap(username, data);
+    const data = {
+      mapName: name,
+      mapUrl,
+      locationData: JSON.stringify(elementArr),
+    };
+    if (name === mapName) {
+      if (!mapId) return;
+      console.log(data);
+      await updateMap(username, mapId, data);
+    } else {
+      await saveMap(username, data);
+    }
     alert('map saved');
   }
 
@@ -258,6 +275,7 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
+      {console.log(mapUrl)}
       <div className="map-edit-image">
         <svg
           className="main-svg"
@@ -281,7 +299,7 @@ export default function MapEdit() {
             <img
               ref={imgRef}
               // eslint-disable-next-line
-              src="https://explorednd.com/wp-content/uploads/2021/05/DD-Maps.png"
+              src={mapUrl}
               alt=""
             />
           </foreignObject>
