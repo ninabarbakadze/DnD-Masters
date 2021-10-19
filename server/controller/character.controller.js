@@ -46,12 +46,10 @@ const getCharacter = async (req, res) => {
 };
 
 const updateCharacter = async (req, res) => {
-  console.log('hit controller');
   try {
     const updatedChar = await Character.findByIdAndUpdate(
       req.params.characterId, req.body, { new: true },
     );
-    console.log('controller updated character', updatedChar);
     res.status(201).json(updatedChar);
   } catch (err) {
     res.status(500).send({ message: err.message });
