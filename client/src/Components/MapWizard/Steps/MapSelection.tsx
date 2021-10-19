@@ -35,7 +35,7 @@ export default function MapSelection({ history }: any) {
         updateMapNameAndId({
           mapName,
           // eslint-disable-next-line
-          mapId,
+          mapId: mapArr[mapIndex - 1]._id,
           mapUrl,
         }),
       );

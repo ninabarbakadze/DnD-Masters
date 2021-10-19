@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateSelectedElement,
@@ -8,7 +7,6 @@ import MapSelectionItem from '../MapSelectionItem/MapSelectionItem';
 import { IRootState } from '../../../reducers';
 
 export default function PointSelection() {
-  // const [selectedElement, setSelectedElement] = useState('');
   const dispatch = useDispatch();
   const { shouldDelete } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
@@ -57,7 +55,6 @@ export default function PointSelection() {
   const elementNames = ['element1', 'element2', 'element3'];
 
   const selectItem = (elementName: string) => {
-    // console.log(evt.target.firstChild);
     dispatch(updateSelectedElement({ selectedElement: elementName }));
   };
 

@@ -196,6 +196,7 @@ export default function MapEdit() {
             yCoord={svgCoord.y}
             element={element}
             getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+            Key={id}
           />,
         ],
       }),
@@ -297,10 +298,11 @@ export default function MapEdit() {
       );
     });
     dispatch(updateLocationArr({ locationArr: locations }));
-  }, [elementArr]);
+  }, []);
 
   return (
     <div className="map-edit-container">
+      {console.log(mapId)}
       <div className="map-edit-image">
         <svg
           className="main-svg"
