@@ -15,7 +15,7 @@ import {
   updateLocationArr,
 } from '../../../actions/mapWizard.action';
 import { iElement } from '../../../interfaces/map.interface';
-// import { saveMap } from '../../../services/map.service';
+import { saveMap } from '../../../services/map.service';
 
 export default function MapEdit() {
   const dispatch = useDispatch();
@@ -23,9 +23,8 @@ export default function MapEdit() {
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
   // eslint-disable-next-line
-  const { selectedElement, locationArr, elementArr, mapUrl } = useSelector(
-    (state: IRootState) => state.mapCreationReducer,
-  );
+  const { selectedElement, locationArr, elementArr, mapUrl, username } =
+    useSelector((state: IRootState) => state.mapCreationReducer);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
@@ -203,10 +202,11 @@ export default function MapEdit() {
     dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
   }
 
-  async function onSaveModalSubmit(name: string) {
-    // const data = { mapName: name, mapUrl, locationData: elementArr };
-    // await saveMap(username, data);
-    console.log(name, elementArr);
+  async function onSaveModalSubmit(mapName: string) {
+    if (!username || !mapUrl) return;
+    const data = { mapName, mapUrl, locationData: JSON.stringify(elementArr) };
+    await saveMap(username, data);
+    alert('map saved');
   }
 
   const setPoint = (evt: any) => {
@@ -280,7 +280,8 @@ export default function MapEdit() {
           >
             <img
               ref={imgRef}
-              src="https://i.redd.it/pq61m18mmzp51.jpg"
+              // eslint-disable-next-line
+              src="https://explorednd.com/wp-content/uploads/2021/05/DD-Maps.png"
               alt=""
             />
           </foreignObject>

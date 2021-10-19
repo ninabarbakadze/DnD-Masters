@@ -1,8 +1,14 @@
 import { iElement } from '../interfaces/map.interface';
 
-const baseUrl = 'http://localhost/3001/';
+const baseUrl = 'http://localhost:3001/';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
+
+interface iData {
+  mapName: string;
+  mapUrl: string;
+  locationData?: string;
+}
 
 export async function getAllMaps(username: string) {
   const maps = await fetch(`${baseUrl}${username}/maps`);
@@ -36,12 +42,17 @@ export async function deleteMap(username: string, mapId: string) {
   return response.json();
 }
 
-export async function saveMap(username: string, data: iElement) {
-  const createdMap = await fetch(`${baseUrl}${username}/map/new}`, {
-    method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(data),
-  });
-  return createdMap.json();
+export async function saveMap(username: string, data: iData) {
+  try {
+    const createdMap = await fetch(`${baseUrl}${username}/map/new`, {
+      method: 'POST',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    console.log(createdMap);
+    return createdMap.json();
+  } catch (err) {
+    return console.error(err);
+  }
 }

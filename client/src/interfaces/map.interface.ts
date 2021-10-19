@@ -16,4 +16,5 @@ export interface iMap {
   shouldDelete?: boolean;
   currentDescription?: string;
   currentName?: string;
+  username?: string;
 }
