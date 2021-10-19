@@ -3,7 +3,7 @@ import {
   characterCreationReducer,
   characterWizardStateReducer,
 } from './CharacterCreation.reducer';
-import socketReducer from './Socketl.reducer';
+import socketReducer from './Socket.reducer';
 import userReducer from './user.reducer';
 import gameReducer, { iGameWizardState } from './game.reducer';
 import {

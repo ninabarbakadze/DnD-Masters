@@ -5,16 +5,17 @@
 // @ts-nocheck
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { joinGame } from '../../actions/Socket.action';
 // import { Socket } from 'socket.io-client';
-import { IRootState } from '../../reducers';
+// import { IRootState } from '../../reducers';
 import { createSocket } from '../../services/socket.service';
 
-const PlayerJoin = () => {
+const PlayerJoin = ({ activateGame }: any) => {
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState<string>('');
   const [roomCode, setRoomCode] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(true);
-  const socket = useSelector((state: IRootState) => state.socketReducer);
+  // const socket = useSelector((state: IRootState) => state.socketReducer);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
@@ -25,7 +26,9 @@ const PlayerJoin = () => {
 
   function handleClick() {
     console.log('clicked');
-    dispatch(createSocket());
+    dispatch(joinGame(roomCode));
+    // createSocket();
+    activateGame(true);
     // if (!socket) {
     // const sock = createSocket();
 

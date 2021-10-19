@@ -8,6 +8,7 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import EncounterWizard from './Components/EncounterWizard/EncounterWizard';
 // import Room from './Components/Chat/Room';
 import GameRoom from './Components/Game/GameRoom';
+import Dice from './Components/Dice/Dice';
 
 function App() {
   return (
@@ -34,9 +35,9 @@ function App() {
         <Route path="/play">
           <GameRoom />
         </Route>
-        {/* <Route path="/chat">
-          <Room />
-        </Route> */}
+        <Route path="/dice">
+          <Dice />
+        </Route>
       </Switch>
     </Router>
   );
