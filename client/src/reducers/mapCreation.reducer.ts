@@ -1,7 +1,11 @@
 import { iMap } from '../interfaces/map.interface';
 import { iAction } from '../interfaces/redux.interface';
 
-const initialState: iMap = { shouldDelete: false, locationArr: [] };
+const initialState: iMap = {
+  shouldDelete: false,
+  locationArr: [],
+  elementArr: [],
+};
 
 const mapCreationReducer = (
   state: iMap = initialState,
@@ -32,6 +36,12 @@ const mapCreationReducer = (
       return {
         ...state,
         shouldDelete: !state.shouldDelete,
+      };
+    case 'SET_CURRENT_DESCRIPTION':
+      return {
+        ...state,
+        currentDescription: payload.currentDescription,
+        currentName: payload.currentName,
       };
     default:
       return state;

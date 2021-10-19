@@ -1,11 +1,15 @@
 // eslint-disable-next-line
 import { useState, useEffect, useRef } from 'react';
 
-export default function MapSelectionItem({ element, selectItem }: any) {
+export default function MapSelectionItem({
+  element,
+  selectItem,
+  elementName,
+}: any) {
   const node = useRef(null);
   const [isSelected, setIsSelected] = useState(false);
-  const handleClick = (e: any) => {
-    selectItem(e);
+  const handleClick = () => {
+    selectItem(elementName);
     setIsSelected(true);
   };
 
@@ -25,11 +29,15 @@ export default function MapSelectionItem({ element, selectItem }: any) {
   }, []);
 
   return (
-    <div className="element-presentation">
+    // eslint-disable-next-line
+    <div onClick={handleClick} className="element-presentation">
+      {/* {console.log(element.props.dataset)} */}
       <svg
         ref={node}
-        onClick={handleClick}
-        className={isSelected ? 'isSelected' : ''}
+        // onClick={handleClick}
+        className={
+          isSelected ? 'isSelected non-click-layer' : 'non-click-layer'
+        }
         width="100"
         height="100"
       >
