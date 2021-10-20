@@ -42,7 +42,7 @@ export default function GameWizard() {
           <SelectMap onSubmit={onSubmit} path="/gameWizard/step3" />
         </Route>
         <Route path="/gameWizard/step3">
-          <Invitation onSubmit={onWizardComplete} />
+          <Invitation onSubmit={onSubmit} />
         </Route>
       </Switch>
     </div>

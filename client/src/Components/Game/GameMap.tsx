@@ -4,18 +4,14 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 import MapItem from '../MapWizard/MapItem/MapItem';
 import getMapElements from '../../assets/mapElements/mapData';
-import { getMap } from '../../services/map.service';
 import { IRootState } from '../../reducers';
 
 export default function GameMap() {
   const imgRef = useRef<any>(null);
-  // const dispatch = useDispatch();
-  const { mapId, mapUrl } = useSelector(
+  const { mapUrl, elementArr } = useSelector(
     (state: IRootState) => state.gameCreationReducer,
   );
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
-  // const [mapUrl, setMapurl] = useState('');
-  const [mapElements, setMapElements] = useState<any[]>([]);
   const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
@@ -34,21 +30,11 @@ export default function GameMap() {
   const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
   const [keyCode, setKeyCode] = useState('');
 
-  const getMapData = async () => {
-    const mapData = await getMap('ruso', mapId);
-    // setMapurl(mapData.mapUrl);
-    setMapElements(mapData.locationData);
-  };
-
   useLayoutEffect(() => {
     setViewBoxString(
       `${newViewBox.x} ${newViewBox.y} ${newViewBox.width} ${newViewBox.height}`,
     );
   }, [newViewBox]);
-
-  useEffect(() => {
-    getMapData();
-  }, []);
 
   useEffect(() => {
     document.addEventListener('keydown', (evt) => {
@@ -63,14 +49,6 @@ export default function GameMap() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (imgRef.current) {
-  //     setDimensions({
-  //       width: imgRef.current.offsetWidth,
-  //       height: imgRef.current.offsetHeight,
-  //     });
-  //   }
-  // }, [mapUrl, imgRef.current]);
   // Panning
   function getPointFromEvent(evt: any) {
     const point = { x: 0, y: 0 };
@@ -150,15 +128,14 @@ export default function GameMap() {
   }, []);
 
   useEffect(() => {
-    if (mapElements.length === 0) return;
-    const locations = mapElements.map((element) => {
+    const locations = elementArr?.map((element) => {
       const el = getMapElements(element.x, element.y, element.elementName);
       return (
         <MapItem
           // eslint-disable-next-line
           // deleteLocation={deleteLocation}
           id={element.id}
-          locationName={element.elementName}
+          locationName={element.title}
           locationDescription={element.description}
           xCoord={element.x}
           yCoord={element.y}
@@ -172,7 +149,6 @@ export default function GameMap() {
 
   return (
     <div className="map-edit-image">
-      {console.log(mapElements)}
       <div>
         <svg
           className="main-svg"
