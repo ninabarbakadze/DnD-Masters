@@ -7,7 +7,7 @@ import './EditableDisplayComponent.scss';
 type Input= {textfieldValue: string | number };
 interface IProps {
   action:any
-  initialVal?: string | number
+  initialVal?: string | number | any
   inputType:string | number
   options?: string[] | undefined
   itemKey?: string
@@ -83,8 +83,14 @@ export default function EditableDisplayComponent({
                 {...register('textfieldValue')}
                 onChange={handleChange}
                 value={textfieldValue}
+                // placeholder="select"
               >
-                  {options?.map((option) => (<option key={`header-${option}`}>{option}</option>))}
+                <option> Select...</option>
+                  {options?.map((option) => (
+                    <option key={`header-${option}`}>
+                      {option}
+                    </option>
+                  ))}
               </select>
               ))}
         <button

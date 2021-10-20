@@ -1,59 +1,80 @@
+/* eslint-disable arrow-body-style */
+import { iCharacter } from '../interfaces/character.interface';
+
 const headers = new Headers({ 'Content-Type': 'application/json' });
-const host = 'http://localhost:3001';
 
-// @ts-ignore
-const saveCharacter = (username, character) => (
-  fetch(`${host}/${username}/characters/new`, {
-    method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(character),
-  }).then((res) => res.json())
-    .then((res) => res)
-    .catch((err) => { console.log(err); }));
-// @ts-ignore
+const json = (response: Response) => response.json();
 
-const getCharacter = (username, characterId) => (
-  fetch(`${host}/${username}/characters/${characterId}`, {
-    method: 'GET',
-    headers,
-    credentials: 'include',
-  }).then((res) => res.json())
-    .then((res) => console.log(res))
-);
-// @ts-ignore
-
-const updateCharacter = (username, characterId, character) => {
-  console.log(typeof characterId);
-  return fetch(`${host}/${username}/characters/${characterId}`, {
-    method: 'PUT',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(character),
-  }).then((res) => res.json())
-    .then((res) => res);
+export const saveCharacter = (username: string, character: iCharacter) => {
+  return fetch(
+    `${process.env.REACT_APP_SERVER_URL}/${username}/characters/new`,
+    {
+      method: 'POST',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify(character),
+    },
+  )
+    .then(json)
+    .catch(console.log);
 };
-// @ts-ignore
 
-const deleteCharacter = (username, characterId) => (
+export const getCharacter = (
+  username: string,
+  characterId: string,
+): Promise<iCharacter> => {
+  return fetch(
+    `${process.env.REACT_APP_SERVER_URL}/${username}/characters/${characterId}`,
+    {
+      method: 'GET',
+      headers,
+      credentials: 'include',
+    },
+  )
+    .then(json)
+    .catch(console.log);
+};
 
-  fetch(`${host}/${username}/character/${characterId}`, {
-    method: 'DELETE',
-    headers,
-    credentials: 'include',
-  }).then((res) => res.json())
-    .then((res) => res)
-);
-// @ts-ignore
+export const updateCharacter = (
+  username: string,
+  characterId: string,
+  character: iCharacter,
+) => {
+  return fetch(
+    `${process.env.REACT_APP_SERVER_URL}/${username}/characters/${characterId}`,
+    {
+      method: 'PUT',
+      headers,
+      credentials: 'include',
+      body: JSON.stringify(character),
+    },
+  )
+    .then(json)
+    .catch(console.log);
+};
 
-const getAllCharacters = (username) => (
-  fetch(`${host}/${username}/character/characters`, {
-    method: 'GET',
-    headers,
-    credentials: 'include',
-  }).then((res) => res.json())
-    .then((res) => res)
-);
-export {
-  getCharacter, saveCharacter, updateCharacter, deleteCharacter, getAllCharacters,
+export const deleteCharacter = (username: string, characterId: string) => {
+  return fetch(
+    `${process.env.REACT_APP_SERVER_URL}/${username}/character/${characterId}`,
+    {
+      method: 'DELETE',
+      headers,
+      credentials: 'include',
+    },
+  )
+    .then(json)
+    .catch(console.log);
+};
+
+export const getAllCharacter = (username: string): Promise<any[]> => {
+  return fetch(
+    `${process.env.REACT_APP_SERVER_URL}/${username}/character/characters`,
+    {
+      method: 'GET',
+      headers,
+      credentials: 'include',
+    },
+  )
+    .then(json)
+    .catch(console.log);
 };

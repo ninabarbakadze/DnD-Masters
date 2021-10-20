@@ -5,9 +5,11 @@
 // @ts-nocheck
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { joinGame } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
-import { getAllCharacters } from '../../services/character.sevices';
+import { getAllCharacter } from '../../services/character.sevices';
+import CharacterWizard from '../CharacterWizard/CharacterWizard';
 
 const PlayerJoin = ({ activateGame }: any) => {
   const user = useSelector((state: IRootState) => state.user);
@@ -34,7 +36,7 @@ const PlayerJoin = ({ activateGame }: any) => {
 
   const getCharacters = async () => {
     if (user.name) {
-      const characters = getAllCharacters(user.name);
+      const characters = getAllCharacter(user.name);
       setCharactersArr(characters);
     }
   };
@@ -66,7 +68,9 @@ const PlayerJoin = ({ activateGame }: any) => {
         />
       </div>
       <button type="submit">Choose Character</button>
-      <button type="submit">Create Character</button>
+      <Link to="/characterWizard/raceSelection">
+        <button type="submit">Create Character</button>
+      </Link>
       <button type="button" disabled={disabled} onClick={() => handleClick()}>
         Join Room!
       </button>
