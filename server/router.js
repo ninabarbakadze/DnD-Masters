@@ -2,8 +2,7 @@ const router = require('express').Router();
 const { register, logIn, getUser } = require('./controller/user.controller');
 const {
   createCharacter, getUsersCharacters,
-  deleteCharacter,
-  updateCharacter,
+  deleteCharacter, updateCharacter,
   getCharacter,
 } = require('./controller/character.controller');
 const {
@@ -22,7 +21,7 @@ router.post('/:username/map/new', createMap);
 router.get('/:username/characters/:characterId', getCharacter);
 router.delete('/:username/characters/:characterId', deleteCharacter);
 router.put('/:username/characters/:characterId', updateCharacter);
-router.get('/:username/characters/characters', getUsersCharacters);
+router.get('/:username/characters/', getUsersCharacters);
 router.post('/:username/characters/new', createCharacter);
 
 module.exports = router;

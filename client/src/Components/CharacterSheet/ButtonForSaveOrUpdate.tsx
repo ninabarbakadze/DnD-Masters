@@ -18,11 +18,8 @@ export default function ButtonForSaveOrUpdate({
   const handleClick = () => {
     history.push('/dashboard');
     if (body.saved) {
-      console.log('saved', body.saved);
-      // const { _id, ...updatedCharacter } = body;
       return updateCharacter(username, body._id, body).then((res) => {
         set({ ...res });
-        console.log('updated');
       });
     }
     if (!body.saved) {

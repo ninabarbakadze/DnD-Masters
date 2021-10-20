@@ -31,9 +31,9 @@ const register = (req, res) => {
           username: req.body.username,
           password: hashedPassword,
         });
-        await newUser.save();
+        const created = await newUser.save();
         res.status(200);
-        res.send(user);
+        res.send(created);
       }
     });
   } catch (err) {
