@@ -6,9 +6,12 @@ import { IRootState } from '../../../reducers';
 function Name({ path, onSubmit }: any) {
   const [name, setName] = useState('');
   const [tags, setTags] = useState('');
-  const gameWizard = useSelector((state: IRootState) => state.game);
+  const gameWizard = useSelector(
+    (state: IRootState) => state.gameCreationReducer,
+  );
 
   const handleSubmit = () => {
+    console.log(name);
     onSubmit({ name, tags }, updateNameAndTag, path);
   };
 
@@ -18,7 +21,9 @@ function Name({ path, onSubmit }: any) {
         value={name}
         placeholder="Name of the Game"
         id="name"
-        onChange={(e) => { setName(e.target.value); }}
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
         defaultValue={gameWizard.name}
         required
       />
@@ -26,7 +31,9 @@ function Name({ path, onSubmit }: any) {
         value={tags}
         placeholder="Tags"
         id="tags"
-        onChange={(e) => { setTags(e.target.value); }}
+        onChange={(e) => {
+          setTags(e.target.value);
+        }}
         defaultValue={gameWizard.tags}
       />
       <button type="submit">Submit</button>

@@ -15,9 +15,9 @@ interface IAction {
   payload: iGameWizardState;
 }
 
-const gameReducer = (state = initialState, action: IAction) => {
+const gameCreationReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
-    case 'UPDATE_NAME':
+    case 'UPDATE_NAME_AND_TAG':
       return {
         ...state,
         name: action.payload.name,
@@ -33,4 +33,4 @@ const gameReducer = (state = initialState, action: IAction) => {
   }
 };
 
-export default gameReducer;
+export default gameCreationReducer;

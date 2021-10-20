@@ -19,7 +19,10 @@ function SelectMap({ onSubmit, path }: any) {
     const loadedMaps = await getAllMaps('ruso');
     setMapArr(loadedMaps);
     setItems(
-      loadedMaps.map((map: any) => <MapCarouselItem url={map.mapUrl} />),
+      loadedMaps.map((map: any) => (
+        // eslint-disable-next-line
+        <MapCarouselItem url={map.mapUrl} key={map._id} />
+      )),
     );
   }
 

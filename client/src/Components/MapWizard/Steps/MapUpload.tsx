@@ -10,7 +10,6 @@ import InfoModal from '../../InfoModal/InfoModal';
 export default function MapUpload({ history }: any) {
   const dispatch = useDispatch();
   const [file, setFile] = useState<File | undefined>();
-  // const [url, setUrl] = useState('');
   const [mapUploaded, setMapUploaded] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
@@ -36,11 +35,6 @@ export default function MapUpload({ history }: any) {
     setIsModal(!isModal);
     setMapUploaded(true);
   };
-
-  // useEffect(() => {
-  //   dispatch(updateUrl({ mapUrl: url }));
-  //   console.log(url);
-  // }, [url]);
 
   const toggleModal = () => {
     setIsModal(!isModal);
