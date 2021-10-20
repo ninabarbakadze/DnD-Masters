@@ -11,15 +11,22 @@ function SelectMap({ onSubmit, path }: any) {
   const [items, setItems] = useState<JSX.Element[]>([]);
 
   const nextPage = () => {
-    // eslint-disable-next-line
-    onSubmit({ mapId: mapArr[mapIndex]._id }, updateMap, path);
+    onSubmit(
+      // eslint-disable-next-line
+      { mapId: mapArr[mapIndex]._id, mapUrl: mapArr[mapIndex].mapUrl },
+      updateMap,
+      path,
+    );
   };
 
   async function getMaps() {
     const loadedMaps = await getAllMaps('ruso');
     setMapArr(loadedMaps);
     setItems(
-      loadedMaps.map((map: any) => <MapCarouselItem url={map.mapUrl} />),
+      loadedMaps.map((map: any) => (
+        // eslint-disable-next-line
+        <MapCarouselItem url={map.mapUrl} key={map._id} />
+      )),
     );
   }
 

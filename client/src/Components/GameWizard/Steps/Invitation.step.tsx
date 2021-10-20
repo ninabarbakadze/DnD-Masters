@@ -1,6 +1,11 @@
 import { withRouter } from 'react-router-dom';
 
 function Invitation({ onSubmit }: any) {
+  // const handleClick = () => {
+
+  //   onSubmit();
+  // }
+
   return (
     <div>
       <p>
