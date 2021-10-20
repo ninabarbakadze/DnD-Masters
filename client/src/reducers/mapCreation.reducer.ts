@@ -5,6 +5,9 @@ const initialState: iMap = {
   shouldDelete: false,
   locationArr: [],
   elementArr: [],
+  mapName: '',
+  mapUrl: 'https://i.redd.it/pq61m18mmzp51.jpg',
+  username: 'ruso',
 };
 
 const mapCreationReducer = (
@@ -42,6 +45,13 @@ const mapCreationReducer = (
         ...state,
         currentDescription: payload.currentDescription,
         currentName: payload.currentName,
+      };
+    case 'UPDATE_MAP_NAME_AND_ID':
+      return {
+        ...state,
+        mapName: payload.mapName,
+        mapId: payload.mapId,
+        mapUrl: payload.mapUrl,
       };
     default:
       return state;

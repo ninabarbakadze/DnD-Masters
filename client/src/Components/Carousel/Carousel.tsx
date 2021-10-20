@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import './Carousel.scss';
 
 export default function Carousel(props: any) {
-  const { children, show, setIndex } = props;
+  // eslint-disable-next-line
+  const { children, show, setIndex, refresh } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(children.length);
 
@@ -24,6 +25,10 @@ export default function Carousel(props: any) {
       setIndex((prevIndex: number) => prevIndex - 1);
     }
   };
+
+  useEffect(() => {
+    prev();
+  }, [refresh]);
 
   return (
     <div className="carousel-container">

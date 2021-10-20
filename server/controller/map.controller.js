@@ -38,7 +38,7 @@ exports.getUserMap = async (req, res) => {
 exports.deleteMap = async (req, res) => {
   try {
     await Map.findByIdAndDelete(req.params.mapId);
-    res.send('Map deleted');
+    res.send({ message: 'Map deleted' });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -47,6 +47,7 @@ exports.deleteMap = async (req, res) => {
 exports.updateMap = async (req, res) => {
   try {
     const newMap = await Map.findByIdAndUpdate(req.params.mapId, req.body, { new: true });
+    console.log(newMap);
     res.send(newMap);
   } catch (err) {
     res.status(500).send({ message: err.message });
