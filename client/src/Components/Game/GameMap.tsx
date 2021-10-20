@@ -142,7 +142,6 @@ export default function GameMap() {
     setTimeout(() => {
       // @ts-expect-error
       const bbox = document.querySelector('.test1')?.getBBox();
-      console.log(bbox);
       setDimensions({
         width: bbox.width,
         height: bbox.height,
@@ -151,7 +150,7 @@ export default function GameMap() {
   }, []);
 
   useEffect(() => {
-    // if (!elementArr) return;
+    if (mapElements.length === 0) return;
     const locations = mapElements.map((element) => {
       const el = getMapElements(element.x, element.y, element.elementName);
       return (
