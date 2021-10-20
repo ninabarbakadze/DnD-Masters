@@ -26,7 +26,6 @@ export default function CharacterSheetSkills({
 }:IProps) {
   const [hide, setHide] = useState(true);
   const filteredSkills = skills.filter((item) => item.proficient === true);
-  console.log(bonus);
   const renderList = (arr: ISkills[]) => (
     <div>
       {arr.map((skill) => (
