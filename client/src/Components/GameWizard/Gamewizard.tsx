@@ -7,6 +7,8 @@ import Name from './Steps/Name.step';
 import SelectMap from './Steps/SelectMap.step';
 import Invitation from './Steps/Invitation.step';
 
+import './GameWizard.scss';
+
 export default function GameWizard() {
   const dispatch = useDispatch();
   const history = useHistory();
