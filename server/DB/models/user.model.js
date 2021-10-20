@@ -6,7 +6,7 @@ const userSchema = new Schema({
   username: String,
   email: String,
   password: String,
-  characters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Character' }],
+  characters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Characters' }],
   // I think this should be association
   maps: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Map' }],
 });
