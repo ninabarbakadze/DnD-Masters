@@ -11,8 +11,12 @@ function SelectMap({ onSubmit, path }: any) {
   const [items, setItems] = useState<JSX.Element[]>([]);
 
   const nextPage = () => {
-    // eslint-disable-next-line
-    onSubmit({ mapId: mapArr[mapIndex]._id }, updateMap, path);
+    onSubmit(
+      // eslint-disable-next-line
+      { mapId: mapArr[mapIndex]._id, mapUrl: mapArr[mapIndex].mapUrl },
+      updateMap,
+      path,
+    );
   };
 
   async function getMaps() {

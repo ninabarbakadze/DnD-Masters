@@ -2,17 +2,21 @@
 import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import gsap from 'gsap';
+import MapItem from '../MapWizard/MapItem/MapItem';
+import getMapElements from '../../assets/mapElements/mapData';
 import { getMap } from '../../services/map.service';
 import { IRootState } from '../../reducers';
 
 export default function GameMap() {
   const imgRef = useRef<any>(null);
   // const dispatch = useDispatch();
-  const { mapId } = useSelector(
+  const { mapId, mapUrl } = useSelector(
     (state: IRootState) => state.gameCreationReducer,
   );
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
-  const [mapUrl, setMapurl] = useState('');
+  // const [mapUrl, setMapurl] = useState('');
+  const [mapElements, setMapElements] = useState<any[]>([]);
+  const [locationArr, setLocationArr] = useState<JSX.Element[]>([]);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
@@ -28,12 +32,12 @@ export default function GameMap() {
     height: 600,
   });
   const [viewBoxString, setViewBoxString] = useState('-600 -300 1200 600');
-
   const [keyCode, setKeyCode] = useState('');
 
   const getMapData = async () => {
     const mapData = await getMap('ruso', mapId);
-    setMapurl(mapData.mapUrl);
+    // setMapurl(mapData.mapUrl);
+    setMapElements(mapData.locationData);
   };
 
   useLayoutEffect(() => {
@@ -59,15 +63,14 @@ export default function GameMap() {
     });
   }, []);
 
-  useEffect(() => {
-    if (imgRef.current) {
-      setDimensions({
-        width: imgRef.current.offsetWidth,
-        height: imgRef.current.offsetHeight,
-      });
-    }
-  }, [mapUrl, imgRef.current]);
-
+  // useEffect(() => {
+  //   if (imgRef.current) {
+  //     setDimensions({
+  //       width: imgRef.current.offsetWidth,
+  //       height: imgRef.current.offsetHeight,
+  //     });
+  //   }
+  // }, [mapUrl, imgRef.current]);
   // Panning
   function getPointFromEvent(evt: any) {
     const point = { x: 0, y: 0 };
@@ -122,21 +125,76 @@ export default function GameMap() {
     setViewBox(zoomedViewBox);
   }
 
+  // Point
+  function getSVGCoord(x: number, y: number): {} {
+    const svg = document.querySelector('.main-svg');
+    if (!svg) return {};
+    // @ts-expect-error
+    const pt = svg.createSVGPoint();
+    pt.x = x;
+    pt.y = y;
+    // @ts-expect-error
+    const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+    return cursorPoint;
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      // @ts-expect-error
+      const bbox = document.querySelector('.test1')?.getBBox();
+      console.log(bbox);
+      setDimensions({
+        width: bbox.width,
+        height: bbox.height,
+      });
+    }, 1);
+  }, []);
+
+  useEffect(() => {
+    // if (!elementArr) return;
+    const locations = mapElements.map((element) => {
+      const el = getMapElements(element.x, element.y, element.elementName);
+      return (
+        <MapItem
+          // eslint-disable-next-line
+          // deleteLocation={deleteLocation}
+          id={element.id}
+          locationName={element.elementName}
+          locationDescription={element.description}
+          xCoord={element.x}
+          yCoord={element.y}
+          element={el}
+          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+        />
+      );
+    });
+    setLocationArr(locations);
+  }, []);
+
   return (
     <div className="map-edit-image">
-      <svg
-        className="main-svg"
-        onMouseDown={(evt) => {
-          onPointerDown(evt);
-        }}
-        onMouseUp={onPointerUp}
-        onMouseLeave={onPointerUp}
-        onMouseMove={onPointerMove}
-        width="100%"
-        height="100%"
-        viewBox={viewBoxString}
-      >
-        <foreignObject
+      {console.log(mapElements)}
+      <div>
+        <svg
+          className="main-svg"
+          onMouseDown={(evt) => {
+            onPointerDown(evt);
+          }}
+          onMouseUp={onPointerUp}
+          onMouseLeave={onPointerUp}
+          onMouseMove={onPointerMove}
+          width="100%"
+          height="100%"
+          viewBox={viewBoxString}
+        >
+          <image
+            className="test1"
+            x={-dimensions.width / 2}
+            y={-dimensions.height / 2}
+            ref={imgRef}
+            href={mapUrl}
+          />
+          {/* <foreignObject
           width={dimensions.width}
           height={dimensions.height}
           y={-dimensions.height / 2}
@@ -148,9 +206,10 @@ export default function GameMap() {
             src={mapUrl}
             alt=""
           />
-        </foreignObject>
-        {/* {locationArr} */}
-      </svg>
+        </foreignObject> */}
+          {locationArr}
+        </svg>
+      </div>
       <button onClick={() => zoom(0.8)} type="button">
         Zoom In
       </button>
