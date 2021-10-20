@@ -290,7 +290,7 @@ export default function MapEdit() {
         width: bbox.width,
         height: bbox.height,
       });
-    }, 1);
+    }, 1000);
   }, []);
 
   useEffect(() => {
