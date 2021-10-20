@@ -8,8 +8,8 @@ interface props {
 
 const RaceDetails = ({ race }: props) => {
   return (
-    <div className="  flex flex-col justify-center  w-3/5 align-start text-left">
-      <div className=" flex flex-row">
+    <div className=" pr-32 pl-12 flex flex-col justify-center  w-3/5 align-start text-left object-contain">
+      <div>
         <h3>Ability Bonuses</h3>
         {race.ability_bonuses.map((item, index) => {
           return (

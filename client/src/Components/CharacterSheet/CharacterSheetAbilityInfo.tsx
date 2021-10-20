@@ -17,7 +17,8 @@ export default function CharacterSheetAbilityInfo({
   return (
     <div className="character-sheet-ability-info">
       <div className="character-sheet-ability-score">
-        <h5>{ ability}</h5>
+        <b className="ability-title">{ ability}</b>
+        <div className="character-sheet-ability-mod">{positivePrecursor(modifier)}</div>
         <div className="character-sheet-ability-modifier">
           <EditableDisplayComponent
             action={dispatchAction}
@@ -26,7 +27,6 @@ export default function CharacterSheetAbilityInfo({
             itemKey={ability}
           />
         </div>
-        {positivePrecursor(modifier)}
       </div>
     </div>
   );

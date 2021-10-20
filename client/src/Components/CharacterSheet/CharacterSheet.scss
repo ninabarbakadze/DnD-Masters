@@ -1,3 +1,11 @@
+.character-sheet-inspiration,
+.character-sheet-PB,
+.character-sheet-proficiency,
+// character-sheet-saving-throws,
+.character-sheet-action-row-1,
+.character-sheet-action-row-3,
+.character-sheet-action-row-2,
+.character-sheet-languages,
 .character-sheet-body,
 .character-sheet-background,
 .character-sheet,
@@ -6,38 +14,36 @@
 .character-sheet-CLB, 
 .character-sheet-RAX, 
 .character-sheet-action,
+.character-sheet-ability,
 .character-sheet-ability-score,
 .character-sheet-ability-proficiency,
 .character-sheet-armor-initiative-speed,
 .character-sheet-hit-death,
 .character-sheet-saving-throw-skills-tile,
+.character-sheet-perception,
 .character-sheet-equipment{
     display:flex;
 
 }
 .character-sheet{
-    max-width: 120vh;
+    max-width: 150vh;
+    height : 100%;
     flex-direction: row;
     margin:10px;
   color: rgba(0, 0, 0, 0.726);
     font-size: 0.6rem;
     border-radius: 25px;
-    height : 100%;
   
 }
+.character-sheet-ability,
 .character-sheet-ability-score,
 .character-sheet-initial-information
 {
     flex-direction: column;
 }
-// .character-sheet-death-save,
-// .character-sheet-fails,
+
 .character-sheet-success,
-.character-sheet-saving-throw-skills-tile, 
-.character-sheet-header, 
-// .character-sheet-CLB, 
-// .character-sheet-RAX, 
-.character-sheet-action
+.character-sheet-action,
 .character-sheet-equipment
 {
     align-items:center;
@@ -48,7 +54,7 @@
 .character-sheet-header,
 .character-sheet-ability-score{
     align-items: center;
-    justify-content: space-around;}
+    justify-content: space-between;}
     
 .character-sheet-CLB, 
 .character-sheet-RAX{        
@@ -57,7 +63,7 @@
  
 }
 
-.character-sheet-ability-info,
+.character-sheet-ability,
 .character-sheet-inspiration,
 .character-sheet-proficiency-bonus,
 .character-sheet-saving-throws,
@@ -78,40 +84,43 @@
 .character-sheet-personality-features-traits,
 .character-sheet-perception{
     justify-content: space-around;
-    border: solid 2px gray;
-    padding: 3px;
-    margin:3px;
-    max-width:  20vh;
+    padding: 15px;
+    // border: solid 2px gray;
+    border-radius: 25px;
+    margin:5px;
+    background-color : #9ca3af36
+    
+    // max-width:  15vh;
 }
-.character-sheet-ability-modifier,
-.character-sheet-saving-throw-skills-tile{
-    border: solid 1px;
+
+.character-sheet-ability-proficiency{
+    height: 74%;
+    // justify-content: space-around;
 }
 .character-sheet-action{
     justify-content: space-around;
+    height: 100%;
     padding: 30px;
-}
-
-.character-sheet p{
-margin:1px;
 
 }
+
 .character-sheet-death-save{
     width: 100px;
 }
 .character-sheet-background{
     width: auto;
-    height: 85vh;
+    height: 88vh;
     justify-content: center;
 }
 .character-sheet-header{
     // border-radius: 25px  0 0 25px;
     // height: 30vh;
-    padding:50px;
+    justify-content: space-around;
+    padding: 20px;
     width: 60vh;;
 }
 .character-sheet-img{
-    height: 44vh;
+    height: 39vh;
     margin: 7px;
     padding: 5px;
 }
@@ -122,7 +131,9 @@ margin:8px
 }
 
 .character-sheet-initial-information{
- width: 30vh;
+ width: 34vh;
+ height: 100%;
+ justify-content: space-around;
  
 }
 .character-name hr {
@@ -137,12 +148,93 @@ margin:8px
     // color:red;
     border-radius: 0 0 25px 0
 }
+
 .character-sheet-body{
     width: 100%;
+    height: 100%;
     flex-direction: column;
     justify-content: space-between;
 }
-// .character-sheet-header span,
  h3 em {
-    font-size: 0.7rem;;
+    font-size: 0.8rem;
+}
+.character-sheet-action-row-3,
+.character-sheet-action-row-2,
+.character-sheet-action-row-1{
+    width: 36vh;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+
+}
+.character-sheet-languages{
+    height: 9vh;
+    flex-direction: column;
+justify-content: space-around;
+    text-align: left;
+}
+.character-sheet-saving-throw-skills-tile{
+    flex-direction: row;
+    justify-self: space-between;
+    margin-bottom: 5px,
+}
+.character-sheet-saving-throw{
+    justify-content: space-between;
+}
+
+.character-sheet-languages b {
+    font-size: 1rem;
+    font-weight: 400;
+  
+}
+.subTitle{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.character-sheet-ability-info{
+    font-size: 1rem;
+    margin:3px
+}
+.character-sheet-proficiency{
+    height: 100%;
+    flex-direction: column;
+    justify-self: space-between;
+    min-width: 2vh;
+}
+
+.character-sheet-inspiration .editable-text-field,
+.character-sheet-ability-mod{
+    width: 40px;
+    background-color:#f6f9ff9b;
+    border-radius : 25px;
+    text-align: center;
+}
+
+.ability-title{
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.character-sheet-ability{
+    height:102%
+}
+
+.character-sheet-PB,
+.character-sheet-perception,
+.character-sheet-inspiration{
+    flex-direction: row;
+    justify-content: space-around;
+}
+.character-sheet-inspiration h4{
+  
+    height: 10px;
+}
+.character-sheet-inspiration,
+.character-sheet-skills,
+.character-sheet-saving-throws,
+.character-sheet-saving-throw-skills-tile,
+.character-sheet-PB,
+.character-sheet-perception{
+    font-size: 0.9rem;
+    font-weight: 500;
+
 }
