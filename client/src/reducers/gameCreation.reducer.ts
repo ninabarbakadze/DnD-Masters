@@ -1,8 +1,11 @@
+import { iElement } from '../interfaces/map.interface';
+
 export interface iGameWizardState {
   name: string;
   tags: string;
   mapId: string;
   mapUrl: string;
+  elementArr: iElement[] | [];
 }
 
 const initialState = {
@@ -10,6 +13,7 @@ const initialState = {
   tags: '',
   mapId: '',
   mapUrl: '',
+  elementArr: [],
 };
 
 interface IAction {
@@ -30,6 +34,11 @@ const gameCreationReducer = (state = initialState, action: IAction) => {
         ...state,
         mapId: action.payload.mapId,
         mapUrl: action.payload.mapUrl,
+      };
+    case 'UPDATE_MAP_ELEMENTS':
+      return {
+        ...state,
+        elementArr: action.payload.elementArr,
       };
     default:
       return state;
