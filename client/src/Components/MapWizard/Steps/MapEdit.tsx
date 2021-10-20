@@ -273,12 +273,13 @@ export default function MapEdit() {
 
   useEffect(() => {
     if (imgRef.current) {
+      console.log(mapUrl);
       setDimensions({
         width: imgRef.current.offsetWidth,
         height: imgRef.current.offsetHeight,
       });
     }
-  }, [imgRef.current, mapUrl]);
+  }, [mapUrl]);
 
   useEffect(() => {
     if (!elementArr) return;
@@ -303,7 +304,7 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
-      {console.log(mapId)}
+      {console.log(mapUrl)}
       <div className="map-edit-image">
         <svg
           className="main-svg"
