@@ -62,7 +62,7 @@ const SubRaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
           {optionsList}
         </select>
 
-        <input type="submit" />
+        <input type="submit" className="main-button" />
       </form>
     </div>
   );

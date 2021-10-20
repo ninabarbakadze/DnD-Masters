@@ -9,7 +9,7 @@ import { getAllInList } from '../../../services/externalData.service';
 import Carousel from '../../Carousel/Carousel';
 import DetailsCard from '../../DetailsCard/detailsCard.component';
 import photos from '../../../assets/racePhotos/racePhotos';
-import RaceDetails from '../../raceDetails/raceDetails';
+import RaceDetails from '../../DetailsCard/raceDetails/raceDetails';
 
 const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [races, setRaces] = useState<iCharacterRace[]>([]);
@@ -62,6 +62,7 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
         <h2>...Loading</h2>
       )}
       <button
+        className="main-button"
         type="button"
         onClick={() =>
           onSubmit({ race: selectedRace }, updateRace, handleNextStep())

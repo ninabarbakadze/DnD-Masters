@@ -95,5 +95,6 @@ export interface iCharacterClass extends iResourceListItem {
   proficiencies: iCharacterProficiency[];
   saving_throws: iResourceListItem[];
   starting_equipmnet: iResourceListItem[];
-  spellcasting: iClassCastingInfo;
+  spellcasting?: iClassCastingInfo;
+  subclasses: iResourceListItem[];
 }

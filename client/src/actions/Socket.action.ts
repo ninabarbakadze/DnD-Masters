@@ -15,12 +15,15 @@ export const joinGame = (gameRoom: string) => {
     if (!appStore.getState().socketReducer.socket) {
       createSocket().then((socket: Socket) => {
         console.log('at creation', socket);
+        socket.roomCode = gameRoom;
         dispatch(updateSocket(socket));
         socket.emit('join_room', gameRoom);
       });
     } else {
       const { socket } = appStore.getState().socketReducer;
       console.log('after getting from store', socket);
+      socket.roomCode = gameRoom;
+      dispatch(updateSocket(socket));
       socket.emit('join_room', gameRoom);
     }
   };

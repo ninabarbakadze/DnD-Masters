@@ -1,16 +1,24 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PayloadAction } from '../../interfaces/redux.interface';
 
 import { iGameWizardState } from '../../reducers/game.reducer';
 import Name from './Steps/Name.step';
 import SelectMap from './Steps/SelectMap.step';
 import Invitation from './Steps/Invitation.step';
+import { IRootState } from '../../reducers';
+
+import './GameWizard.scss';
 
 export default function GameWizard() {
+  const { mapId } = useSelector((state: IRootState) => state.game);
   const dispatch = useDispatch();
   const history = useHistory();
-  const onWizardComplete = () => console.log('finished');
+  const onWizardComplete = () => {
+    alert('game created');
+    console.log(mapId);
+    // history.push('/game');
+  };
 
   const onSubmit = (
     data: iGameWizardState,
