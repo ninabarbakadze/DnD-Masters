@@ -83,7 +83,7 @@ export default function CharacterSheet({ fetched }:IProps) {
             <h5 className="character-sheet-username">
               User Name:
               &nbsp;
-              <span>{username}</span>
+              <em><b>{username || 'user name'}</b></em>
             </h5>
             <div className="character-name">
               {/* <b>Character Name</b> */}
@@ -168,32 +168,37 @@ export default function CharacterSheet({ fetched }:IProps) {
                   ))}
                 </div>
                 <div className="character-sheet-proficiency">
-                  <div className="character-sheet-inspiration">
+                  <div className="character-sheet-inspiration ">
                     <EditableDisplayComponent
                       action={(val:string) => { setCharacter((prevVal:any) => ({ ...prevVal, inspiration: val })); }}
                       initialVal={0}
                       inputType="number"
                     />
+                    &nbsp;
                     <h4> INSPIRATION</h4>
                   </div>
                   <div className="character-sheet-perception">
-                    <h5>
-                      {positivePrecursor(character.passiveWisdom)}
-                      &nbsp;
-                      Passive Wisdom (perception)
-                    </h5>
+                    {/* <h5> */}
+                    <div className="character-sheet-ability-mod">{positivePrecursor(character.passiveWisdom)}</div>
+                    &nbsp;
+                    Perception
+                    {/* </h5> */}
                   </div>
                   <div className="character-sheet-proficiency-bonus">
                     <div className="character-sheet-PB">
-                      <h4>
+                      <div className="character-sheet-ability-mod">
                         {positivePrecursor(proficiencyBonusCalc(character.classes.level))}
+
+                      </div>
+                      <h4>
                         &nbsp;
-                        PROFICIENCY BONUS
+                        BONUS
                       </h4>
                     </div>
                   </div>
                   <div className="character-sheet-saving-throws">
                     <h4>SAVING THROWS :</h4>
+                    <br />
                     <CharacterSheetSavingThrows
                       ability={character.abilityScores}
                       bonus={proficiencyBonusCalc(character.classes.level)}
@@ -201,6 +206,7 @@ export default function CharacterSheet({ fetched }:IProps) {
                   </div>
                   <div className="character-sheet-skills">
                     <h4>  SKILLS:</h4>
+                    <br />
                     <CharacterSheetSkills
                       skills={character.skills}
                       ability={character.abilityScores}
@@ -212,24 +218,37 @@ export default function CharacterSheet({ fetched }:IProps) {
               </div>
               <div>
                 <div className="character-sheet-languages">
-                  <h4> Other Proficiencies & languages</h4>
-                  <b>Languages</b>
-                  <br />
-                  {character.languages.map((attribute:any) => (
-                    <b key={attribute.name}>
-                      {attribute.name}
+                  <div className="subTitle"> Other Proficiencies & languages</div>
+                  <div>
+
+                    <b>Languages: </b>
                   &nbsp;
-                    </b>
-                  ))}
-                  <br />
-                  <b>Other</b>
-                  <br />
-                  {character.proficiencies.map((item:any) => (
-                    <b key={item.name}>
-                      {item.name}
-                &nbsp;
-                    </b>
-                  ))}
+                    {character.languages.map((attribute:any) => (
+                      <em>
+                        <b key={attribute.name}>
+                          {attribute.name}
+                          ,
+                          &nbsp;
+                        </b>
+
+                      </em>
+                    ))}
+                  </div>
+                  <div>
+                    <b>Other: </b>
+                  &nbsp;
+                    {character.proficiencies.map((item:any) => (
+                      <em>
+
+                        <b key={item.name}>
+                          {item.name}
+                          ,
+                          &nbsp;
+                        </b>
+
+                      </em>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -382,7 +401,7 @@ export default function CharacterSheet({ fetched }:IProps) {
           </div>
           <div className="character-sheet-save bg-gray-400">
             <ButtonForSaveOrUpdate
-              username="David"
+              username={username}
               body={character}
               set={setCharacter}
             />
