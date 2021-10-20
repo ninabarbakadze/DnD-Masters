@@ -9,6 +9,7 @@ import { getAllInList } from '../../../services/externalData.service';
 import Carousel from '../../Carousel/Carousel';
 import photos from '../../../assets/classPhotos/classPhotos';
 import DetailsCard from '../../DetailsCard/detailsCard.component';
+import ClassDetails from '../../DetailsCard/classDetails/classDetails';
 
 const ClassSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [classes, setClasses] = useState<iCharacterClass[]>([]);
@@ -30,6 +31,7 @@ const ClassSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
           key={JSON.stringify(item)}
           name={item.name}
           imgPath={photos[item.index.replace('-', '')]}
+          content={<ClassDetails CLASS={item} />}
         />
       );
     });
@@ -54,6 +56,7 @@ const ClassSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
         <h2>...Loading</h2>
       )}
       <button
+        className="main-button"
         type="button"
         onClick={() => onSubmit({ class: selectedClass }, updateClass, path)}
         disabled={isLoading}

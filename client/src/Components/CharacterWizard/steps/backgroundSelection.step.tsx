@@ -103,7 +103,7 @@ const BackgroundSelectionStep = ({
             />
           </>
         )}
-        <input type="submit" />
+        <input type="submit" className="main-button" />
       </form>
     </div>
   );
