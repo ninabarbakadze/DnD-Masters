@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import {
   mod,
@@ -31,19 +32,22 @@ export default function CharacterSheetSkills({
       {arr.map((skill) => (
         <div className="character-sheet-saving-throw-skills-tile" key={skill.name}>
 
-          {ability.map((ab) => (
-            (ab.name === skill.ability)
-              ? (skill.proficient && positivePrecursor(mod(ab.scores) + bonus)
+          <div className="character-sheet-ability-mod">
+
+            {ability.map((ab) => (
+              (ab.name === skill.ability)
+                ? (skill.proficient && positivePrecursor(mod(ab.scores) + bonus)
               && skill.name === 'Perception' && pasWisdom(mod(ab.scores) + bonus))
                || positivePrecursor(mod(ab.scores)) : null
-          ))}
+            ))}
+          </div>
                 &nbsp;
           {skill.proficient ? (
             <div>
               <b>
                 {skill.name}
               </b>
-              &nbsp;
+
               (
               {skill.ability.slice(0, 3)}
               )
@@ -69,7 +73,10 @@ export default function CharacterSheetSkills({
       {hide ? renderList(filteredSkills) : renderList(skills)}
       <button
         type="button"
-        onClick={() => { setHide(!hide); }}
+        onClick={() => {
+          // setHide(!hide);
+          console.log('need fixing');
+        }}
       >
         ...
       </button>

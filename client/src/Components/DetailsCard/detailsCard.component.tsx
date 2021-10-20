@@ -9,10 +9,10 @@ interface props {
 
 const DetailsCard = ({ name, imgPath, content }: props) => {
   return (
-    <div className="flex-row flex rounded-2xl bg-gray-300 drop-shadow-2xl">
-      <div className="bg-gray-400">
+    <div className="object-contain flex-row flex rounded-2xl bg-gray-300 drop-shadow-2xl">
+      <div className="bg-gray-400 w-2/5">
         {imgPath && (
-          <figure className=" wizard-image h-3/4">
+          <figure className="wizard-image h-3/4">
             <img src={imgPath} alt={`${name}`} />
           </figure>
         )}
