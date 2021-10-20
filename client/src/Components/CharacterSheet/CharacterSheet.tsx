@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import './CharacterSheet.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import photos from '../../assets/racePhotos/racePhotos';
 import { IRootState } from '../../reducers';
@@ -72,8 +72,9 @@ export default function CharacterSheet({ fetched }:IProps) {
       },
     })));
   };
-  console.log(newCharacter);
-  console.log(formatted);
+
+  // console.log( newCharacter);
+  // console.log('character: ', character);
   return (
     <div className="character-sheet-background ">
       <div className="character-sheet bg-gray-300">

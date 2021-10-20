@@ -55,7 +55,7 @@ export const updateCharacter = (
 
 export const deleteCharacter = (username: string, characterId: string) => {
   return fetch(
-    `${process.env.REACT_APP_SERVER_URL}/${username}/character/${characterId}`,
+    `${process.env.REACT_APP_SERVER_URL}/${username}/characters/${characterId}`,
     {
       method: 'DELETE',
       headers,
@@ -68,7 +68,7 @@ export const deleteCharacter = (username: string, characterId: string) => {
 
 export const getAllCharacter = (username: string): Promise<any[]> => {
   return fetch(
-    `${process.env.REACT_APP_SERVER_URL}/${username}/character/characters`,
+    `${process.env.REACT_APP_SERVER_URL}/${username}/characters/`,
     {
       method: 'GET',
       headers,
