@@ -1,9 +1,9 @@
+/* eslint-disable */
+// @ts-nocheck
+import './Chat.scss';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
-// @ts-ignore
 import ScrollToBottom from 'react-scroll-to-bottom';
-/* eslint-disable */
-// @ts-ignore
 export default function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
@@ -17,7 +17,6 @@ export default function Chat({ socket, username, room }) {
         time: new Date(Date.now()),
       };
       await socket.emit('send_message', messageData);
-      // @ts-ignore
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage('');
     }
@@ -35,8 +34,9 @@ export default function Chat({ socket, username, room }) {
       <p id="chat-header">Live Chat</p>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => (
+          {messageList.map((messageContent, index) => (
             <div
+              key={`${messageContent}${index}`}
               className="message"
               // @ts-ignore
               id={username === messageContent.author ? 'you' : 'other'}

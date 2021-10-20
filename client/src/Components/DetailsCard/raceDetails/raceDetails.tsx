@@ -22,7 +22,7 @@ const RaceDetails = ({ race }: props) => {
           <>
             <p>{`+1 to ${race.ability_bonus_options.choose} of the following`}</p>
             {race.ability_bonus_options.from.map((item) => (
-              <p>{item.ability_score.index}</p>
+              <p key={JSON.stringify(item)}>{item.ability_score.index}</p>
             ))}
           </>
         )}
