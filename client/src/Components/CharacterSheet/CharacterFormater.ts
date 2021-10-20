@@ -2,15 +2,14 @@
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
 // @ts-ignore
-import { iCharacter } from '../interfaces/character.interface';
+import { iCharacter } from '../../interfaces/character.interface';
 
 const formatCharacter = (charFromWizard:iCharacter) => {
-  console.log('format character', charFromWizard);
-  const updateSkillProficiency = (skill:string, arr:any) => {
-    if (skill === arr[0].index) return true;
-    if (skill === arr[1].index) return true;
-    return false;
-  };
+  // const updateSkillProficiency = (skill:string, arr:any) => {
+  //   if (skill === arr[0].index) return true;
+  //   if (skill === arr[1].index) return true;
+  //   return false;
+  // };
 
   const {
     abilityArray, background, race, subrace,
@@ -31,19 +30,20 @@ const formatCharacter = (charFromWizard:iCharacter) => {
     // starting_proficiencies,
     traits, alignment, languages,
   }:any = race;
-  console.log(updateSkillProficiency('skill-religion', starting_proficiencies));
+
   const mockCharacter:any = {
     note: 'note goes here',
-    // name: ' Dragonborn Sorcerer',
-
     name: 'Jon Doe',
     characterName: 'EDON',
+    saved: false,
+    inspiration: 0,
     xp: 1,
     initiative: 3,
     race: {
       name: race?.name,
       subrace: subrace?.name,
       traits,
+      index: race?.index,
     },
     classes: {
       name: charFromWizard.class?.name,

@@ -108,7 +108,7 @@ export default function EditableDisplayComponent({
 
   const renderDefaultView = (): ReactElement => (
     <div className="editable-text-field">
-      <div>
+      <div className="editable-text-div">
         {textfieldValue}
       </div>
       <button

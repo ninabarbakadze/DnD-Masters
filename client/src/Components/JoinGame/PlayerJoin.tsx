@@ -6,12 +6,18 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { joinGame } from '../../actions/Socket.action';
+import { IRootState } from '../../reducers';
+import { getAllCharacters } from '../../services/character.sevices';
 
 const PlayerJoin = ({ activateGame }: any) => {
+  const user = useSelector((state: IRootState) => state.user);
+  console.log('player join', user);
   const dispatch = useDispatch();
-  const [playerName, setPlayerName] = useState<string>('');
-  const [roomCode, setRoomCode] = useState<string>('');
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [playerName, setPlayerName] = useState('');
+  const [roomCode, setRoomCode] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const [charactersArr, setCharactersArr] = useState([]);
+  console.log(charactersArr);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
@@ -26,7 +32,15 @@ const PlayerJoin = ({ activateGame }: any) => {
     activateGame(true);
   }
 
+  const getCharacters = async () => {
+    if (user.name) {
+      const characters = getAllCharacters(user.name);
+      setCharactersArr(characters);
+    }
+  };
+
   useEffect(() => {
+    getCharacters();
     setDisabled(!(playerName.length && roomCode.length === 5));
   }, [playerName, roomCode]);
 
@@ -51,6 +65,8 @@ const PlayerJoin = ({ activateGame }: any) => {
           onChange={(e) => handleCodeChange(e)}
         />
       </div>
+      <button type="submit">Choose Character</button>
+      <button type="submit">Create Character</button>
       <button type="button" disabled={disabled} onClick={() => handleClick()}>
         Join Room!
       </button>
