@@ -5,12 +5,14 @@ import { useDispatch } from 'react-redux';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import storage from '../../../firebase';
 import { updateUrl } from '../../../actions/mapWizard.action';
+import InfoModal from '../../InfoModal/InfoModal';
 
 export default function MapUpload({ history }: any) {
   const dispatch = useDispatch();
   const [file, setFile] = useState<File | undefined>();
   const [url, setUrl] = useState('');
   const [mapUploaded, setMapUploaded] = useState(false);
+  const [isModal, setIsModal] = useState(false);
 
   function handleUpload() {
     if (!file) return;
@@ -28,13 +30,18 @@ export default function MapUpload({ history }: any) {
 
   const handleSubmit = (): void => {
     handleUpload();
-    alert('Image Uploaded');
+    setIsModal(!isModal);
     setMapUploaded(true);
   };
 
   useEffect(() => {
     dispatch(updateUrl({ mapUrl: url }));
+    console.log(url);
   }, [url]);
+
+  const toggleModal = () => {
+    setIsModal(!isModal);
+  };
 
   return (
     <div className="map-upload-container">
@@ -61,6 +68,12 @@ export default function MapUpload({ history }: any) {
           Edit Map
         </button>
       </div>
+      <InfoModal
+        isVisible={isModal}
+        setIsVisible={toggleModal}
+        message="Image successfully uploaded"
+        type="success"
+      />
     </div>
   );
 }

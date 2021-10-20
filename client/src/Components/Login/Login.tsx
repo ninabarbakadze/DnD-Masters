@@ -3,11 +3,14 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useHistory } from 'react-router';
 import { loginAction } from '../../actions/user.actions';
-import { registerUser, logIn /* getUser */ } from '../../services/user.services';
+import {
+  registerUser,
+  logIn /* getUser */,
+} from '../../services/user.services';
 import './Login.scss';
 
 /* eslint-disable
- */export default function Login() {
+ */ export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -16,21 +19,20 @@ import './Login.scss';
   const dispatch = useDispatch();
   const history = useHistory();
 
-
   const handleSubmit = async (data: object, e: MouseEvent) => {
-    e.preventDefault()
-      if (isLogin) {
-        const user = await logIn({ username, password });
-        console.log(user);
-        Cookies.set('user', user.username);
-        dispatch(loginAction(user.username));
-        history.push('/Dashboard')
-      } else {
-        await registerUser({
-          username,
-          email,
-          password,
-        });
+    e.preventDefault();
+    if (isLogin) {
+      const user = await logIn({ username, password });
+      console.log(user);
+      Cookies.set('user', user.username);
+      dispatch(loginAction(user.username));
+      history.push('/Dashboard');
+    } else {
+      await registerUser({
+        username,
+        email,
+        password,
+      });
     }
   };
 
@@ -48,7 +50,9 @@ import './Login.scss';
           placeholder="Username"
           value={username}
           id="username"
-          onChange={(e) => { setUsername(e.target.value); }}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         />
         {!isLogin && (
           <input
@@ -56,7 +60,9 @@ import './Login.scss';
             placeholder="Email"
             value={email}
             id="email"
-            onChange={(e) => { setEmail(e.target.value); }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         )}
         <input
@@ -64,7 +70,9 @@ import './Login.scss';
           type="password"
           value={password}
           id="password"
-          onChange={(e) => { setPassword(e.target.value); }}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
         {!isLogin && (
           <input
@@ -72,7 +80,9 @@ import './Login.scss';
             type="password"
             value={passwordConfirm}
             id="password"
-            onChange={(e) => { setPasswordConfirm(e.target.value); }}
+            onChange={(e) => {
+              setPasswordConfirm(e.target.value);
+            }}
           />
         )}
         <button className="submit-btn" type="submit">

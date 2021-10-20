@@ -9,6 +9,7 @@ export interface iElement {
 
 export interface iMap {
   mapName?: string;
+  mapId?: string;
   mapUrl?: string;
   selectedElement?: string;
   elementArr?: iElement[];
@@ -16,4 +17,5 @@ export interface iMap {
   shouldDelete?: boolean;
   currentDescription?: string;
   currentName?: string;
+  username?: string;
 }

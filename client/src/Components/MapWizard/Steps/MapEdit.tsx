@@ -9,6 +9,7 @@ import ElementForm from '../Modal/ModalForms/ElementForm';
 import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
+import InfoModal from '../../InfoModal/InfoModal';
 import DescriptionPreview from '../DescriptionPreview/DescriptionPreview';
 import getMapElements from '../../../assets/mapElements/mapData';
 import {
@@ -16,15 +17,23 @@ import {
   updateLocationArr,
 } from '../../../actions/mapWizard.action';
 import { iElement } from '../../../interfaces/map.interface';
+import { saveMap, updateMap } from '../../../services/map.service';
 
 export default function MapEdit() {
   const dispatch = useDispatch();
 
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
-  const { selectedElement, locationArr, elementArr } = useSelector(
-    (state: IRootState) => state.mapCreationReducer,
-  );
+  // eslint-disable-next-line
+  const {
+    selectedElement,
+    locationArr,
+    elementArr,
+    mapUrl,
+    username,
+    mapName,
+    mapId,
+  } = useSelector((state: IRootState) => state.mapCreationReducer);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
@@ -45,6 +54,7 @@ export default function MapEdit() {
   const [elementModalIsActive, setElementModalIsActive] = useState(false);
   const [saveModalIsActive, setSaveModalIsActive] = useState(false);
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
+  const [isModal, setIsModal] = useState(false);
 
   // Create Id
   function generateId() {
@@ -187,6 +197,7 @@ export default function MapEdit() {
             yCoord={svgCoord.y}
             element={element}
             getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+            Key={id}
           />,
         ],
       }),
@@ -200,12 +211,22 @@ export default function MapEdit() {
       description: locationDescription,
     };
     dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
-    // setElmentArr([...elementArr, dataObj]);
   }
 
-  function onSaveModalSubmit() {
-    const dataString = JSON.stringify(elementArr);
-    return dataString;
+  async function onSaveModalSubmit(name: string) {
+    if (!username || !mapUrl) return;
+    const data = {
+      mapName: name,
+      mapUrl,
+      locationData: JSON.stringify(elementArr),
+    };
+    if (name === mapName) {
+      if (!mapId) return;
+      await updateMap(username, mapId, data);
+    } else {
+      await saveMap(username, data);
+    }
+    setIsModal(!isModal);
   }
 
   const setPoint = (evt: any) => {
@@ -246,6 +267,10 @@ export default function MapEdit() {
     showSaveModal();
   }
 
+  function toggleModal() {
+    setIsModal(!isModal);
+  }
+
   useEffect(() => {
     if (imgRef.current) {
       setDimensions({
@@ -253,10 +278,32 @@ export default function MapEdit() {
         height: imgRef.current.offsetHeight,
       });
     }
-  }, [imgRef.current]);
+  }, [imgRef.current, mapUrl]);
+
+  useEffect(() => {
+    if (!elementArr) return;
+    const locations = elementArr.map((element) => {
+      const el = getMapElements(element.x, element.y, element.elementName);
+      return (
+        <MapItem
+          // eslint-disable-next-line
+          deleteLocation={deleteLocation}
+          id={element.id}
+          locationName={element.elementName}
+          locationDescription={element.description}
+          xCoord={element.x}
+          yCoord={element.y}
+          element={el}
+          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+        />
+      );
+    });
+    dispatch(updateLocationArr({ locationArr: locations }));
+  }, []);
 
   return (
     <div className="map-edit-container">
+      {console.log(mapId)}
       <div className="map-edit-image">
         <svg
           className="main-svg"
@@ -279,7 +326,8 @@ export default function MapEdit() {
           >
             <img
               ref={imgRef}
-              src="https://i.redd.it/pq61m18mmzp51.jpg"
+              // eslint-disable-next-line
+              src={mapUrl}
               alt=""
             />
           </foreignObject>
@@ -329,6 +377,13 @@ export default function MapEdit() {
           onModalSubmit={onSaveModalSubmit}
         />
       </Modal>
+      <InfoModal
+        isVisible={isModal}
+        // eslint-disable-next-line
+        setIsVisible={toggleModal}
+        message="Map saved"
+        type="success"
+      />
     </div>
   );
 }
