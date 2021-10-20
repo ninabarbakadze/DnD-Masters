@@ -1,38 +1,55 @@
-import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import Carousel from '../../Carousel/Carousel';
+import MapCarouselItem from '../../MapWizard/MapCarouselItem/MapCarouselItem';
+import { getAllMaps } from '../../../services/map.service';
 import { updateMap } from '../../../actions/gameWizard.actions';
-import { IRootState } from '../../../reducers';
-import { iGameWizardState } from '../../../reducers/game.reducer';
-
-type Inputs = {
-  mapName: string;
-  mapTags: string;
-};
 
 function SelectMap({ onSubmit, path }: any) {
-  const gameWizard = useSelector((state: IRootState) => state.game);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const [mapIndex, setMapIndex] = useState(0);
+  const [mapArr, setMapArr] = useState<any>([]);
+  const [items, setItems] = useState<JSX.Element[]>([]);
+
+  const nextPage = () => {
+    // eslint-disable-next-line
+    onSubmit({ mapId: mapArr[mapIndex]._id }, updateMap, path);
+  };
+
+  async function getMaps() {
+    const loadedMaps = await getAllMaps('ruso');
+    setMapArr(loadedMaps);
+    setItems(
+      loadedMaps.map((map: any) => <MapCarouselItem url={map.mapUrl} />),
+    );
+  }
+
+  useEffect(() => {
+    getMaps();
+  }, []);
 
   return (
-    <form
-      onSubmit={handleSubmit((data: iGameWizardState) => {
-        onSubmit(data, updateMap, path);
-      })}
-    >
-      <input
-        {...register('mapName', { required: true })}
-        id="mapName"
-        defaultValue={gameWizard.mapName}
-      />
-      <input
-        {...register('mapTags', { required: true })}
-        id="mapTags"
-        defaultValue={gameWizard.mapTags}
-      />
-      <input type="submit" />
-      <div>Create new Map</div>
-    </form>
+    <div className="map-selection-container">
+      <div className="map-carousel-preview-container">
+        <h1 className="map-carousel-preview-container-title">
+          {mapArr[mapIndex]?.mapName}
+        </h1>
+        <img
+          className="map-carousel-preview"
+          src={mapArr[mapIndex]?.mapUrl}
+          alt=""
+        />
+      </div>
+      <div>
+        <button className="main-button" onClick={nextPage} type="button">
+          Choose
+        </button>
+      </div>
+      <div>
+        <Carousel setIndex={setMapIndex} show={5}>
+          {items}
+        </Carousel>
+      </div>
+    </div>
   );
 }
 

@@ -1,15 +1,13 @@
 export interface iGameWizardState {
   name: string;
   tags: string;
-  mapName: string;
-  mapTags: string;
+  mapId: string;
 }
 
 const initialState = {
   name: '',
   tags: '',
-  mapName: '',
-  mapTags: '',
+  mapId: '',
 };
 
 interface IAction {
@@ -28,8 +26,7 @@ const gameReducer = (state = initialState, action: IAction) => {
     case 'UPDATE_MAP':
       return {
         ...state,
-        mapName: action.payload.mapName,
-        mapTags: action.payload.mapTags,
+        mapId: action.payload.mapId,
       };
     default:
       return state;
