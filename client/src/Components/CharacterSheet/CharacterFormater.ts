@@ -43,6 +43,7 @@ const formatCharacter = (charFromWizard:iCharacter) => {
       name: race?.name,
       subrace: subrace?.name,
       traits,
+      index: race?.index,
     },
     classes: {
       name: charFromWizard.class?.name,

@@ -1,5 +1,5 @@
 const headers = new Headers({ 'Content-Type': 'application/json' });
-const host = 'http://localhost:3002';
+const host = 'http://localhost:3001';
 
 // @ts-ignore
 const saveCharacter = (username, character) => (
