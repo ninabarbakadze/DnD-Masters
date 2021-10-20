@@ -106,5 +106,5 @@ const characterSchema = new Schema({
   // saves: [String],
 });
 
-const character = mongoose.model('Character', characterSchema);
+const character = mongoose.model('Characters', characterSchema);
 module.exports = character;
