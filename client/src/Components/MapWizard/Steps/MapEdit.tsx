@@ -271,14 +271,27 @@ export default function MapEdit() {
     setIsModal(!isModal);
   }
 
+  // useEffect(() => {
+  //   // const bbox = document.querySelector('.test')?.getBBox();
+  //   setTimeout(() => {
+  //     console.log(imgRef.current.getBoundingClientRect().width);
+  //     setDimensions({
+  //       width: imgRef.current.getBoundingClientRect().width,
+  //       height: imgRef.current.getBoundingClientRect().height,
+  //     });
+  //   }, 1);
+  // }, []);
+
   useEffect(() => {
-    if (imgRef.current) {
+    // @ts-expect-error
+    const bbox = document.querySelector('.test')?.getBBox();
+    setTimeout(() => {
       setDimensions({
-        width: imgRef.current.offsetWidth,
-        height: imgRef.current.offsetHeight,
+        width: bbox.width,
+        height: bbox.height,
       });
-    }
-  }, [imgRef.current, mapUrl]);
+    }, 1);
+  }, []);
 
   useEffect(() => {
     if (!elementArr) return;
@@ -303,36 +316,48 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
-      {console.log(mapId)}
+      {console.log('something')}
       <div className="map-edit-image">
-        <svg
-          className="main-svg"
-          onMouseDown={(evt) => {
-            onPointerDown(evt);
-            setPoint(evt);
-          }}
-          onMouseUp={onPointerUp}
-          onMouseLeave={onPointerUp}
-          onMouseMove={onPointerMove}
-          width="100%"
-          height="100%"
-          viewBox={viewBoxString}
-        >
-          <foreignObject
+        {/* <img src={mapUrl} alt="" /> */}
+        <div>
+          <svg
+            className="main-svg"
+            onMouseDown={(evt) => {
+              onPointerDown(evt);
+              setPoint(evt);
+            }}
+            onMouseUp={onPointerUp}
+            onMouseLeave={onPointerUp}
+            onMouseMove={onPointerMove}
+            width="100%"
+            height="100%"
+            viewBox={viewBoxString}
+          >
+            <image
+              className="test"
+              x={-dimensions.width / 2}
+              y={-dimensions.height / 2}
+              ref={imgRef}
+              href={mapUrl}
+            />
+            {/* <foreignObject
             width={dimensions.width}
             height={dimensions.height}
             y={-dimensions.height / 2}
             x={-dimensions.width / 2}
           >
             <img
-              ref={imgRef}
+              className="test"
+              // ref={imgRef}
               // eslint-disable-next-line
               src={mapUrl}
               alt=""
             />
-          </foreignObject>
-          {locationArr}
-        </svg>
+          </foreignObject> */}
+            {locationArr}
+          </svg>
+        </div>
+
         <button onClick={() => zoom(0.8)} type="button">
           Zoom In
         </button>

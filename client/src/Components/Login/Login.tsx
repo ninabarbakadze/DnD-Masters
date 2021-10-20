@@ -21,6 +21,7 @@ import './Login.scss';
 
   const handleSubmit = async (data: object, e: MouseEvent) => {
     e.preventDefault();
+    console.log(isLogin)
     if (isLogin) {
       const user = await logIn({ username, password });
       console.log(user);

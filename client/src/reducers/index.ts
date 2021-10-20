@@ -5,7 +5,7 @@ import {
 } from './CharacterCreation.reducer';
 import socketReducer from './Socket.reducer';
 import userReducer from './user.reducer';
-import gameReducer, { iGameWizardState } from './game.reducer';
+import gameCreationReducer, { iGameWizardState } from './gameCreation.reducer';
 import {
   iCharacter,
   iCharacterWizardState,
@@ -17,7 +17,7 @@ import { iMap } from '../interfaces/map.interface';
 // interface prop name and reducer name must be an EXACT MATCH
 export interface IRootState {
   user: { isLoggedIn: boolean; name: string };
-  game: iGameWizardState;
+  gameCreationReducer: iGameWizardState;
   characterWizardStateReducer: iCharacterWizardState;
   characterCreationReducer: iCharacter;
   mapCreationReducer: iMap;
@@ -26,7 +26,7 @@ export interface IRootState {
 
 const allReducer = combineReducers({
   user: userReducer,
-  game: gameReducer,
+  gameCreationReducer,
   characterCreationReducer,
   characterWizardStateReducer,
   mapCreationReducer,

@@ -1,25 +1,35 @@
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../../MapWizard/MapCarouselItem/MapCarouselItem';
 import { getAllMaps } from '../../../services/map.service';
 import { updateMap } from '../../../actions/gameWizard.actions';
+import { IRootState } from '../../../reducers';
 
 function SelectMap({ onSubmit, path }: any) {
   const [mapIndex, setMapIndex] = useState(0);
   const [mapArr, setMapArr] = useState<any>([]);
   const [items, setItems] = useState<JSX.Element[]>([]);
+  const user = useSelector((state: IRootState) => state.user);
 
   const nextPage = () => {
-    // eslint-disable-next-line
-    onSubmit({ mapId: mapArr[mapIndex]._id }, updateMap, path);
+    onSubmit(
+      // eslint-disable-next-line
+      { mapId: mapArr[mapIndex]._id, mapUrl: mapArr[mapIndex].mapUrl },
+      updateMap,
+      path,
+    );
   };
 
   async function getMaps() {
-    const loadedMaps = await getAllMaps('ruso');
+    const loadedMaps = await getAllMaps(user.name);
     setMapArr(loadedMaps);
     setItems(
-      loadedMaps.map((map: any) => <MapCarouselItem url={map.mapUrl} />),
+      loadedMaps.map((map: any) => (
+        // eslint-disable-next-line
+        <MapCarouselItem url={map.mapUrl} key={map._id} />
+      )),
     );
   }
 
