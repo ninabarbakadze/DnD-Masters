@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllMaps, deleteMap, getMap } from '../../../services/map.service';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../MapCarouselItem/MapCarouselItem';
@@ -9,6 +9,7 @@ import {
   updateMapNameAndId,
   updateElementArr,
 } from '../../../actions/mapWizard.action';
+import { IRootState } from '../../../reducers';
 
 export default function MapSelection({ history }: any) {
   const [refresh, doRefresh] = useState(0);
@@ -20,6 +21,7 @@ export default function MapSelection({ history }: any) {
   ]);
   const [items, setItems] = useState<JSX.Element[]>([]);
   const [isModal, setIsModal] = useState(false);
+  const user = useSelector((state: IRootState) => state.user);
 
   const nextPage = async () => {
     if (mapIndex === 0) {
@@ -27,7 +29,7 @@ export default function MapSelection({ history }: any) {
     } else {
       // eslint-disable-next-line
       const { mapName, mapId, mapUrl, locationData } = await getMap(
-        'ruso',
+        user.name,
         // eslint-disable-next-line
         mapArr[mapIndex - 1]._id,
       );
@@ -46,7 +48,7 @@ export default function MapSelection({ history }: any) {
   };
 
   async function getMaps() {
-    const loadedMaps = await getAllMaps('ruso');
+    const loadedMaps = await getAllMaps(user.name);
     setMapArr(loadedMaps);
     setImages([images[0], ...loadedMaps.map((map: any) => map.mapUrl)]);
   }
@@ -54,7 +56,7 @@ export default function MapSelection({ history }: any) {
   const onDelete = async () => {
     // eslint-disable-next-line
     const id = mapArr[mapIndex - 1]._id;
-    await deleteMap('ruso', id);
+    await deleteMap(user.name, id);
     setIsModal(!isModal);
     doRefresh((prev) => prev + 1);
     await getMaps();
