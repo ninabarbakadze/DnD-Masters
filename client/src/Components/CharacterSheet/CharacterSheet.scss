@@ -1,3 +1,5 @@
+.character-sheet-body,
+.character-sheet-background,
 .character-sheet,
 .character-sheet-initial-information,
 .character-sheet-header, 
@@ -14,12 +16,14 @@
 
 }
 .character-sheet{
-    max-width: 75vh;
-    flex-direction: column;
+    max-width: 120vh;
+    flex-direction: row;
     margin:10px;
   color: rgba(0, 0, 0, 0.726);
     font-size: 0.6rem;
-    // background-image: url('../../assets/backgroundPhotos/oldPaper.png');
+    border-radius: 25px;
+    height : 100%;
+  
 }
 .character-sheet-ability-score,
 .character-sheet-initial-information
@@ -31,15 +35,14 @@
 .character-sheet-success,
 .character-sheet-saving-throw-skills-tile, 
 .character-sheet-header, 
-.character-sheet-CLB, 
-.character-sheet-RAX, 
+// .character-sheet-CLB, 
+// .character-sheet-RAX, 
 .character-sheet-action
 .character-sheet-equipment
 {
     align-items:center;
     flex-direction: row;
     justify-content: center;
-    margin:3px;
     padding:5px
 }
 .character-sheet-header,
@@ -50,6 +53,8 @@
 .character-sheet-CLB, 
 .character-sheet-RAX{        
    justify-content: space-between;
+   margin: 15px;
+ 
 }
 
 .character-sheet-ability-info,
@@ -84,11 +89,60 @@
 }
 .character-sheet-action{
     justify-content: space-around;
+    padding: 30px;
 }
 
 .character-sheet p{
-margin:1px
+margin:1px;
+
 }
 .character-sheet-death-save{
     width: 100px;
+}
+.character-sheet-background{
+    width: auto;
+    height: 85vh;
+    justify-content: center;
+}
+.character-sheet-header{
+    // border-radius: 25px  0 0 25px;
+    // height: 30vh;
+    padding:50px;
+    width: 60vh;;
+}
+.character-sheet-img{
+    height: 44vh;
+    margin: 7px;
+    padding: 5px;
+}
+.character-name .editable-text-div{
+font-size: 1.5rem;
+font-weight: bold;
+margin:8px
+}
+
+.character-sheet-initial-information{
+ width: 30vh;
+ 
+}
+.character-name hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.301);
+}
+.character-sheet-save
+{
+    text-align: center;
+    width: 100%;
+    height:35px;
+    font-size: 20px;
+    // color:red;
+    border-radius: 0 0 25px 0
+}
+.character-sheet-body{
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+// .character-sheet-header span,
+ h3 em {
+    font-size: 0.7rem;;
 }

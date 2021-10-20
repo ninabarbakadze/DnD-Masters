@@ -10,6 +10,7 @@ const mockCharacter:any = {
   race: {
     name: 'Dragonborn',
     subtype: 'Silver',
+    index: 'human',
     traits: [
       {
         name: 'Damage Resistance - Cold',
