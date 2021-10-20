@@ -58,7 +58,7 @@ const CharacterWizard: FC = () => {
             />
           </Route>
           <Route path="/characterWizard/characterSheet">
-            <CharacterSheet />
+            <CharacterSheet fetched={undefined} />
           </Route>
         </Switch>
       </div>

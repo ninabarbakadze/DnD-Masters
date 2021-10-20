@@ -8,6 +8,7 @@ const raceSchema = new Schema({
   size: String,
   traits: [traitSchema],
   subRaces: String,
+  index: String,
   // age: String,
   // speed: Number,
   // sizeDescription: String,

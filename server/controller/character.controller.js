@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const User = require('../DB/models/user.model');
-const Character = require('../DB/models/user.model');
+const Character = require('../DB/models/character.model');
 
 const getUsersCharacters = async (req, res) => {
   try {
@@ -16,11 +16,13 @@ const getUsersCharacters = async (req, res) => {
 const createCharacter = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
-    const character = await new Map({ ...req.body, user: user._id });
-    user.characters.push(character._id);
+    // console.log('req.body', req.body.race.traits);
+    const character = await new Character({ ...req.body, user: user._id });
     character.save();
+    user.characters.push(character._id);
+    console.log('Character Saved');
     user.save();
-    res.status(201).send(character);
+    res.status(201).json(character);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -42,12 +44,13 @@ const getCharacter = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
 const updateCharacter = async (req, res) => {
   try {
     const updatedChar = await Character.findByIdAndUpdate(
       req.params.characterId, req.body, { new: true },
     );
-    res.status(201).send(updatedChar);
+    res.status(201).json(updatedChar);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

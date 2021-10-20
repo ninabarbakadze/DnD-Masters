@@ -2,7 +2,7 @@ const { mongoose } = require('../../connection');
 
 const { Schema } = mongoose;
 const skillsSchema = new Schema({
-  nam: String,
+  name: String,
   ability: String,
   proficient: Boolean,
   // athletics: {
