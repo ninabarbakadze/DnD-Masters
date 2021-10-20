@@ -3,16 +3,16 @@ import { withRouter } from 'react-router-dom';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../../MapWizard/MapCarouselItem/MapCarouselItem';
 import { getAllMaps } from '../../../services/map.service';
+import { updateMap } from '../../../actions/gameWizard.actions';
 
 function SelectMap({ onSubmit, path }: any) {
   const [mapIndex, setMapIndex] = useState(0);
   const [mapArr, setMapArr] = useState<any>([]);
-  // const [images, setImages] = useState<string[]>([]);
   const [items, setItems] = useState<JSX.Element[]>([]);
 
   const nextPage = () => {
-    alert('selecte');
-    onSubmit(path);
+    // eslint-disable-next-line
+    onSubmit({ mapId: mapArr[mapIndex]._id }, updateMap, path);
   };
 
   async function getMaps() {

@@ -1,13 +1,13 @@
 import { withRouter } from 'react-router-dom';
 
-function Invitation({ onWizardComplete }: any) {
+function Invitation({ onSubmit }: any) {
   return (
     <div>
       <p>
         Invitiation Link:
         {Math.random()}
       </p>
-      <button type="button" onClick={onWizardComplete}>
+      <button type="button" onClick={onSubmit}>
         Start Game
       </button>
     </div>
