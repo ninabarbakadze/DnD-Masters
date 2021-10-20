@@ -54,7 +54,7 @@ export default function Dashboard() {
         <DashboarMenuItem
           // eslint-disable-next-line
           image="https://cdn.pixabay.com/photo/2017/03/13/04/25/play-button-2138735_1280.png"
-          link="/play"
+          link="/joinGame"
           text="Play Game"
         />
       </div>

@@ -6,9 +6,9 @@ import CharacterWizard from './Components/CharacterWizard/CharacterWizard';
 import MapWizard from './Components/MapWizard/MapWizard';
 import Dashboard from './Components/Dashboard/Dashboard';
 import EncounterWizard from './Components/EncounterWizard/EncounterWizard';
-// import Room from './Components/Chat/Room';
 import GameRoom from './Components/Game/GameRoom';
 import Dice from './Components/Dice/Dice';
+import PlayerJoin from './Components/JoinGame/PlayerJoin';
 
 function App() {
   return (
@@ -37,6 +37,9 @@ function App() {
         </Route>
         <Route path="/dice">
           <Dice />
+        </Route>
+        <Route path="/joinGame">
+          <PlayerJoin />
         </Route>
       </Switch>
     </Router>

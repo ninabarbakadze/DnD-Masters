@@ -58,6 +58,7 @@ const CharacterWizard: FC = () => {
             />
           </Route>
           <Route path="/characterWizard/characterSheet">
+            {/* @ts-ignore */}
             <CharacterSheet fetched={undefined} />
           </Route>
         </Switch>
