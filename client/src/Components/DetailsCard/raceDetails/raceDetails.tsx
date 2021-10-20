@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable arrow-body-style */
-import { iCharacterRace } from '../../interfaces/externalData/externalData.interface';
+import { iCharacterRace } from '../../../interfaces/externalData/externalData.interface';
 
 interface props {
   race: iCharacterRace;
@@ -9,7 +9,7 @@ interface props {
 const RaceDetails = ({ race }: props) => {
   return (
     <div className="  flex flex-col justify-center  w-3/5 align-start text-left">
-      <div className="pr-50 pl-10">
+      <div className=" flex flex-row">
         <h3>Ability Bonuses</h3>
         {race.ability_bonuses.map((item, index) => {
           return (

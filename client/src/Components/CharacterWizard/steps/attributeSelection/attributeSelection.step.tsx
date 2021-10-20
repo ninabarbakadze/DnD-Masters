@@ -64,8 +64,10 @@ const AttributeSelectionStep = ({
       score--;
       setPool(pool + 1);
     } else {
-      score++;
-      setPool(pool - 1);
+      if (pool > 0) {
+        score++;
+        setPool(pool - 1);
+      }
     }
     const newAbilityArray = { ...abilityArray };
     newAbilityArray[value].score = score;

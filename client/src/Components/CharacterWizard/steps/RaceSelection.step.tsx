@@ -62,6 +62,7 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
         <h2>...Loading</h2>
       )}
       <button
+        className="main-button"
         type="button"
         onClick={() =>
           onSubmit({ race: selectedRace }, updateRace, handleNextStep())
