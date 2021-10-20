@@ -11,7 +11,7 @@ const charDetails = require('./subDocuments/pesonalDetails.Schema');
 
 const { Schema } = mongoose;
 const characterSchema = new Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
@@ -20,6 +20,11 @@ const characterSchema = new Schema({
     type: Number,
     default: 0,
   },
+  inspiration: {
+    type: Number,
+    default: 0,
+  },
+  saved: Boolean,
   characterName: {
     type: String,
     required: true,
@@ -72,11 +77,11 @@ const characterSchema = new Schema({
   },
   languages: [languages],
 
-  skills,
+  skills: [skills],
   details: charDetails,
-  abilityScore: abilities,
+  abilityScores: [abilities],
   savingThrow: [String],
-  weapons: [weapon], //
+  weapons: [weapon],
   spells: {
     name: String,
     desc: [String],
@@ -91,6 +96,11 @@ const characterSchema = new Schema({
   equipments: [equipment],
   race: characterRace,
   classes: characterClass,
+  proficiencies: {
+    index: String,
+    name: String,
+    url: String,
+  },
   // armorProficient: [String],
   // otherProficient: [String],
   // saves: [String],

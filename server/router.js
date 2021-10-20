@@ -23,6 +23,6 @@ router.get('/:username/characters/:characterId', getCharacter);
 router.delete('/:username/characters/:characterId', deleteCharacter);
 router.put('/:username/characters/:characterId', updateCharacter);
 router.get('/:username/characters/characters', getUsersCharacters);
-router.post('/:username/character/new', createCharacter);
+router.post('/:username/characters/new', createCharacter);
 
 module.exports = router;
