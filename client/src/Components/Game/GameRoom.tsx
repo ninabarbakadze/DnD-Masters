@@ -3,7 +3,7 @@
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { IRootState } from '../../reducers';
-import PlayerJoin from './playerJoin';
+import PlayerJoin from '../JoinGame/PlayerJoin';
 import GameMap from './GameMap';
 import GamePlay from './GamePlay';
 

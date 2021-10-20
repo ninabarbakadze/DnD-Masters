@@ -29,11 +29,14 @@ import './Login.scss';
       dispatch(loginAction(user.username));
       history.push('/Dashboard');
     } else {
-      await registerUser({
+   const user = await registerUser({
         username,
         email,
         password,
       });
+      Cookies.set('user', user.username);
+      dispatch(loginAction(user.username));
+      history.push('/Dashboard');
     }
   };
 

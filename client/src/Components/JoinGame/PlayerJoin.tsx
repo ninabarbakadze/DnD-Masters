@@ -5,17 +5,21 @@
 // @ts-nocheck
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { joinGame } from '../../actions/Socket.action';
-// import { Socket } from 'socket.io-client';
-// import { IRootState } from '../../reducers';
-import { createSocket } from '../../services/socket.service';
+import { IRootState } from '../../reducers';
+import { getAllCharacter } from '../../services/character.sevices';
+import CharacterWizard from '../CharacterWizard/CharacterWizard';
 
 const PlayerJoin = ({ activateGame }: any) => {
+  const user = useSelector((state: IRootState) => state.user);
+  console.log('player join', user);
   const dispatch = useDispatch();
-  const [playerName, setPlayerName] = useState<string>('');
-  const [roomCode, setRoomCode] = useState<string>('');
-  const [disabled, setDisabled] = useState<boolean>(true);
-  // const socket = useSelector((state: IRootState) => state.socketReducer);
+  const [playerName, setPlayerName] = useState('');
+  const [roomCode, setRoomCode] = useState('');
+  const [disabled, setDisabled] = useState(true);
+  const [charactersArr, setCharactersArr] = useState([]);
+  console.log(charactersArr);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
@@ -27,19 +31,18 @@ const PlayerJoin = ({ activateGame }: any) => {
   function handleClick() {
     console.log('clicked');
     dispatch(joinGame(roomCode));
-    // createSocket();
     activateGame(true);
-    // if (!socket) {
-    // const sock = createSocket();
-
-    // sock.emit('join_game', roomCode);
-    // console.log(sock);
-    // }
-    // console.log(socket);
-    // socket.emit('join_room', roomCode);
   }
 
+  const getCharacters = async () => {
+    if (user.name) {
+      const characters = getAllCharacter(user.name);
+      setCharactersArr(characters);
+    }
+  };
+
   useEffect(() => {
+    getCharacters();
     setDisabled(!(playerName.length && roomCode.length === 5));
   }, [playerName, roomCode]);
 
@@ -64,6 +67,10 @@ const PlayerJoin = ({ activateGame }: any) => {
           onChange={(e) => handleCodeChange(e)}
         />
       </div>
+      <button type="submit">Choose Character</button>
+      <Link to="/characterWizard/raceSelection">
+        <button type="submit">Create Character</button>
+      </Link>
       <button type="button" disabled={disabled} onClick={() => handleClick()}>
         Join Room!
       </button>
