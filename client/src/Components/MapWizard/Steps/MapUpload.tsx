@@ -43,11 +43,11 @@ export default function MapUpload({ history }: any) {
   return (
     <div className="map-upload-container">
       {console.log(file)}
-      <div>
+      <div className="upload-image-header">
         <h1>Image Upload</h1>
-        <p>Select an Image and edit your Map</p>
+        <h3>Select an Image and edit your Map</h3>
       </div>
-      <div>
+      <div className="upload-preview">
         <ImageUpload setFile={setFile} />
         {file && (
           <button

@@ -9,6 +9,7 @@
   width: 600px;
   display: inline-block;
   position: relative;
+  // margin-top: 100px;
 }
 
 .map-carousel-preview-container-title {
@@ -36,6 +37,10 @@
   align-items: center;
   justify-content: space-around;
   height: 90vh;
+}
+
+.map-selection-container .carousel-content-wrapper {
+  margin: 0;
 }
 
 .map-edit-image {
@@ -156,4 +161,13 @@
 
 .deletion-on {
   fill: white;
+}
+
+.upload-preview button{
+  margin: 20px;
+}
+
+.upload-image-header h3{
+  margin: 10px;
+  font-weight: 400;
 }
