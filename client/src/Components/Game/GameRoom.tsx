@@ -30,7 +30,7 @@ const GameRoom = () => {
               setPlayers={setPlayers}
               socket={socket}
             />
-            {/* <GameMap /> */}
+            <GameMap />
           </div>
         ) : (
           <h1>...Loading</h1>
