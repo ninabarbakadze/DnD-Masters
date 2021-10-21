@@ -16,7 +16,7 @@ interface props {
   playerCharacter?: iCharacter;
   socket: Socket;
   players: iPlayerToken[];
-  setPlayers: Dispatch<SetStateAction<iPlayerToken[]>>;
+  setPlayers: any;
   // roomCode: 'string';
 }
 
