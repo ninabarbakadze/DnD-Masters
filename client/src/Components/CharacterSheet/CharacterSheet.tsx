@@ -12,7 +12,9 @@ import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
 import formatCharacter from './CharacterFormater';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
-import { mod, proficiencyBonusCalc, positivePrecursor } from './helper';
+import {
+  mod, proficiencyBonusCalc, positivePrecursor, updateArrObj,
+} from './helper';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
 // import { saveCharacter } from '../../services/character.sevices';
 import ButtonForSaveOrUpdate from './ButtonForSaveOrUpdate';
@@ -76,7 +78,7 @@ export default function CharacterSheet({ fetched }:IProps) {
   };
 
   // console.log( newCharacter);
-  // console.log('character: ', character);
+  console.log('character: ', character);
   return (
     <div className="character-sheet-background ">
       <div className="character-sheet bg-gray-300">
@@ -93,7 +95,7 @@ export default function CharacterSheet({ fetched }:IProps) {
               <EditableDisplayComponent
                 inputType="input"
                 action={(val:string) => { setCharacter((prevVal:any) => ({ ...prevVal, characterName: val })); }}
-                initialVal=" Character Name"
+                initialVal="Name your Char!"
               />
               <hr />
               {/* <h4 className="character-sheet-campaign">Campaign Name</h4> */}
@@ -289,10 +291,12 @@ export default function CharacterSheet({ fetched }:IProps) {
                     <div>
                       Current:
                       <EditableDisplayComponent
-                        action={(val:number) => {
-                          setCharacter((prevVal:any) => (
-                            { ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
-                        }}
+                        action={
+                          (val:number) => {
+                            setCharacter((prevVal:any) => (
+                              { ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
+                          }
+}
                         initialVal={character.hitPoints.max}
                         inputType="number"
                       />
@@ -360,6 +364,7 @@ export default function CharacterSheet({ fetched }:IProps) {
                 <div className="character-sheet-equipment-list">
                   <div className="hit-point ">Equipments</div>
                   <br />
+                  {console.log('character at equip', character)}
                   {character.equipments.map((item:any) => (
                     <div className="equipment-list-item" key={item.equipment.name}>
                       {item.equipment.name}
@@ -368,7 +373,8 @@ export default function CharacterSheet({ fetched }:IProps) {
 
                       <EditableDisplayComponent
                         inputType="number"
-                        action={null}
+                        itemKey={item.equipment.name}
+                        action={(val:number, key:string) => setCharacter(updateArrObj(character, key, Number(val)))}
                         initialVal={item.quantity}
                       />
 

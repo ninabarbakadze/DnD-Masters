@@ -1,3 +1,6 @@
+import { ICharacterDB } from '../../interfaces/characterFromDB.intervace';
+// import mockCharacter from '../../mockData/mockCharackter';
+
 export const mod = (score:number) => {
   const m = Math.round(score / 2 - 5.1);
   return m;
@@ -13,3 +16,21 @@ export const proficiencyBonusCalc = (level: number) => {
   if (level > 16 && level < 20) proficiencyBonus = 6;
   return proficiencyBonus;
 };
+
+export function updateArrObj(obj: ICharacterDB, key:string, newValue:number) {
+  const { equipments, ...data } = obj;
+  console.log(data);
+  // eslint-disable-next-line
+  const temp = equipments.filter((item) => item.equipment.name !== key);
+  const newItem = equipments.find((item) => item.equipment.name === key);
+  // @ts-ignore
+  // newItem.quantity
+  // eslint-disable-next-line no-unused-expressions
+  newItem && temp.push(Object.assign(newItem, { quantity: newValue }));
+
+  const objToreturn = { equipments: temp, ...data };
+  console.log('objToReturn', objToreturn);
+  console.log('key', key);
+  console.log('val', newValue);
+  return objToreturn;
+}
