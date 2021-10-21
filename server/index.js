@@ -1,3 +1,4 @@
+/* eslint-disable arrow-spacing */
 require('dotenv/config');
 const passport = require('passport');
 const express = require('express');
@@ -35,12 +36,10 @@ const io = new Server(server, {
   },
 });
 
-const players =  [];
+let players = [];
 io.on('connection', (socket) => {
-  console.log('connected', socket.id);
   socket.on('join_room', ({ gameRoom, player }) => {
     socket.join(gameRoom);
-    console.log(gameRoom);
     console.log(`${player} with ID: ${socket.id} joined room: ${gameRoom}`);
   });
   socket.on('send_message', (data) => {
@@ -49,10 +48,13 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected', socket.id);
   });
-  socket.on('new_player', (player, respond) => {
+  socket.on('new_player', ({ player, room }, respond) => {
     players.push(player);
-    console.log(players);
     respond(players);
+  });
+  socket.on('update_players', (data) => {
+    players = data.players;
+    socket.to(data.room).emit('update_players', players);
   });
 });
 

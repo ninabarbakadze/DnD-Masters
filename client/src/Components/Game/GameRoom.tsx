@@ -16,7 +16,7 @@ const GameRoom = () => {
   const { socket } = useSelector((state: IRootState) => state.socketReducer);
 
   function addPlayer(player: iPlayerToken) {
-    setPlayers([...players, player]);
+    setPlayers([player]);
   }
   return (
     <div>

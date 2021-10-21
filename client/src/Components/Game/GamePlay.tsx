@@ -24,25 +24,29 @@ const GamePlay = ({ playerCharacter, players, setPlayers, socket }: props) => {
   // const userName = useSelector((state: IRootState) => state.user.name);
   const [gameName, setGameName] = useState<string>('');
   const [gameJoined, setGameJoined] = useState<boolean>(false);
-  const [PlayersUpdating, setPlayersUpdating] = useState<boolean>(false);
+  const [socketUpdate, setSocketUpdate] = useState<boolean>(false);
 
   useEffect(() => {
-    socket.emit('new_player', players[0], (inRoom) => {
-      console.log(inRoom);
-      setPlayersUpdating(true);
-      setPlayers(inRoom);
-      setGameJoined(true);
-      setPlayersUpdating(false);
-    });
+    socket.emit(
+      'new_player',
+      { player: players[0], room: socket.roomCode },
+      (inRoom) => {
+        setPlayers(inRoom);
+      },
+    );
   }, []);
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (!socketUpdate)
+      socket.emit('update_players', { players, room: socket.roomCode });
+  }, [players]);
 
   useEffect(() => {
-    console.log('wee');
-    if (socket) {
-      socket.on('add_player', (data: any) => console.log('event fired', data));
-    }
+    socket.on('update_players', (players) => {
+      setSocketUpdate(true);
+      setPlayers(players);
+      setSocketUpdate(false);
+    });
   }, [socket]);
 
   return (
@@ -60,6 +64,15 @@ const GamePlay = ({ playerCharacter, players, setPlayers, socket }: props) => {
           />
         </div>
       )}
+      <button
+        onClick={() => {
+          const newPlayers = [...players];
+          newPlayers[0].position.x += 5;
+          setPlayers(newPlayers);
+        }}
+      >
+        {JSON.stringify(players)}
+      </button>
     </div>
   );
 };
