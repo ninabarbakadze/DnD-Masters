@@ -28,7 +28,11 @@ export default function SaveForm({ onModalSubmit, setModalIsActive }: any) {
         value={name}
         onChange={(evt) => setName(evt.target.value)}
       />
-      <input type="submit" value="Save" />
+      <input
+        className="main-button success-button"
+        type="submit"
+        value="Save"
+      />
     </form>
   );
 }

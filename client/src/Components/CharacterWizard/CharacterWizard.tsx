@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './characterWizard.scss';
 
 import RaceSelection from './steps/RaceSelection.step';
@@ -10,19 +10,19 @@ import BackgroundSelectionStep from './steps/backgroundSelection.step';
 import AttributeSelectionStep from './steps/attributeSelection/attributeSelection.step';
 import CharacterSheet from '../CharacterSheet/CharacterSheet';
 import ClassSelection from './steps/ClassSelection.step';
+import WizardNav from '../WizardNav/WizardNav';
 
 const CharacterWizard: FC = () => {
   const onWizardComplete = () => console.log('finished');
+  const history = useHistory();
 
   const submitfunc = useWizardStepComplete<iCharacter>(onWizardComplete);
 
   return (
     <div className="character-wizard wizard flex-col justify-center items-center text-center">
-      <div
-        className="place-content-center w-full shadow-lg h-20 items-center justify-center"
-        bg-color-lightPurple
-      >
-        <h1 className="text-5xl">Character Wizard</h1>
+      <div className="wizard-header">
+        <h1>Map Wizard</h1>
+        <WizardNav history={history} />
       </div>
       <div className="mt-2">
         <Switch>

@@ -10,10 +10,11 @@ export default function Dashboard() {
   return (
     <div className="dashboard-container">
       <div className="header">
-        <p>
+        <h1>
           Hello,
-          {user.name}
-        </p>
+          {/* eslint-disable-next-line */}
+          {' ' + user.name}
+        </h1>
         <svg
           className="user-avatar"
           xmlns="http://www.w3.org/2000/svg"
@@ -47,13 +48,13 @@ export default function Dashboard() {
         />
         <DashboarMenuItem
           // eslint-disable-next-line
-          image="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Android_TV_game_controller.jpg/1200px-Android_TV_game_controller.jpg"
+          image="https://images.unsplash.com/photo-1601987177651-8edfe6c20009?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
           link="/gameWizard/step1"
           text="Create Game"
         />
         <DashboarMenuItem
           // eslint-disable-next-line
-          image="https://cdn.pixabay.com/photo/2017/03/13/04/25/play-button-2138735_1280.png"
+          image="https://images.unsplash.com/photo-1585504198199-20277593b94f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1317&q=80"
           link="/joinGame"
           text="Play Game"
         />

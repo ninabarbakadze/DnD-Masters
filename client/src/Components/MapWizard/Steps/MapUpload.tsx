@@ -42,19 +42,21 @@ export default function MapUpload({ history }: any) {
 
   return (
     <div className="map-upload-container">
-      <div>
+      <div className="upload-image-header">
         <h1>Image Upload</h1>
-        <p>Select an Image and edit your Map</p>
+        <h3>Select an Image and edit your Map</h3>
       </div>
-      <div>
+      <div className="upload-preview">
         <ImageUpload setFile={setFile} />
-        <button
-          className={mapUploaded ? 'not-visible' : 'main-button'}
-          type="submit"
-          onClick={() => handleSubmit()}
-        >
-          Upload
-        </button>
+        {file && (
+          <button
+            className={mapUploaded ? 'not-visible' : 'main-button'}
+            type="submit"
+            onClick={() => handleSubmit()}
+          >
+            Upload
+          </button>
+        )}
         <button
           className={
             mapUploaded ? 'main-button success-button' : 'not-visible '
