@@ -4,11 +4,17 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 import MapItem from '../MapWizard/MapItem/MapItem';
 import getMapElements from '../../assets/mapElements/mapData';
+import PlayerToken from './PlayerToken';
 import { IRootState } from '../../reducers';
 
 export default function GameMap() {
+  // const playerArr = [
+  //   { playerName: 'Horst', position: { x: 0, y: 0 } },
+  //   { playerName: 'Detlef', position: { x: 0, y: 0 } },
+  // ];
+  const [playerLocations, setPlayerLocations] = useState<JSX.Element[]>([]);
   const imgRef = useRef<any>(null);
-  const { mapUrl, elementArr } = useSelector(
+  const { mapUrl, elementArr, playerArr } = useSelector(
     (state: IRootState) => state.gameCreationReducer,
   );
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
@@ -144,7 +150,24 @@ export default function GameMap() {
         />
       );
     });
+    if (!locations) return;
     setLocationArr(locations);
+  }, []);
+
+  useEffect(() => {
+    const players = playerArr?.map((player) => {
+      console.log(player);
+      return (
+        <PlayerToken
+          xCoord={player.position.x}
+          yCoord={player.position.y}
+          playerName={player.playerName}
+          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+        />
+      );
+    });
+    if (!players) return;
+    setPlayerLocations(players);
   }, []);
 
   return (
@@ -183,6 +206,7 @@ export default function GameMap() {
           />
         </foreignObject> */}
           {locationArr}
+          {playerLocations}
         </svg>
       </div>
       <button onClick={() => zoom(0.8)} type="button">

@@ -1,11 +1,20 @@
 import { iElement } from '../interfaces/map.interface';
 
+interface iPlayer {
+  playerName: string;
+  position: {
+    x: number;
+    y: number;
+  };
+}
+
 export interface iGameWizardState {
-  name: string;
-  tags: string;
-  mapId: string;
-  mapUrl: string;
-  elementArr: iElement[] | [];
+  name?: string;
+  tags?: string;
+  mapId?: string;
+  mapUrl?: string;
+  elementArr?: iElement[] | [];
+  playerArr?: iPlayer[] | [];
 }
 
 const initialState = {
@@ -14,6 +23,10 @@ const initialState = {
   mapId: '',
   mapUrl: '',
   elementArr: [],
+  playerArr: [
+    { playerName: 'Horst', position: { x: 0, y: 0 } },
+    { playerName: 'Detlef', position: { x: 0, y: 0 } },
+  ],
 };
 
 interface IAction {
@@ -39,6 +52,11 @@ const gameCreationReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         elementArr: action.payload.elementArr,
+      };
+    case 'UPDATE_PLAYER':
+      return {
+        ...state,
+        playerArr: action.payload.playerArr,
       };
     default:
       return state;
