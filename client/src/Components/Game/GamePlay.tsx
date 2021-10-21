@@ -3,9 +3,10 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable */
 // @ts-nocheck
-import { useEffect, useState, Dispatch, SetStateAction } from 'react';
-// import { useSelector } from 'react-redux';
+import { useEffect, useState, SetStateAction } from 'react';
+import { useDispatch } from 'react-redux';
 import { iCharacter } from '../../interfaces/character.interface';
+import { updateMap } from '../../actions/gameWizard.actions';
 // import { IRootState } from '../../reducers';
 import { Socket } from 'socket.io-client';
 import iPlayerToken from '../../interfaces/playerToken.interface';
@@ -17,10 +18,18 @@ interface props {
   socket: Socket;
   players: iPlayerToken[];
   setPlayers: any;
+  mapUrl: string | undefined;
   // roomCode: 'string';
 }
 
-const GamePlay = ({ playerCharacter, players, setPlayers, socket }: props) => {
+const GamePlay = ({
+  playerCharacter,
+  players,
+  setPlayers,
+  socket,
+  mapUrl,
+}: props) => {
+  const dispatch = useDispatch();
   // const userName = useSelector((state: IRootState) => state.user.name);
   const [gameName, setGameName] = useState<string>('');
   const [gameJoined, setGameJoined] = useState<boolean>(false);
@@ -34,6 +43,11 @@ const GamePlay = ({ playerCharacter, players, setPlayers, socket }: props) => {
         setPlayers(inRoom);
       },
     );
+    mapUrl
+      ? socket.emit('send_map', mapUrl)
+      : socket.emit('request_map', '', (url) =>
+          dispatch(updateMap({ mapUrl: url })),
+        );
   }, []);
 
   useEffect(() => {

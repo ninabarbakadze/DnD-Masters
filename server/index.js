@@ -35,7 +35,7 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
-
+let map;
 let players = [];
 io.on('connection', (socket) => {
   socket.on('join_room', ({ gameRoom, player }) => {
@@ -55,6 +55,11 @@ io.on('connection', (socket) => {
   socket.on('update_players', (data) => {
     players = data.players;
     socket.to(data.room).emit('update_players', players);
+  });
+  // eslint-disable-next-line no-return-assign
+  socket.on('send_map', (url) => map = url);
+  socket.on('request_map', (_, respond) => {
+    respond(map);
   });
 });
 
