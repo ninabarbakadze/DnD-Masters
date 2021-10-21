@@ -11,7 +11,11 @@ export default function Modal({
       <div className="modal-form-container">
         <h1>{heading}</h1>
         {children}
-        <button onClick={closeModal} type="button">
+        <button
+          className=" close-modal-button side-button danger-button"
+          onClick={closeModal}
+          type="button"
+        >
           Close
         </button>
       </div>

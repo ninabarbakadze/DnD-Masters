@@ -9,9 +9,10 @@ export default function MapWizard() {
   const history = useHistory();
   return (
     <div className="map-wizard-container">
-      <h1>Map Wizard</h1>
-
-      <WizardNav history={history} />
+      <div className="wizard-header">
+        <h1>Map Wizard</h1>
+        <WizardNav history={history} />
+      </div>
       <Switch>
         <Route path="/mapWizard/mapSelection">
           <MapSelection history={history} />
