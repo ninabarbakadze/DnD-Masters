@@ -3,7 +3,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/self-closing-comp */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { iCharacter } from '../../interfaces/character.interface';
 import { IRootState } from '../../reducers';
@@ -19,6 +19,14 @@ const GamePlay = ({ playerCharacter }: props) => {
   const { socket } = useSelector((state: IRootState) => state.socketReducer);
   const userName = useSelector((state: IRootState) => state.user.name);
   const [gameName, setGameName] = useState<string>('');
+  const [userTokens, setUserTokens] = useState([]);
+
+  useEffect(() => {
+    console.log('wee');
+    if (socket) {
+      socket.on('add_player', (data: any) => console.log('event fired', data));
+    }
+  }, [socket]);
 
   return (
     <div>

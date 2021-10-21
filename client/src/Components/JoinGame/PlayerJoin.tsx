@@ -13,9 +13,12 @@ import CharacterCard from './CharacterCard';
 import photos from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
 
-const PlayerJoin = ({ activateGame }: any) => {
+interface props {
+  activateGame: any;
+}
+
+const PlayerJoin = ({ activateGame }: props) => {
   const user = useSelector((state: IRootState) => state.user);
-  console.log('player join', user);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
   const [charraces, setCharRaces] = useState([]);
@@ -34,8 +37,7 @@ const PlayerJoin = ({ activateGame }: any) => {
   };
 
   function handleClick() {
-    console.log('clicked');
-    dispatch(joinGame(roomCode));
+    dispatch(joinGame({ roomCode, playerName }));
     activateGame(true);
   }
 
@@ -55,7 +57,10 @@ const PlayerJoin = ({ activateGame }: any) => {
     if (user.name) {
       const characters = await getAllCharacter(user.name);
       setCharactersArr(characters);
-      const arr = characters.map((char) => ({ race: char.race, name: char.name }));
+      const arr = characters.map((char) => ({
+        race: char.race,
+        name: char.name,
+      }));
       setCharRaces(arr);
     }
   };

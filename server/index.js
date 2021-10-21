@@ -37,9 +37,11 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   console.log('connected', socket.id);
-  socket.on('join_room', (data) => {
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  socket.on('join_room', ({ gameRoom, player }) => {
+    socket.join(gameRoom);
+    console.log(gameRoom);
+    socket.in(gameRoom).emit('add_player', player);
+    console.log(`${player} with ID: ${socket.id} joined room: ${gameRoom}`);
   });
   socket.on('send_message', (data) => {
     socket.to(data.room).emit('receive_message', data);

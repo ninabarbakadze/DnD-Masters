@@ -12,12 +12,11 @@ const GameRoom = () => {
   return (
     <div>
       <h1>GAME ROOM</h1>
-      <PlayerJoin activateGame={setGameActive} />
-      <GameMap />
 
       {gameActive ? (
         <div>
           <GamePlay />
+          {/* <GameMap /> */}
         </div>
       ) : (
         <PlayerJoin activateGame={setGameActive} />

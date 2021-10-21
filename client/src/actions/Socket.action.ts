@@ -10,21 +10,24 @@ export const updateSocket = (data: Socket) => ({
   payload: data,
 });
 
-export const joinGame = (gameRoom: string) => {
+export const joinGame = (gameRoom: string, player: string) => {
+  console.log(gameRoom, player);
   return async (dispatch: any) => {
     if (!appStore.getState().socketReducer.socket) {
       createSocket().then((socket: Socket) => {
         console.log('at creation', socket);
         socket.roomCode = gameRoom;
+        socket.player = player;
         dispatch(updateSocket(socket));
-        socket.emit('join_room', gameRoom);
+        socket.emit('join_room', { gameRoom, player });
       });
     } else {
       const { socket } = appStore.getState().socketReducer;
       console.log('after getting from store', socket);
       socket.roomCode = gameRoom;
+      socket.player = player;
       dispatch(updateSocket(socket));
-      socket.emit('join_room', gameRoom);
+      socket.emit('join_room', { gameRoom, player });
     }
   };
 };
