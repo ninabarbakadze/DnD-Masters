@@ -283,15 +283,16 @@ export default function MapEdit() {
   // }, []);
 
   useEffect(() => {
-    // @ts-expect-error
-    const bbox = document.querySelector('.test')?.getBBox();
     setTimeout(() => {
+      // @ts-expect-error
+      const bbox = document.querySelector('.test')?.getBBox();
+      console.log(bbox);
       setDimensions({
         width: bbox.width,
         height: bbox.height,
       });
     }, 1000);
-  }, []);
+  }, [imgRef.current]);
 
   useEffect(() => {
     if (!elementArr) return;
@@ -316,7 +317,7 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
-      {console.log('something')}
+      {console.log('bla')}
       <div className="map-edit-image">
         {/* <img src={mapUrl} alt="" /> */}
         <div>

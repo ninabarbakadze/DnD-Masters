@@ -6,7 +6,7 @@ const initialState: iMap = {
   locationArr: [],
   elementArr: [],
   mapName: '',
-  mapUrl: 'https://i.redd.it/pq61m18mmzp51.jpg',
+  mapUrl: '',
 };
 
 const mapCreationReducer = (
