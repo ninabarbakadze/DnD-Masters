@@ -1,20 +1,13 @@
 import { iElement } from '../interfaces/map.interface';
-
-interface iPlayer {
-  playerName: string;
-  position: {
-    x: number;
-    y: number;
-  };
-}
+import iPlayerToken from '../interfaces/playerToken.interface';
 
 export interface iGameWizardState {
   name?: string;
   tags?: string;
   mapId?: string;
   mapUrl?: string;
-  elementArr?: iElement[] | [];
-  playerArr?: iPlayer[] | [];
+  elementArr?: iElement[];
+  playerArr: iPlayerToken[];
 }
 
 const initialState = {
@@ -24,8 +17,8 @@ const initialState = {
   mapUrl: '',
   elementArr: [],
   playerArr: [
-    { playerName: 'Horst', position: { x: 0, y: 0 } },
-    { playerName: 'Detlef', position: { x: 0, y: 0 } },
+    // { playerName: 'Horst', position: { x: 0, y: 0 } },
+    // { playerName: 'Detlef', position: { x: 0, y: 0 } },
   ],
 };
 
