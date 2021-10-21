@@ -25,7 +25,11 @@ export default function ElementForm({ onModalSubmit, setModalIsActive }: any) {
         value={locationDescription}
         onChange={(evt) => setLocationDescription(evt.target.value)}
       />
-      <input type="submit" value="Enter" />
+      <input
+        className="main-button success-button"
+        type="submit"
+        value="Enter"
+      />
     </form>
   );
 }

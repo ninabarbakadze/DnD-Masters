@@ -286,7 +286,6 @@ export default function MapEdit() {
     setTimeout(() => {
       // @ts-expect-error
       const bbox = document.querySelector('.test')?.getBBox();
-      console.log(bbox);
       setDimensions({
         width: bbox.width,
         height: bbox.height,
@@ -317,7 +316,6 @@ export default function MapEdit() {
 
   return (
     <div className="map-edit-container">
-      {console.log('bla')}
       <div className="map-edit-image">
         {/* <img src={mapUrl} alt="" /> */}
         <div>
@@ -358,21 +356,52 @@ export default function MapEdit() {
             {locationArr}
           </svg>
         </div>
-
-        <button onClick={() => zoom(0.8)} type="button">
-          Zoom In
-        </button>
-        <button onClick={() => zoom(1.25)} type="button">
-          Zoom Out
-        </button>
-        <button type="button" onClick={handleSave}>
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            {/* eslint-disable-next-line */}
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-            {/* eslint-disable-next-line */}
-            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-          </svg>
-        </button>
+        <div className="map-edit-buttons">
+          <div>
+            <button
+              className="map-zoom-button"
+              onClick={() => zoom(0.8)}
+              type="button"
+            >
+              <svg
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+              </svg>
+            </button>
+            <button
+              className="map-zoom-button"
+              onClick={() => zoom(1.25)}
+              type="button"
+            >
+              <svg
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+              </svg>
+            </button>
+          </div>
+          <button
+            className="map-save-button"
+            type="button"
+            onClick={handleSave}
+          >
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              {/* eslint-disable-next-line */}
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+              {/* eslint-disable-next-line */}
+              <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+            </svg>
+          </button>
+        </div>
       </div>
       {/* eslint-disable-next-line */}
       <div className="map-edit-menu">

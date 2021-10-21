@@ -7,7 +7,7 @@ export default function DescriptionPreview() {
   );
   return (
     <div className="map-edit-description">
-      <h3>Location Description</h3>
+      <h2>Location Description</h2>
       <h5>{currentName}</h5>
       <p>{currentDescription}</p>
     </div>

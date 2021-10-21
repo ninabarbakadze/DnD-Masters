@@ -68,7 +68,7 @@ export default function PointSelection() {
   ));
   return (
     <div className="map-edit-selection">
-      <h3>Select a point of interest</h3>
+      <h2>Select a point of interest</h2>
       <div>{selectList}</div>
       <svg
         className={
