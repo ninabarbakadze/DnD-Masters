@@ -1,6 +1,20 @@
+.character-sheet-max-curr-temp-hit-points,
+.character-sheet-attacks-spell-casting,
+.deathSave,
+.equipment-list-item,
+.character-sheet-attack-list-item,
+.character-sheet-attack-header,
+.character-sheet-fails,
+.character-sheet-success,
+.character-sheet-armor,
+.character-sheet-initiative,
+.character-sheet-speed,
 .character-sheet-inspiration,
 .character-sheet-PB,
+.character-sheet-hit-death,
 .character-sheet-proficiency,
+.character-sheet-current-hit-points,
+.character-sheet-hit-dice,
 // character-sheet-saving-throws,
 .character-sheet-action-row-1,
 .character-sheet-action-row-3,
@@ -26,7 +40,7 @@
 
 }
 .character-sheet{
-    max-width: 150vh;
+    max-width: 160vh;
     height : 100%;
     flex-direction: row;
     margin:10px;
@@ -49,7 +63,7 @@
     align-items:center;
     flex-direction: row;
     justify-content: center;
-    padding:5px
+    padding:2px
 }
 .character-sheet-header,
 .character-sheet-ability-score{
@@ -99,17 +113,17 @@
 }
 .character-sheet-action{
     justify-content: space-around;
-    height: 100%;
-    padding: 30px;
+    height: 90%;
+    padding: 10px;
 
 }
 
 .character-sheet-death-save{
-    width: 100px;
+    width: 100%;
 }
 .character-sheet-background{
-    width: auto;
-    height: 88vh;
+    width: 100%;
+    height: 100vh;
     justify-content: center;
 }
 .character-sheet-header{
@@ -150,20 +164,21 @@ margin:8px
 }
 
 .character-sheet-body{
-    width: 100%;
+    min-width: 80vh;
     height: 100%;
     flex-direction: column;
     justify-content: space-between;
 }
  h3 em {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 .character-sheet-action-row-3,
 .character-sheet-action-row-2,
 .character-sheet-action-row-1{
-    width: 36vh;
+    width: 40vh;
+    align-items: center;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 100%;
 
 }
@@ -183,7 +198,7 @@ justify-content: space-around;
 }
 
 .character-sheet-languages b {
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: 400;
   
 }
@@ -192,30 +207,48 @@ justify-content: space-around;
     font-weight: 500;
 }
 .character-sheet-ability-info{
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin:3px
 }
 .character-sheet-proficiency{
     height: 100%;
     flex-direction: column;
-    justify-self: space-between;
-    min-width: 2vh;
+    justify-content: space-between;
+    width: 22vh;
+    // padding-top: -5px;
+    // margin: 5px;
 }
-
+.attack-name,
+.attack-bonus,
+.attack-damage,
+.character-sheet-success,
+.character-sheet-fails,
+.equipment-list-item,
+.character-sheet-temporary-hit-points .editable-text-field,
+.character-sheet-current-hit-points .editable-text-field,
+.character-sheet-initiative .editable-text-field,
+.bright-frame,
 .character-sheet-inspiration .editable-text-field,
 .character-sheet-ability-mod{
-    width: 40px;
+    display:flex;
+    min-width: 40px;
+    min-height: 22px;
+    padding: 4px;
+    margin:2px;
     background-color:#f6f9ff9b;
     border-radius : 25px;
     text-align: center;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .ability-title{
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 500;
+    margin: 3px
 }
 .character-sheet-ability{
-    height:102%
+    height:117%
 }
 
 .character-sheet-PB,
@@ -228,13 +261,99 @@ justify-content: space-around;
   
     height: 10px;
 }
+.hit-point,
 .character-sheet-inspiration,
 .character-sheet-skills,
 .character-sheet-saving-throws,
 .character-sheet-saving-throw-skills-tile,
 .character-sheet-PB,
 .character-sheet-perception{
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     font-weight: 500;
 
+}
+
+.character-sheet-armor-initiative-speed{
+    align-items: center;
+}
+.character-sheet-armor,
+.character-sheet-initiative,
+.character-sheet-speed{
+    height: 10vh;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.character-sheet-attacks-spell-casting,
+.character-sheet-hit-death,
+.character-sheet-hit-points{
+    width: 100%;;
+}
+.deathSave,
+.character-sheet-max-curr-temp-hit-points{
+    margin-top: 5px;
+ flex-direction: row;
+ justify-content: space-around;
+ text-align: center;
+}
+
+.character-sheet-success,
+.character-sheet-fails{
+ flex-direction: row;
+ align-items: center;
+ justify-content:space-around;
+}
+.character-sheet-hit-death{
+    justify-content: space-around;
+}
+.character-sheet-attacks-spell-casting,
+.character-sheet-hit-dice{
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.character-sheet-attack-list-item,
+.character-sheet-attack-header{
+    width: 100%;
+    justify-content: space-around;
+    margin:10px,
+}
+.attack-header{
+    font-weight:500;
+}
+.character-sheet-equipment-list{
+    justify-content: space-around;
+    flex-direction: column;
+    width: 40vh;
+    min-height: 20vh;
+}
+.character-sheet-attack{
+    width: 100%;
+}
+.smallTitle{
+    font-size: 0.6;
+    font-weight: 500;
+}
+.features-and-traits{
+    max-height: 19vh;
+    overflow: auto; 
+}
+.character-sheet-body {
+    overflow-y: hidden;
+  }
+  .character-sheet-skills,
+.character-sheet-saving-throws{
+    min-height: 21vh ;
+    // max-height: 35vh;
+    overflow: auto; 
+}
+ .features-and-traits::-webkit-scrollbar {
+    display: none;
+}
+.character-sheet-saving-throws::-webkit-scrollbar {
+    display: none;
+}
+.character-sheet-skills::-webkit-scrollbar {
+    display: none;
 }
