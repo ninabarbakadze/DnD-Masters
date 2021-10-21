@@ -9,17 +9,22 @@ import { Link } from 'react-router-dom';
 import { joinGame } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
 import { getAllCharacter } from '../../services/character.sevices';
-import CharacterWizard from '../CharacterWizard/CharacterWizard';
+import CharacterCard from './CharacterCard';
+import photos from '../../assets/racePhotos/racePhotos';
+import Carousel from '../Carousel/Carousel';
 
 const PlayerJoin = ({ activateGame }: any) => {
   const user = useSelector((state: IRootState) => state.user);
   console.log('player join', user);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
+  const [charraces, setCharRaces] = useState([]);
   const [roomCode, setRoomCode] = useState('');
   const [disabled, setDisabled] = useState(true);
   const [charactersArr, setCharactersArr] = useState([]);
-  console.log(charactersArr);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  console.log('characters array', charactersArr);
+  console.log('character races', charraces);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
@@ -34,15 +39,29 @@ const PlayerJoin = ({ activateGame }: any) => {
     activateGame(true);
   }
 
-  const getCharacters = async () => {
+  const createRaceOptions = (races) => {
+    return races.map((race) => {
+      return (
+        <CharacterCard
+          key={JSON.stringify(race.race)}
+          name={race.name}
+          imgPath={photos[race.race.index.replace('-', '')]}
+        />
+      );
+    });
+  };
+
+  const getAllCharacters = async () => {
     if (user.name) {
       const characters = await getAllCharacter(user.name);
       setCharactersArr(characters);
+      const arr = characters.map((char) => ({ race: char.race, name: char.name }));
+      setCharRaces(arr);
     }
   };
 
   useEffect(() => {
-    getCharacters();
+    getAllCharacters();
     setDisabled(!(playerName.length && roomCode.length === 5));
   }, [playerName, roomCode]);
 
@@ -67,6 +86,13 @@ const PlayerJoin = ({ activateGame }: any) => {
           onChange={(e) => handleCodeChange(e)}
         />
       </div>
+      {charraces.length ? (
+        <Carousel setIndex={setSelectedIndex} show={4}>
+          {createRaceOptions(charraces)}
+        </Carousel>
+      ) : (
+        <h2>...Loading</h2>
+      )}
       <button type="submit">Choose Character</button>
       <Link to="/characterWizard/raceSelection">
         <button type="submit">Create Character</button>
