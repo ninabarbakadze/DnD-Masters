@@ -5,10 +5,10 @@ interface IProps{
 }
 export default function CharacterSheetDeathSaves({ death, success, fail }:IProps) {
   return (
-    <div>
+    <div className="deathSave">
       <div className="character-sheet-fails">
         <p>{fail}</p>
-        <button type="submit" onClick={() => (death('fails'))}>💀</button>
+        <button type="button" onClick={() => (death('fails'))}>💀</button>
       </div>
       <div className="character-sheet-success">
         <p>{success}</p>
