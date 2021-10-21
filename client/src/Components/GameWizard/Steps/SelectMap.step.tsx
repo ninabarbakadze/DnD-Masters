@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../../MapWizard/MapCarouselItem/MapCarouselItem';
