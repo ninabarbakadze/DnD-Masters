@@ -6,16 +6,20 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { joinGame } from '../../actions/Socket.action';
+import { joinGame, updatePlayers } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
 import { getAllCharacter } from '../../services/character.sevices';
 import CharacterCard from './CharacterCard';
 import photos from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
 
-const PlayerJoin = ({ activateGame }: any) => {
+interface props {
+  activateGame: any;
+  addPlayer: any;
+}
+
+const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   const user = useSelector((state: IRootState) => state.user);
-  console.log('player join', user);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
   const [charraces, setCharRaces] = useState([]);
@@ -34,8 +38,8 @@ const PlayerJoin = ({ activateGame }: any) => {
   };
 
   function handleClick() {
-    console.log('clicked');
-    dispatch(joinGame(roomCode));
+    dispatch(joinGame(roomCode, playerName));
+    addPlayer({ playerName, position: { x: 10, y: 10 } });
     activateGame(true);
   }
 
@@ -55,7 +59,10 @@ const PlayerJoin = ({ activateGame }: any) => {
     if (user.name) {
       const characters = await getAllCharacter(user.name);
       setCharactersArr(characters);
-      const arr = characters.map((char) => ({ race: char.race, name: char.name }));
+      const arr = characters.map((char) => ({
+        race: char.race,
+        name: char.name,
+      }));
       setCharRaces(arr);
     }
   };
