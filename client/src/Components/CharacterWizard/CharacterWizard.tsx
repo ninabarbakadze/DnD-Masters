@@ -21,7 +21,7 @@ const CharacterWizard: FC = () => {
   return (
     <div className="character-wizard wizard flex-col justify-center items-center text-center">
       <div className="wizard-header">
-        <h1>Map Wizard</h1>
+        <h1>Character Wizard</h1>
         <WizardNav history={history} />
       </div>
       <div className="mt-2">

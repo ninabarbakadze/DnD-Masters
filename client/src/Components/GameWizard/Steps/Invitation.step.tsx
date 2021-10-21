@@ -13,11 +13,13 @@ function Invitation({ onSubmit }: any) {
   const user = useSelector((state: IRootState) => state.user);
 
   const getMapData = async () => {
-    const mapData = await getMap(user.name, mapId);
-    onSubmit(
-      { elementArr: JSON.parse(mapData.locationData) },
-      updateMapElements,
-    );
+    if (mapId) {
+      const mapData = await getMap(user.name, mapId);
+      onSubmit(
+        { elementArr: JSON.parse(mapData.locationData) },
+        updateMapElements,
+      );
+    }
   };
 
   const handleClick = () => {
