@@ -35,12 +35,12 @@ const io = new Server(server, {
   },
 });
 
+const players =  [];
 io.on('connection', (socket) => {
   console.log('connected', socket.id);
   socket.on('join_room', ({ gameRoom, player }) => {
     socket.join(gameRoom);
     console.log(gameRoom);
-    socket.in(gameRoom).emit('add_player', player);
     console.log(`${player} with ID: ${socket.id} joined room: ${gameRoom}`);
   });
   socket.on('send_message', (data) => {
@@ -48,6 +48,11 @@ io.on('connection', (socket) => {
   });
   socket.on('disconnect', () => {
     console.log('user disconnected', socket.id);
+  });
+  socket.on('new_player', (player, respond) => {
+    players.push(player);
+    console.log(players);
+    respond(players);
   });
 });
 

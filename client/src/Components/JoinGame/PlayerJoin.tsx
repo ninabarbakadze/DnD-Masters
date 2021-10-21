@@ -6,7 +6,7 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { joinGame } from '../../actions/Socket.action';
+import { joinGame, updatePlayers } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
 import { getAllCharacter } from '../../services/character.sevices';
 import CharacterCard from './CharacterCard';
@@ -15,9 +15,10 @@ import Carousel from '../Carousel/Carousel';
 
 interface props {
   activateGame: any;
+  addPlayer: any;
 }
 
-const PlayerJoin = ({ activateGame }: props) => {
+const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   const user = useSelector((state: IRootState) => state.user);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
@@ -37,7 +38,8 @@ const PlayerJoin = ({ activateGame }: props) => {
   };
 
   function handleClick() {
-    dispatch(joinGame({ roomCode, playerName }));
+    dispatch(joinGame(roomCode, playerName));
+    addPlayer({ playerName, position: { x: 10, y: 10 } });
     activateGame(true);
   }
 

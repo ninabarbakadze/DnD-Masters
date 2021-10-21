@@ -31,3 +31,10 @@ export const joinGame = (gameRoom: string, player: string) => {
     }
   };
 };
+
+export function updatePlayers(players: []) {
+  return {
+    type: 'UPDATE_PLAYERS',
+    playload: players,
+  };
+}
