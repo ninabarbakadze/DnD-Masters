@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable arrow-body-style */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -27,8 +28,6 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   const [disabled, setDisabled] = useState(true);
   const [charactersArr, setCharactersArr] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  console.log('characters array', charactersArr);
-  console.log('character races', charraces);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
@@ -39,7 +38,7 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
 
   function handleClick() {
     dispatch(joinGame(roomCode, playerName));
-    addPlayer({ playerName, position: { x: 10, y: 10 } });
+    addPlayer({ playerName, position: { x: 0, y: 0 } });
     activateGame(true);
   }
 
@@ -66,6 +65,10 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
       setCharRaces(arr);
     }
   };
+
+  useEffect(() => {
+    dispatch(updatePlayers({ playerArr: [] }));
+  }, []);
 
   useEffect(() => {
     getAllCharacters();

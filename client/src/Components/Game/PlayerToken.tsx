@@ -36,6 +36,10 @@ export default function PlayerToken({
           const playerArrCopy = [...playerArr];
           playerArrCopy[index].position.x = coords.x;
           playerArrCopy[index].position.y = coords.y;
+          console.log(
+            'what is the player array right after move',
+            playerArrCopy,
+          );
           dispatch(updatePlayer({ playerArr: playerArrCopy }));
         }
       },

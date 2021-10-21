@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable  */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-unused-vars */
 /* eslint-disable arrow-body-style */
@@ -14,15 +14,14 @@ import { updatePlayer } from '../../actions/gameWizard.actions';
 const GameRoom = () => {
   const dispatch = useDispatch();
   const [gameActive, setGameActive] = useState<Boolean>(false);
-  // const [players, setPlayers] = useState<iPlayerToken[]>([]);
   const { socket } = useSelector((state: IRootState) => state.socketReducer);
-  const { playerArr } = useSelector(
+  const { playerArr, mapUrl } = useSelector(
     (state: IRootState) => state.gameCreationReducer,
   );
 
   function addPlayer(player: iPlayerToken) {
     if (playerArr) {
-      dispatch(updatePlayer({ playerArr: [player] }));
+      dispatch(updatePlayer({ playerArr: [...playerArr, player] }));
     }
   }
 
@@ -39,10 +38,11 @@ const GameRoom = () => {
           <div>
             <GamePlay
               players={playerArr}
+              mapUrl={mapUrl}
               setPlayers={setPlayers}
               socket={socket}
             />
-            <GameMap />
+            {mapUrl && <GameMap mapUrl={mapUrl} playerArr={playerArr} />}
           </div>
         ) : (
           <h1>...Loading</h1>
