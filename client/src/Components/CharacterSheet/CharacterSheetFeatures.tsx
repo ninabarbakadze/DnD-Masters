@@ -10,11 +10,11 @@ interface IProp{
 export default function CharacterSheetFeatures({ features }:IProp) {
   const [hide, setHide] = useState(false);
   return (
-    <div>
-      <b>{features.name}</b>
+    <div className="features-and-traits">
+      <div className="bright-frame  smallTitle">{features.name}</div>
       {hide ? features.desc.map((item:any) => (
         <div key={item}>
-          <p>{item}</p>
+          <div className="featureItem">{item}</div>
         </div>
       )) : null}
       <button type="button" onClick={() => { setHide(!hide); }}>...</button>

@@ -16,9 +16,11 @@ import { mod, proficiencyBonusCalc, positivePrecursor } from './helper';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
 // import { saveCharacter } from '../../services/character.sevices';
 import ButtonForSaveOrUpdate from './ButtonForSaveOrUpdate';
+import CharacterSheetAttacks from './CharacterSheetAttacks';
+import { ICharacterDB } from '../../interfaces/characterFromDB.intervace';
 
 interface IProps{
-  fetched:any |undefined
+  fetched:ICharacterDB |undefined
 }
 export default function CharacterSheet({ fetched }:IProps) {
   const username = useSelector((state:IRootState) => state.user.name);
@@ -256,9 +258,10 @@ export default function CharacterSheet({ fetched }:IProps) {
             <div className="character-sheet-action-row-2">
               <div className="character-sheet-armor-initiative-speed">
                 <div className="character-sheet-armor">
-                  {character.armorClass.value}
-                  <br />
-                  Armor Class
+                  <div className="bright-frame">
+                    {character.armorClass.value}
+                  </div>
+                  <div className="hit-point "> Armor</div>
                 </div>
                 <div className="character-sheet-initiative">
                   <EditableDisplayComponent
@@ -266,56 +269,60 @@ export default function CharacterSheet({ fetched }:IProps) {
                     initialVal={character.initiative}
                     inputType="number"
                   />
-                  Initiative
+                  <div className="hit-point">Initiative</div>
                 </div>
                 <div className="character-sheet-speed">
-                  {character.speed.walk}
-                  <br />
-                  Speed
+                  <div className="bright-frame">{character.speed.walk}</div>
+
+                  <div className="hit-point"> Speed</div>
                 </div>
               </div>
               <div className="character-sheet-hit-points">
-                Hit Points
-                <div className="character-sheet-current-hit-points">
-                  <p>
+                <div className="hit-point"> Hit Points</div>
+                <div className="character-sheet-max-curr-temp-hit-points">
+                  <div className="character-sheet-max-hit-points">
                     Max:
-                    {character.hitPoints.max}
-                  </p>
-                  <div>
-                    Current:
+                    <br />
+                    <div className="bright-frame">{character.hitPoints.max}</div>
+                  </div>
+                  <div className="character-sheet-current-hit-points">
+                    <div>
+                      Current:
+                      <EditableDisplayComponent
+                        action={(val:number) => {
+                          setCharacter((prevVal:any) => (
+                            { ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
+                        }}
+                        initialVal={character.hitPoints.max}
+                        inputType="number"
+                      />
+                    </div>
+                  </div>
+                  <div className="character-sheet-temporary-hit-points">
+                    Temporary:
                     <EditableDisplayComponent
-                      action={(val:number) => {
+                      action={(val:any) => {
                         setCharacter((prevVal:any) => (
-                          { ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
+                          { ...prevVal, hitPoints: { ...prevVal.hitPoints, temporary: val } }));
                       }}
-                      initialVal={character.hitPoints.current}
+                      initialVal={character.hitPoints.temporary}
                       inputType="number"
                     />
                   </div>
                 </div>
-                <div className="character-sheet-temporary-hit-points">
-                  Temporary:
-                  <EditableDisplayComponent
-                    action={(val:any) => {
-                      setCharacter((prevVal:any) => (
-                        { ...prevVal, hitPoints: { ...prevVal.hitPoints, temporary: val } }));
-                    }}
-                    initialVal={character.hitPoints.temporary}
-                    inputType="number"
-                  />
-                </div>
               </div>
               <div className="character-sheet-hit-death">
                 <div className="character-sheet-hit-dice">
-                  <span>
-                    d
-                    {character.classes.hitDie}
-                  </span>
-                  <br />
-                  Hit Dice
+                  <div className="hit-point"> Hit Dice </div>
+                  <div className="bright-frame">
+                    <span>
+                      d
+                      {character.classes.hitDie}
+                    </span>
+                  </div>
                 </div>
                 <div className="character-sheet-death-save">
-                  Death Save
+                  <div className="hit-point">Death Save</div>
                   <CharacterSheetDeathSaves
                     death={updateDeathSaves}
                     success={success}
@@ -324,11 +331,12 @@ export default function CharacterSheet({ fetched }:IProps) {
                 </div>
               </div>
               <div className="character-sheet-attacks-spell-casting">
-                Attacks & Spell Casting
+                <div className="hit-point"> Attacks & Spell Casting</div>
+                <CharacterSheetAttacks weapons={character.weapons} />
               </div>
               <div className="character-sheet-equipment">
-                <div className="character-sheet-currency">
-                  {/* <div className="character-sheet-coin">
+                {/* <div className="character-sheet-currency">
+                  <div className="character-sheet-coin">
                 CP:
                 <EditableDisplayComponent action={null} initialVal={10} inputType="number" />
               </div>
@@ -347,19 +355,24 @@ export default function CharacterSheet({ fetched }:IProps) {
               <div className="character-sheet-coin">
                 PP:
                 <EditableDisplayComponent action={null} initialVal={0} inputType="number" />
-              </div> */}
-                </div>
+              </div>
+                </div> */}
                 <div className="character-sheet-equipment-list">
-                  Equipments
+                  <div className="hit-point ">Equipments</div>
                   <br />
                   {character.equipments.map((item:any) => (
-                    <b key={item.equipment.name}>
+                    <div className="equipment-list-item" key={item.equipment.name}>
                       {item.equipment.name}
-                &nbsp;
-                      {item.quantity}
 
-                      <br />
-                    </b>
+                      <div>x</div>
+
+                      <EditableDisplayComponent
+                        inputType="number"
+                        action={null}
+                        initialVal={item.quantity}
+                      />
+
+                    </div>
                   ))}
                 </div>
               </div>
@@ -367,35 +380,35 @@ export default function CharacterSheet({ fetched }:IProps) {
             <div className="character-sheet-action-row-3">
               <div className="character-sheet-personality">
                 <div className="character-sheet-personality-traits">
-                  Personality
+                  <div className="hit-point">Personality</div>
                   {character.details.personality}
                   {/* <EditableDisplayComponent action={null}
               initialVal={character.details.personality} inputType="textarea" /> */}
                 </div>
                 <div className="character-sheet-personality-ideals">
-                  Ideals
+                  <div className="hit-point">Ideals</div>
                   {character.details.ideal}
                   {/* <EditableDisplayComponent action={null}
                initialVal={character.details.ideal} inputType="textarea" /> */}
                 </div>
                 <div className="character-sheet-personality-bonds">
-                  Bonds
+                  <div className="hit-point">Bonds</div>
                   {character.details.bond}
                   {/* <EditableDisplayComponent action={null}
               initialVal={character.details.bond} inputType="textarea" /> */}
                 </div>
                 <div className="character-sheet-personality-flaws">
-                  Flaws
+                  <div className="hit-point"> Flaws</div>
                   {character.details.flaw}
                   {/* <EditableDisplayComponent action={null}
               initialVal={character.details.flaw} inputType="textarea" /> */}
                 </div>
-              </div>
-              <div className="character-sheet-personality-features-traits">
-                Features & traits
-                <br />
-                <CharacterSheetFeatures features={character.classes.features} />
+                <div className="character-sheet-personality-features-traits">
+                  <div className="hit-point">Features & traits</div>
+                  <br />
+                  <CharacterSheetFeatures features={character.classes.features} />
 
+                </div>
               </div>
             </div>
             <div />

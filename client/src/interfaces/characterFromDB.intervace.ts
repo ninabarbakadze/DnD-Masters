@@ -60,7 +60,7 @@ export interface IWeapon{
     damage: IDamage,
     properties: IWeaponProp,
     // eslint-disable-next-line camelcase
-    throw_range:IThrowRange, }
+    throw_range?:IThrowRange, }
 export interface ISpells{
     name: string,
     desc: string[],

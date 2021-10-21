@@ -73,8 +73,8 @@ export default function CharacterSheetSkills({
       <button
         type="button"
         onClick={() => {
-          // setHide(!hide);
-          console.log('need fixing');
+          setHide(!hide);
+          // console.log('need fixing');
         }}
       >
         ...
