@@ -36,7 +36,9 @@ function Name({ path, onSubmit }: any) {
         }}
         defaultValue={gameWizard.tags}
       />
-      <button type="submit">Submit</button>
+      <button className="main-button" type="submit">
+        Next
+      </button>
     </form>
   );
 }

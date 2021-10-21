@@ -42,7 +42,6 @@ export default function MapUpload({ history }: any) {
 
   return (
     <div className="map-upload-container">
-      {console.log(file)}
       <div className="upload-image-header">
         <h1>Image Upload</h1>
         <h3>Select an Image and edit your Map</h3>

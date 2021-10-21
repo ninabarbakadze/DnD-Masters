@@ -30,7 +30,7 @@ export default function ButtonForSaveOrUpdate({
   };
   return (
     <div>
-      <button type="button" onClick={() => { handleClick(); }}>
+      <button className="save-character" type="button" onClick={() => { handleClick(); }}>
         {!body.saved ? 'Save' : 'Update'}
       </button>
     </div>

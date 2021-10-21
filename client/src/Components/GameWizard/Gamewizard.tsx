@@ -6,6 +6,7 @@ import { iGameWizardState } from '../../reducers/gameCreation.reducer';
 import Name from './Steps/Name.step';
 import SelectMap from './Steps/SelectMap.step';
 import Invitation from './Steps/Invitation.step';
+import WizardNav from '../WizardNav/WizardNav';
 
 import './GameWizard.scss';
 
@@ -33,7 +34,10 @@ export default function GameWizard() {
 
   return (
     <div>
-      <h1>GameWizard</h1>
+      <div className="wizard-header">
+        <h1>Map Wizard</h1>
+        <WizardNav history={history} />
+      </div>
       <Switch>
         <Route path="/gameWizard/step1">
           <Name onSubmit={onSubmit} path="/gameWizard/step2" />

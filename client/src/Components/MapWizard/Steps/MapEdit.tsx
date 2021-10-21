@@ -25,15 +25,9 @@ export default function MapEdit() {
   const imgRef = useRef<any>(null);
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
   // eslint-disable-next-line
-  const {
-    selectedElement,
-    locationArr,
-    elementArr,
-    mapUrl,
-    username,
-    mapName,
-    mapId,
-  } = useSelector((state: IRootState) => state.mapCreationReducer);
+  const { selectedElement, locationArr, elementArr, mapUrl, mapName, mapId } =
+    useSelector((state: IRootState) => state.mapCreationReducer);
+  const username = useSelector((state: IRootState) => state.user);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({
@@ -214,7 +208,7 @@ export default function MapEdit() {
   }
 
   async function onSaveModalSubmit(name: string) {
-    if (!username || !mapUrl) return;
+    if (!username.name || !mapUrl) return;
     const data = {
       mapName: name,
       mapUrl,
@@ -222,9 +216,9 @@ export default function MapEdit() {
     };
     if (name === mapName) {
       if (!mapId) return;
-      await updateMap(username, mapId, data);
+      await updateMap(username.name, mapId, data);
     } else {
-      await saveMap(username, data);
+      await saveMap(username.name, data);
     }
     setIsModal(!isModal);
   }

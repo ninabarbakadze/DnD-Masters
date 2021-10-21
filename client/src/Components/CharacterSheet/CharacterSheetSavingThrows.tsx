@@ -34,13 +34,13 @@ function CharacterSheetSavingThrows({ ability, bonus }:IProps) {
     <div>
       {ability.map((item) => (
         <div className="character-sheet-saving-throw-skills-tile" key={item.name}>
-          <p>
+          <div className="character-sheet-ability-mod">
             {item.proficient
               ? positivePrecursor(bonus + mod(item.scores))
               : positivePrecursor(mod(item.scores))}
+          </div>
             &nbsp;
-            {item.proficient ? <b>{item.name}</b> : <span>{item.name}</span>}
-          </p>
+          {item.proficient ? <b>{item.name}</b> : <span>{item.name}</span>}
         </div>
       ))}
     </div>
