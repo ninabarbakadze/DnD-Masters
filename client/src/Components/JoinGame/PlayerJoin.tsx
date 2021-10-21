@@ -36,7 +36,7 @@ const PlayerJoin = ({ activateGame }: any) => {
 
   const getCharacters = async () => {
     if (user.name) {
-      const characters = getAllCharacter(user.name);
+      const characters = await getAllCharacter(user.name);
       setCharactersArr(characters);
     }
   };
