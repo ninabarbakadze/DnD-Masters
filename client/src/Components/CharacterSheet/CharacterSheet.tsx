@@ -28,7 +28,6 @@ export default function CharacterSheet({ fetched }:IProps) {
   const username = useSelector((state:IRootState) => state.user.name);
   const newCharacter = useSelector((state:IRootState) => state.characterCreationReducer);
   const formatted = fetched || formatCharacter(newCharacter);
-  // const formatted = formatCharacter(newCharacter);
 
   const [character, setCharacter] = useState({ ...formatted });
   const { success, fails } = character.deathSaves;
@@ -50,7 +49,6 @@ export default function CharacterSheet({ fetched }:IProps) {
     });
     setCharacter((prevVal:any) => ({ ...prevVal, abilityScores: updateAbilityScrList }));
   };
-  // console.log('Character', newCharacter);
 
   const updateDeathSaves = (result:string) => {
     // eslint-disable-next-line no-unused-expressions
@@ -77,6 +75,9 @@ export default function CharacterSheet({ fetched }:IProps) {
     })));
   };
 
+  useEffect(() => {
+    setCharacter((prevVal:any) => ({ ...prevVal, name: username }));
+  }, []);
   // console.log( newCharacter);
   console.log('character: ', character);
   return (
@@ -86,7 +87,7 @@ export default function CharacterSheet({ fetched }:IProps) {
           <div className="character-sheet-avatar-container" />
           <div className="character-sheet-initial-information">
             <h5 className="character-sheet-username">
-              User Name:
+              Hello
               &nbsp;
               <em><b>{username || 'user name'}</b></em>
             </h5>
