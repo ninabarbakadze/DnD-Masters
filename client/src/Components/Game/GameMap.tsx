@@ -4,11 +4,19 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 import MapItem from '../MapWizard/MapItem/MapItem';
 import getMapElements from '../../assets/mapElements/mapData';
+import PlayerToken from './PlayerToken';
 import { IRootState } from '../../reducers';
+import iPlayerToken from '../../interfaces/playerToken.interface';
 
-export default function GameMap() {
+interface props {
+  mapUrl: string;
+  playerArr: iPlayerToken[];
+}
+
+export default function GameMap({ mapUrl, playerArr }: props) {
+  const [playerLocations, setPlayerLocations] = useState<JSX.Element[]>([]);
   const imgRef = useRef<any>(null);
-  const { mapUrl, elementArr } = useSelector(
+  const { elementArr } = useSelector(
     (state: IRootState) => state.gameCreationReducer,
   );
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
@@ -144,8 +152,25 @@ export default function GameMap() {
         />
       );
     });
+    if (!locations) return;
     setLocationArr(locations);
   }, []);
+
+  useEffect(() => {
+    const players = playerArr?.map((player) => {
+      console.log(player);
+      return (
+        <PlayerToken
+          xCoord={player.position.x}
+          yCoord={player.position.y}
+          playerName={player.playerName}
+          getSVGCoord={(x: number, y: number) => getSVGCoord(x, y)}
+        />
+      );
+    });
+    if (!players) return;
+    setPlayerLocations(players);
+  }, [playerArr]);
 
   return (
     <div className="map-edit-image">
@@ -183,6 +208,7 @@ export default function GameMap() {
           />
         </foreignObject> */}
           {locationArr}
+          {playerLocations}
         </svg>
       </div>
       <button onClick={() => zoom(0.8)} type="button">

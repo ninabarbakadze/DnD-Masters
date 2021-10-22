@@ -19,3 +19,8 @@ export const updateMapElements: PayloadAction<iGameWizardState> = (
   type: 'UPDATE_MAP_ELEMENTS',
   payload: wizardData,
 });
+
+export const updatePlayer: PayloadAction<iGameWizardState> = (wizardData) => ({
+  type: 'UPDATE_PLAYER',
+  payload: wizardData,
+});
