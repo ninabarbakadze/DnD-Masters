@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { gsap } from 'gsap';
@@ -10,7 +9,7 @@ import {
 import { IRootState } from '../../../reducers';
 
 gsap.registerPlugin(Draggable);
-export default function MapItem({
+const MapItem = ({
   xCoord,
   yCoord,
   getSVGCoord,
@@ -19,31 +18,31 @@ export default function MapItem({
   locationDescription,
   id,
   deleteLocation,
-}: any) {
+}: any) => {
   const [textWidth, setTextWidth] = useState(0);
   const dispatch = useDispatch();
   const { elementArr, shouldDelete, locationArr } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
 
-  function showDescription() {
+  const showDescription = () => {
     dispatch(
       setCurrentDescription({
         currentDescription: locationDescription,
         currentName: locationName,
       }),
     );
-  }
+  };
 
-  function hideDescription() {
+  const hideDescription = () => {
     dispatch(
       setCurrentDescription({ currentDescription: '', currentName: '' }),
     );
-  }
+  };
 
   useEffect(() => {
     Draggable.create('.draggable', {
-      onDragEnd: (e: any) => {
+      onDragEnd: (e: MouseEvent) => {
         const coords = getSVGCoord(e.x, e.y);
         if (elementArr) {
           const index = elementArr.findIndex((el) => el.id === id);
@@ -65,12 +64,7 @@ export default function MapItem({
 
   return (
     <g
-      onClick={
-        () =>
-          // eslint-disable-next-line
-          shouldDelete && deleteLocation(id, locationArr, elementArr)
-        // eslint-disable-next-line
-      }
+      onClick={() => shouldDelete && deleteLocation(id, locationArr, elementArr)}
       onMouseEnter={showDescription}
       onMouseLeave={hideDescription}
       transform={`translate(${xCoord} ${yCoord})`}
@@ -88,15 +82,8 @@ export default function MapItem({
       >
         {locationName}
       </text>
-      {/* <foreignObject width="100" height="50" x="-40" y="-70">
-        <div
-          className={
-            isHovered ? 'description-text' : 'not-visible description-text'
-          }
-        >
-          {locationDescription}
-        </div>
-      </foreignObject> */}
     </g>
   );
-}
+};
+
+export default MapItem;

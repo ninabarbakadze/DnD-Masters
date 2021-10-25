@@ -5,7 +5,7 @@ import MapEdit from './Steps/MapEdit';
 import WizardNav from '../WizardNav/WizardNav';
 import './MapWizard.scss';
 
-export default function MapWizard() {
+const MapWizard = () => {
   const history = useHistory();
   return (
     <div className="map-wizard-container">
@@ -26,4 +26,6 @@ export default function MapWizard() {
       </Switch>
     </div>
   );
-}
+};
+
+export default MapWizard;

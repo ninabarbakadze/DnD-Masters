@@ -2,7 +2,12 @@ import { SyntheticEvent, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../../reducers';
 
-export default function SaveForm({ onModalSubmit, setModalIsActive }: any) {
+interface props {
+  onModalSubmit(name: string): void;
+  setModalIsActive(arg: boolean): void;
+}
+
+const SaveForm = ({ onModalSubmit, setModalIsActive }: props) => {
   const [name, setName] = useState('');
   const { mapName } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
@@ -35,4 +40,6 @@ export default function SaveForm({ onModalSubmit, setModalIsActive }: any) {
       />
     </form>
   );
-}
+};
+
+export default SaveForm;
