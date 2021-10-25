@@ -6,7 +6,6 @@ import { saveCharacter, updateCharacter } from '../../services/character.sevices
 
 interface IProps{
   username:string,
-  // service:any,
   body: any
   set:any
 }
@@ -24,7 +23,6 @@ export default function ButtonForSaveOrUpdate({
     }
     if (!body.saved) {
       set((prevVal:any) => ({ ...prevVal, saved: true }));
-      // @ts-ignore
       return saveCharacter(username, body).then((res) => { set((prevVal:any) => ({ ...prevVal, _id: res._id })); });
     }
   };
