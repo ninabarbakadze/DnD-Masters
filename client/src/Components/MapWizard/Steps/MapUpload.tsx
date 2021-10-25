@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import storage from '../../../firebase';
 import { updateUrl } from '../../../actions/mapWizard.action';
-import InfoModal from '../../InfoModal/InfoModal';
+import InfoBanner from '../../InfoBanner/InfoBanner';
 
 export default function MapUpload({ history }: any) {
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ export default function MapUpload({ history }: any) {
           Edit Map
         </button>
       </div>
-      <InfoModal
+      <InfoBanner
         isVisible={isModal}
         setIsVisible={toggleModal}
         message="Image successfully uploaded"
