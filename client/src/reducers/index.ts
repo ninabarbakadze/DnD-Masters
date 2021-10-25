@@ -12,6 +12,7 @@ import {
 } from '../interfaces/character.interface';
 import mapCreationReducer from './mapCreation.reducer';
 import { iMap } from '../interfaces/map.interface';
+import iSocket from '../interfaces/socket.interface';
 
 // mapCreationReducer: any;
 // interface prop name and reducer name must be an EXACT MATCH
@@ -21,7 +22,7 @@ export interface IRootState {
   characterWizardStateReducer: iCharacterWizardState;
   characterCreationReducer: iCharacter;
   mapCreationReducer: iMap;
-  socketReducer: any;
+  socketReducer: { socket?: iSocket; players: [] };
 }
 
 const allReducer = combineReducers({
