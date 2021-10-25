@@ -31,7 +31,8 @@ DnD Masters is a game management and online game session tool for Dungeons and D
 
 **Designs**
 
-### Backend Architechture
+### Backend Architecture
+
 
 ## Desired Future Functionality
 
