@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import './characterWizard.scss';
 
@@ -12,8 +11,8 @@ import CharacterSheet from '../CharacterSheet/CharacterSheet';
 import ClassSelection from './steps/ClassSelection.step';
 import WizardNav from '../WizardNav/WizardNav';
 
-const CharacterWizard: FC = () => {
-  const onWizardComplete = () => console.log('finished');
+const CharacterWizard = () => {
+  const onWizardComplete = () => {};
   const history = useHistory();
 
   const submitfunc = useWizardStepComplete<iCharacter>(onWizardComplete);
@@ -31,7 +30,6 @@ const CharacterWizard: FC = () => {
               onSubmit={submitfunc}
               path="/characterWizard/backgroundSelection"
             />
-            {/* <RaceSelection onSubmit={handle} path="/gameWizard/step2" /> */}
           </Route>
           <Route path="/characterWizard/subRaceSelection">
             <SubRaceSelection
@@ -58,7 +56,6 @@ const CharacterWizard: FC = () => {
             />
           </Route>
           <Route path="/characterWizard/characterSheet">
-            {/* @ts-ignore */}
             <CharacterSheet fetched={undefined} />
           </Route>
         </Switch>

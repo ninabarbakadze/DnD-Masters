@@ -20,4 +20,15 @@ const photos = {
   tiefling,
 };
 
+export type racePhotoKeys =
+  | 'dragonborn'
+  | 'dwarf'
+  | 'elf'
+  | 'gnome'
+  | 'halfelf'
+  | 'halforc'
+  | 'halfling'
+  | 'human'
+  | 'tiefling';
+
 export default photos;
