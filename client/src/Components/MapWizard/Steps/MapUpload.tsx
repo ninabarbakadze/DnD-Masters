@@ -1,34 +1,36 @@
-/* eslint-disable */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ref, uploadBytes } from 'firebase/storage';
 import { useDispatch } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import ImageUpload from '../../ImageUpload/ImageUpload';
 import storage from '../../../firebase';
 import { updateUrl } from '../../../actions/mapWizard.action';
 import InfoBanner from '../../InfoBanner/InfoBanner';
 
-export default function MapUpload({ history }: any) {
+interface props {
+  history: RouteComponentProps['history'];
+}
+
+export default function MapUpload({ history }: props) {
   const dispatch = useDispatch();
-  const [file, setFile] = useState<File | undefined>();
+  const [file, setFile] = useState<File>();
   const [mapUploaded, setMapUploaded] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
-  function handleUpload() {
+  const handleUpload = () => {
     if (!file) return;
     const storageRef = ref(storage, `/images/${file.name}`);
     uploadBytes(storageRef, file).then((snapshot) => {
       dispatch(
         updateUrl({
-          mapUrl:
-            // @ts-expect-error
-            `https://firebasestorage.googleapis.com/v0/b/dnd-masters.appspot.com/o/${snapshot.ref._location.path_.replace(
-              /\//,
-              '%2F',
-            )}?alt=media`,
+          mapUrl: `https://firebasestorage.googleapis.com/v0/b/dnd-masters.appspot.com/o/${snapshot.metadata.fullPath.replace(
+            /\//,
+            '%2F',
+          )}?alt=media`,
         }),
       );
     });
-  }
+  };
 
   const handleSubmit = (): void => {
     handleUpload();
