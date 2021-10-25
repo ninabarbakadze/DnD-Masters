@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect, Dispatch, SetStateAction } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { joinGame, updatePlayers } from '../../actions/Socket.action';
@@ -8,10 +8,11 @@ import CharacterCard from './CharacterCard';
 import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
 import { iJoinGameCharacter } from '../../interfaces/character.interface';
+import iPlayerToken from '../../interfaces/playerToken.interface';
 
 interface props {
-  activateGame: any;
-  addPlayer: any;
+  activateGame: Dispatch<SetStateAction<Boolean>>;
+  addPlayer: (player: iPlayerToken) => void
 }
 
 const PlayerJoin = ({ activateGame, addPlayer }: props) => {
