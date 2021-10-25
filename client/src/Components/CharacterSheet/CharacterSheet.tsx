@@ -2,13 +2,13 @@
 import './CharacterSheet.scss';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import photos from '../../assets/racePhotos/racePhotos';
+import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import { IRootState } from '../../reducers';
-import mockCharacter from '../../mockData/mockCharackter';
+// import mockCharacter from '../../mockData/mockCharackter';
 import CharacterSheetSkills from './CharacterSheetSkills';
 import CharacterSheetFeatures from './CharacterSheetFeatures';
 import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
-import formatCharacter from './CharacterFormater';
+import formatCharacter from './CharacterFormatter';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
 import {
@@ -28,7 +28,7 @@ export default function CharacterSheet({ fetched }:IProps) {
   const formatted = fetched || formatCharacter(newCharacter);
   const [character, setCharacter] = useState({ ...formatted });
   const { success, fails } = character.deathSaves;
-  const imageName: string = character.race.index.replace('-', '');
+  const racePhotoKey: racePhotoKeys = character.race.index.replace('-', '') as racePhotoKeys;
 
   const modifyPassiveWisdom = (perception:number) => {
     // setCharacter((preVal:any) => ({ ...preVal, passiveWisdom: perception }));
@@ -94,8 +94,7 @@ export default function CharacterSheet({ fetched }:IProps) {
             </div>
             <img
               className="character-sheet-img"
-              // @ts-ignore
-              src={photos[imageName]}
+              src={photos[racePhotoKey]}
               alt={character.race.index}
             />
             <div className="character-sheet-background-info">

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import './CharacterSheet.scss';
 import CharacterSheet from './CharacterSheet';
-import photos from '../../assets/racePhotos/racePhotos';
+import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import CharacterSheetSkills from './CharacterSheetSkills';
 import mockCharacter from '../../mockData/mockCharackter';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
@@ -19,7 +19,7 @@ export default function MinimalCharComponent() {
   const [nameShow, setNameShow] = useState(false);
   const [initiativeShow, setInitiativeShow] = useState(false);
   const [charSheetShow, setCharSheetShow] = useState(false);
-
+  const racePhotoKey: racePhotoKeys = character.race.index.replace('-', '') as racePhotoKeys;
   const updateCharacterAbility = (updateValue: number, attributeName:string) => {
     const updateAbilityScrList = character.abilityScores.map((item:any) => {
       if (item.name === attributeName) {
@@ -41,15 +41,13 @@ export default function MinimalCharComponent() {
       <div className="flex flex-row  header " style={{ width: '150vh' }}>
         <img
           className="img-avatar"
-          // @ts-ignore
-          src={photos[character.race.index.replace('-', '')]}
+          src={photos[racePhotoKey]}
           alt={character.race.index}
         />
         <div className="flex-initial-1 head-menu" onClick={() => setNameShow(!nameShow)}>
           {character.characterName}
           {nameShow ? (
             <div className="char">
-              {/* <CharacterSheet fetched={character} /> */}
               <div>
                 Race: &nbsp;
                 {character.race.name}
@@ -112,7 +110,6 @@ export default function MinimalCharComponent() {
         </div>
         <div className="flex-initial-1 head-menu" onClick={() => setLanguagesShow(!languagesShow)}>
           <div>languages</div>
-          {console.log(character.languages)}
           {languagesShow ? character.languages.map((attribute:any) => (
             <div key={attribute.name}>
               {attribute.name}
@@ -138,7 +135,6 @@ export default function MinimalCharComponent() {
                 Hide
               </div>
               <CharacterSheet fetched={character} />
-
             </div>
           ) : null}
       </div>
