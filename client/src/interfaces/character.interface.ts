@@ -19,6 +19,11 @@ export interface iAbilityArray {
   cha: iAbilityArrayScore;
 }
 
+export interface iAbilityBonusOption {
+  race?: { max: number; choices: string[] };
+  subrace?: { max: number; choices: string[] };
+}
+
 export interface iCharacter {
   race?: iCharacterRace;
   subrace?: iCharacterSubrace;
