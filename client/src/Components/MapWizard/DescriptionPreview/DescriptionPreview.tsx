@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../reducers';
 
-export default function DescriptionPreview() {
+const DescriptionPreview = () => {
   const { currentDescription, currentName } = useSelector(
     (state: IRootState) => state.mapCreationReducer,
   );
@@ -12,4 +12,6 @@ export default function DescriptionPreview() {
       <p>{currentDescription}</p>
     </div>
   );
-}
+};
+
+export default DescriptionPreview;

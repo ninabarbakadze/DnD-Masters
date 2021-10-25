@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import { getAllMaps, deleteMap, getMap } from '../../../services/map.service';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../MapCarouselItem/MapCarouselItem';
@@ -10,12 +11,17 @@ import {
   updateElementArr,
 } from '../../../actions/mapWizard.action';
 import { IRootState } from '../../../reducers';
+import { iLoadedMap } from '../../../interfaces/map.interface';
 
-export default function MapSelection({ history }: any) {
-  const [refresh, doRefresh] = useState(0);
+interface props {
+  history: RouteComponentProps['history'];
+}
+
+const MapSelection = ({ history }: props) => {
   const dispatch = useDispatch();
-  const [mapArr, setMapArr] = useState<any>([]);
+  const [refresh, doRefresh] = useState(0);
   const [mapIndex, setMapIndex] = useState(0);
+  const [mapArr, setMapArr] = useState<iLoadedMap[]>([]);
   const [images, setImages] = useState([
     'https://endlessicons.com/wp-content/uploads/2012/12/add-icon-614x460.png',
   ]);
@@ -27,34 +33,29 @@ export default function MapSelection({ history }: any) {
     if (mapIndex === 0) {
       history.push('/mapWizard/mapUpload');
     } else {
-      // eslint-disable-next-line
-      const { mapName, mapId, mapUrl, locationData } = await getMap(
+      const { mapName, mapUrl, locationData } = await getMap(
         user.name,
-        // eslint-disable-next-line
         mapArr[mapIndex - 1]._id,
       );
       dispatch(
         updateMapNameAndId({
           mapName,
-          // eslint-disable-next-line
           mapId: mapArr[mapIndex - 1]._id,
           mapUrl,
         }),
       );
-      // console.log(JSON.parse(locationData));
       dispatch(updateElementArr({ elementArr: JSON.parse(locationData) }));
       history.push('/mapWizard/mapEdit');
     }
   };
 
-  async function getMaps() {
+  const getMaps = async () => {
     const loadedMaps = await getAllMaps(user.name);
     setMapArr(loadedMaps);
-    setImages([images[0], ...loadedMaps.map((map: any) => map.mapUrl)]);
-  }
+    setImages([images[0], ...loadedMaps.map((map: iLoadedMap) => map.mapUrl)]);
+  };
 
   const onDelete = async () => {
-    // eslint-disable-next-line
     const id = mapArr[mapIndex - 1]._id;
     await deleteMap(user.name, id);
     setIsModal(!isModal);
@@ -112,4 +113,6 @@ export default function MapSelection({ history }: any) {
       />
     </div>
   );
-}
+};
+
+export default MapSelection;

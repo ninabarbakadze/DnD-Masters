@@ -1,6 +1,11 @@
 import { SyntheticEvent, useState } from 'react';
 
-export default function ElementForm({ onModalSubmit, setModalIsActive }: any) {
+interface props {
+  onModalSubmit(locationName: string, locationDescription: string): void;
+  setModalIsActive(arg: boolean): void;
+}
+
+const ElementForm = ({ onModalSubmit, setModalIsActive }: props) => {
   const [locationName, setLocationName] = useState('');
   const [locationDescription, setLocationDescription] = useState('');
 
@@ -32,4 +37,6 @@ export default function ElementForm({ onModalSubmit, setModalIsActive }: any) {
       />
     </form>
   );
-}
+};
+
+export default ElementForm;

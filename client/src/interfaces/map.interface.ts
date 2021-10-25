@@ -19,3 +19,10 @@ export interface iMap {
   currentName?: string;
   username?: string;
 }
+
+export interface iLoadedMap {
+  mapName: string;
+  mapUrl: string;
+  locationData: iElement[];
+  _id: string;
+}
