@@ -1,22 +1,25 @@
-import { Socket } from 'socket.io-client';
+/* eslint-disable */
 import { iAction } from '../interfaces/redux.interface';
+import { iSocketReducerState } from '../interfaces/socket.interface'
 
-const initialState: { socket?: Socket; players: [] } = { players: [] };
+
+
+const initialState: iSocketReducerState = { players: [] };
 
 const socketReducer = (
   state = initialState,
-  { type, payload }: iAction<Socket>,
-) => {
+  { type, payload }: iAction<iSocketReducerState>,
+):iSocketReducerState => {
   switch (type) {
     case 'CREATE_SOCKET':
       return {
         ...state,
-        socket: payload,
+        socket: payload.socket,
       };
     case 'UPDATE_Players':
       return {
         ...state,
-        players: payload,
+        players: payload.players,
       };
     default:
       return state;

@@ -3,7 +3,6 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-unused-vars */
-// @ts-nocheck
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,7 +10,7 @@ import { joinGame, updatePlayers } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
 import { getAllCharacter } from '../../services/character.sevices';
 import CharacterCard from './CharacterCard';
-import photos from '../../assets/racePhotos/racePhotos';
+import photos, {racePhotoKeys} from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
 
 interface props {
@@ -48,7 +47,7 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
         <CharacterCard
           key={JSON.stringify(race.race)}
           name={race.name}
-          imgPath={photos[race.race.index.replace('-', '')]}
+          imgPath={photos[race.race.index.replace('-', '') as racePhotoKeys]}
         />
       );
     });
@@ -67,7 +66,7 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   };
 
   useEffect(() => {
-    dispatch(updatePlayers({ playerArr: [] }));
+    dispatch(updatePlayers([]));
   }, []);
 
   useEffect(() => {
