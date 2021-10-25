@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import photos from '../../assets/racePhotos/racePhotos';
 import { IRootState } from '../../reducers';
-// import CharacterSheetNotes from './CharacterSheetNotes';
 import mockCharacter from '../../mockData/mockCharackter';
 import CharacterSheetSkills from './CharacterSheetSkills';
 import CharacterSheetFeatures from './CharacterSheetFeatures';
@@ -16,10 +15,9 @@ import {
   mod, proficiencyBonusCalc, positivePrecursor, updateArrObj,
 } from './helper';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
-// import { saveCharacter } from '../../services/character.sevices';
 import ButtonForSaveOrUpdate from './ButtonForSaveOrUpdate';
 import CharacterSheetAttacks from './CharacterSheetAttacks';
-import { ICharacterDB } from '../../interfaces/characterFromDB.intervace';
+import { ICharacterDB } from '../../interfaces/characterFromDB.interface';
 
 interface IProps{
   fetched:ICharacterDB |undefined
@@ -28,9 +26,9 @@ export default function CharacterSheet({ fetched }:IProps) {
   const username = useSelector((state:IRootState) => state.user.name);
   const newCharacter = useSelector((state:IRootState) => state.characterCreationReducer);
   const formatted = fetched || formatCharacter(newCharacter);
-
   const [character, setCharacter] = useState({ ...formatted });
   const { success, fails } = character.deathSaves;
+  const imageName: string = character.race.index.replace('-', '');
 
   const modifyPassiveWisdom = (perception:number) => {
     // setCharacter((preVal:any) => ({ ...preVal, passiveWisdom: perception }));
@@ -50,9 +48,7 @@ export default function CharacterSheet({ fetched }:IProps) {
     setCharacter((prevVal:any) => ({ ...prevVal, abilityScores: updateAbilityScrList }));
   };
 
-  const updateDeathSaves = (result:string) => {
-    // eslint-disable-next-line no-unused-expressions
-    (result === 'success'
+  const updateDeathSaves = (result:string) => (result === 'success'
     && success > 0
     && setCharacter((prevVal:any) => ({
       ...prevVal,
@@ -73,13 +69,10 @@ export default function CharacterSheet({ fetched }:IProps) {
         fails - 1,
       },
     })));
-  };
 
   useEffect(() => {
     setCharacter((prevVal:any) => ({ ...prevVal, name: username }));
   }, []);
-  // console.log( newCharacter);
-  console.log('character: ', character);
   return (
     <div className="character-sheet-background ">
       <div className="character-sheet bg-gray-300">
@@ -92,19 +85,17 @@ export default function CharacterSheet({ fetched }:IProps) {
               <em><b>{username || 'user name'}</b></em>
             </h5>
             <div className="character-name">
-              {/* <b>Character Name</b> */}
               <EditableDisplayComponent
                 inputType="input"
                 action={(val:string) => { setCharacter((prevVal:any) => ({ ...prevVal, characterName: val })); }}
                 initialVal="Name your Char!"
               />
               <hr />
-              {/* <h4 className="character-sheet-campaign">Campaign Name</h4> */}
             </div>
             <img
               className="character-sheet-img"
               // @ts-ignore
-              src={photos[character.race.index.replace('-', '')]}
+              src={photos[imageName]}
               alt={character.race.index}
             />
             <div className="character-sheet-background-info">
@@ -340,28 +331,6 @@ export default function CharacterSheet({ fetched }:IProps) {
                 <CharacterSheetAttacks weapons={character.weapons} />
               </div>
               <div className="character-sheet-equipment">
-                {/* <div className="character-sheet-currency">
-                  <div className="character-sheet-coin">
-                CP:
-                <EditableDisplayComponent action={null} initialVal={10} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                SP:
-                <EditableDisplayComponent action={null} initialVal={7} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                EP:
-                <EditableDisplayComponent action={null} initialVal={8} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                GP:
-                <EditableDisplayComponent action={null} initialVal={7} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                PP:
-                <EditableDisplayComponent action={null} initialVal={0} inputType="number" />
-              </div>
-                </div> */}
                 <div className="character-sheet-equipment-list">
                   <div className="hit-point ">Equipments</div>
                   <br />

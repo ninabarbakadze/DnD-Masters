@@ -1,13 +1,15 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
+import { Dispatch, SetStateAction } from 'react';
 import { useHistory } from 'react-router-dom';
-import { saveCharacter, updateCharacter } from '../../services/character.sevices';
+import { ICharacterDB } from '../../interfaces/characterFromDB.interface';
+import { saveCharacter, updateCharacter } from '../../services/character.services';
 
 interface IProps{
-  username:string,
-  body: any
-  set:any
+  username:string
+  body: ICharacterDB
+  set: Dispatch<SetStateAction<ICharacterDB>>
 }
 
 export default function ButtonForSaveOrUpdate({
@@ -22,8 +24,9 @@ export default function ButtonForSaveOrUpdate({
       });
     }
     if (!body.saved) {
-      set((prevVal:any) => ({ ...prevVal, saved: true }));
-      return saveCharacter(username, body).then((res) => { set((prevVal:any) => ({ ...prevVal, _id: res._id })); });
+      set((prevVal:ICharacterDB) => ({ ...prevVal, saved: true }));
+      return saveCharacter(username, body)
+        .then((res) => { set((prevVal:ICharacterDB) => ({ ...prevVal, _id: res._id })); });
     }
   };
   return (

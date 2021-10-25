@@ -1,11 +1,11 @@
 /* eslint-disable arrow-body-style */
-import { iCharacter } from '../interfaces/character.interface';
+import { ICharacterDB } from '../interfaces/characterFromDB.interface';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
 
 const json = (response: Response) => response.json();
 
-export const saveCharacter = (username: string, character: iCharacter) => {
+export const saveCharacter = (username: string, character: ICharacterDB) => {
   return fetch(
     `${process.env.REACT_APP_SERVER_URL}/${username}/characters/new`,
     {
@@ -22,7 +22,7 @@ export const saveCharacter = (username: string, character: iCharacter) => {
 export const getCharacter = (
   username: string,
   characterId: string,
-): Promise<iCharacter> => {
+): Promise<ICharacterDB> => {
   return fetch(
     `${process.env.REACT_APP_SERVER_URL}/${username}/characters/${characterId}`,
     {
@@ -38,7 +38,7 @@ export const getCharacter = (
 export const updateCharacter = (
   username: string,
   characterId: string,
-  character: iCharacter,
+  character: ICharacterDB,
 ) => {
   return fetch(
     `${process.env.REACT_APP_SERVER_URL}/${username}/characters/${characterId}`,
