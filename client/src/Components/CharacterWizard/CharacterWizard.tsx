@@ -1,5 +1,5 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
-import './characterWizard.scss';
+// import './characterWizard.scss';
 
 import RaceSelection from './steps/RaceSelection.step';
 import { iCharacter } from '../../interfaces/character.interface';

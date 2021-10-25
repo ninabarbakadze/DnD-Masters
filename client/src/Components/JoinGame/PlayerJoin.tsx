@@ -1,8 +1,3 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable arrow-body-style */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-unused-vars */
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,24 +5,28 @@ import { joinGame, updatePlayers } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
 import { getAllCharacter } from '../../services/character.sevices';
 import CharacterCard from './CharacterCard';
-import photos, {racePhotoKeys} from '../../assets/racePhotos/racePhotos';
+import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
+import { iCharacterRace } from '../../interfaces/externalData/externalData.interface';
 
 interface props {
   activateGame: any;
   addPlayer: any;
+}
+interface iCharacter {
+  name: string;
+  race: iCharacterRace
 }
 
 const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   const user = useSelector((state: IRootState) => state.user);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
-  const [charraces, setCharRaces] = useState([]);
+  const [characterRaces, setcharacterRaces] = useState<iCharacter[]>([]);
   const [roomCode, setRoomCode] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [charactersArr, setCharactersArr] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
+  const [charactersArr, setCharactersArr] = useState<iCharacter[]>([]);
+  
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
   };
@@ -41,17 +40,15 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
     activateGame(true);
   }
 
-  const createRaceOptions = (races) => {
-    return races.map((race) => {
-      return (
-        <CharacterCard
-          key={JSON.stringify(race.race)}
-          name={race.name}
-          imgPath={photos[race.race.index.replace('-', '') as racePhotoKeys]}
-        />
-      );
-    });
-  };
+  const createRaceOptions = (races: iCharacter[]) => (
+    races.map((race) => (
+      <CharacterCard
+        key={JSON.stringify(race.race)}
+        name={race.name}
+        imgPath={photos[race.race.index.replace('-', '') as racePhotoKeys]}
+      />
+    ))
+  );
 
   const getAllCharacters = async () => {
     if (user.name) {
@@ -61,7 +58,7 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
         race: char.race,
         name: char.name,
       }));
-      setCharRaces(arr);
+      setcharacterRaces(arr);
     }
   };
 
@@ -95,9 +92,9 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
           onChange={(e) => handleCodeChange(e)}
         />
       </div>
-      {charraces.length ? (
-        <Carousel setIndex={setSelectedIndex} show={4}>
-          {createRaceOptions(charraces)}
+      {characterRaces.length ? (
+        <Carousel  show={4}>
+          {createRaceOptions(characterRaces)}
         </Carousel>
       ) : (
         <h2>...Loading</h2>

@@ -35,8 +35,8 @@ export default function Chat({ socket, username, room }: props) {
   };
 
   useEffect(() => {
-    socket.on('receive_message', (data: string) => {
-      setMessageList((list) => [...list, data ]);
+    socket.on('receive_message', (data: Message) => {
+      setMessageList((list) => [...list, data]);
     });
   }, [socket]);
 
