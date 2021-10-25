@@ -1,6 +1,10 @@
-/* eslint-disable max-len */
-// eslint-disable-next-line
-import { useRef, useState, useLayoutEffect, useEffect } from 'react';
+import {
+  useRef,
+  useState,
+  useLayoutEffect,
+  useEffect,
+  MouseEvent,
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import gsap from 'gsap';
 import { IRootState } from '../../../reducers';
@@ -18,13 +22,12 @@ import {
 } from '../../../actions/mapWizard.action';
 import { iElement } from '../../../interfaces/map.interface';
 import { saveMap, updateMap } from '../../../services/map.service';
+import svgIcons from '../../../assets/svgElements/svgIcons';
 
-export default function MapEdit() {
+const MapEdit = () => {
   const dispatch = useDispatch();
-
-  const imgRef = useRef<any>(null);
+  const imgRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
-  // eslint-disable-next-line
   const { selectedElement, locationArr, elementArr, mapUrl, mapName, mapId } =
     useSelector((state: IRootState) => state.mapCreationReducer);
   const username = useSelector((state: IRootState) => state.user);
@@ -50,30 +53,29 @@ export default function MapEdit() {
   const [svgCoord, setSvgCoord] = useState({ x: 0, y: 0 });
   const [isModal, setIsModal] = useState(false);
 
-  // Create Id
   function generateId() {
     const id = Math.random().toString(16).slice(2);
     return id;
   }
 
-  // Panning
+  // Map Panning
 
-  function getPointFromEvent(evt: any) {
+  const getPointFromEvent = (evt: MouseEvent) => {
     const point = { x: 0, y: 0 };
     point.x = evt.clientX;
     point.y = evt.clientY;
     return point;
-  }
+  };
 
-  function onPointerDown(evt: any) {
+  const onPointerDown = (evt: MouseEvent<SVGSVGElement>) => {
     if (keyCode === 'Space') {
       setIsPointerDown(true);
       const pointerPosition = getPointFromEvent(evt);
       setPointerOrigin({ x: pointerPosition.x, y: pointerPosition.y });
     }
-  }
+  };
 
-  function onPointerMove(evt: any) {
+  const onPointerMove = (evt: MouseEvent) => {
     if (!isPointerDown) return;
     evt.preventDefault();
     const pointerPosition = getPointFromEvent(evt);
@@ -83,9 +85,9 @@ export default function MapEdit() {
       width: viewBox.width,
       height: viewBox.height,
     });
-  }
+  };
 
-  function onPointerUp() {
+  const onPointerUp = () => {
     setIsPointerDown(false);
     setViewBox({
       x: newViewBox.x,
@@ -93,12 +95,11 @@ export default function MapEdit() {
       width: newViewBox.width,
       height: newViewBox.height,
     });
-  }
+  };
 
-  // Zoom
+  // Zoom in Map
 
-  async function zoom(level: number) {
-    // eslint-disable-next-line
+  const zoom = async (level: number) => {
     const { width, height, x, y } = newViewBox;
     const zoomedViewBox = {
       x: x + (width - width * level) / 2,
@@ -110,27 +111,27 @@ export default function MapEdit() {
     await gsap.to('.main-svg', 0.3, { attr: { viewBox: test } });
     setNewViewBox(zoomedViewBox);
     setViewBox(zoomedViewBox);
-  }
+  };
 
   // Create Modal for further information
-  function showElementModal() {
+  const showElementModal = () => {
     setElementModalIsActive(true);
-  }
+  };
 
-  function closeElementModal() {
+  const closeElementModal = () => {
     setElementModalIsActive(false);
-  }
+  };
 
-  function showSaveModal() {
+  const showSaveModal = () => {
     setSaveModalIsActive(true);
-  }
+  };
 
-  function closeSaveModal() {
+  const closeSaveModal = () => {
     setSaveModalIsActive(false);
-  }
+  };
 
   // Point
-  function getSVGCoord(x: number, y: number): {} {
+  const getSVGCoord = (x: number, y: number) => {
     const svg = document.querySelector('.main-svg');
     if (!svg) return {};
     // @ts-expect-error
@@ -139,14 +140,15 @@ export default function MapEdit() {
     pt.y = y;
     // @ts-expect-error
     const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
-    return cursorPoint;
-  }
 
-  function deleteLocation(
+    return cursorPoint;
+  };
+
+  const deleteLocation = (
     id: string,
     locArr: JSX.Element[],
     elArr: iElement[],
-  ) {
+  ) => {
     const locationArrIndex = locArr.findIndex(
       (location) => location.props.id === id,
     );
@@ -167,22 +169,20 @@ export default function MapEdit() {
         ],
       }),
     );
-  }
+  };
 
-  function onElementModalSubmit(
+  const onElementModalSubmit = (
     locationName: string,
     locationDescription: string,
-  ) {
-    if (!elementArr) return;
+  ) => {
+    if (!elementArr || !locationArr) return;
     const element = getMapElements(svgCoord.x, svgCoord.y, selectedElement);
     const id = generateId();
     dispatch(
       updateLocationArr({
         locationArr: [
-          // @ts-expect-error
           ...locationArr,
           <MapItem
-            // eslint-disable-next-line
             deleteLocation={deleteLocation}
             id={id}
             locationName={locationName}
@@ -205,9 +205,9 @@ export default function MapEdit() {
       description: locationDescription,
     };
     dispatch(updateElementArr({ elementArr: [...elementArr, dataObj] }));
-  }
+  };
 
-  async function onSaveModalSubmit(name: string) {
+  const onSaveModalSubmit = async (name: string) => {
     if (!username.name || !mapUrl) return;
     const data = {
       mapName: name,
@@ -221,9 +221,9 @@ export default function MapEdit() {
       await saveMap(username.name, data);
     }
     setIsModal(!isModal);
-  }
+  };
 
-  const setPoint = (evt: any) => {
+  const setPoint = (evt: MouseEvent) => {
     if (keyCode !== 'Space') {
       const svg = document.querySelector('.main-svg');
       if (!svg) return;
@@ -257,24 +257,13 @@ export default function MapEdit() {
     });
   }, []);
 
-  function handleSave() {
+  const handleSave = () => {
     showSaveModal();
-  }
+  };
 
-  function toggleModal() {
+  const toggleModal = () => {
     setIsModal(!isModal);
-  }
-
-  // useEffect(() => {
-  //   // const bbox = document.querySelector('.test')?.getBBox();
-  //   setTimeout(() => {
-  //     console.log(imgRef.current.getBoundingClientRect().width);
-  //     setDimensions({
-  //       width: imgRef.current.getBoundingClientRect().width,
-  //       height: imgRef.current.getBoundingClientRect().height,
-  //     });
-  //   }, 1);
-  // }, []);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -293,7 +282,6 @@ export default function MapEdit() {
       const el = getMapElements(element.x, element.y, element.elementName);
       return (
         <MapItem
-          // eslint-disable-next-line
           deleteLocation={deleteLocation}
           id={element.id}
           locationName={element.elementName}
@@ -311,7 +299,6 @@ export default function MapEdit() {
   return (
     <div className="map-edit-container">
       <div className="map-edit-image">
-        {/* <img src={mapUrl} alt="" /> */}
         <div>
           <svg
             className="main-svg"
@@ -333,20 +320,6 @@ export default function MapEdit() {
               ref={imgRef}
               href={mapUrl}
             />
-            {/* <foreignObject
-            width={dimensions.width}
-            height={dimensions.height}
-            y={-dimensions.height / 2}
-            x={-dimensions.width / 2}
-          >
-            <img
-              className="test"
-              // ref={imgRef}
-              // eslint-disable-next-line
-              src={mapUrl}
-              alt=""
-            />
-          </foreignObject> */}
             {locationArr}
           </svg>
         </div>
@@ -357,30 +330,14 @@ export default function MapEdit() {
               onClick={() => zoom(0.8)}
               type="button"
             >
-              <svg
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-              </svg>
+              {svgIcons.zoomIn}
             </button>
             <button
               className="map-zoom-button"
               onClick={() => zoom(1.25)}
               type="button"
             >
-              <svg
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
-              </svg>
+              {svgIcons.zoomOut}
             </button>
           </div>
           <button
@@ -388,16 +345,10 @@ export default function MapEdit() {
             type="button"
             onClick={handleSave}
           >
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              {/* eslint-disable-next-line */}
-              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-              {/* eslint-disable-next-line */}
-              <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-            </svg>
+            {svgIcons.save}
           </button>
         </div>
       </div>
-      {/* eslint-disable-next-line */}
       <div className="map-edit-menu">
         <PointSelection />
         <DescriptionPreview />
@@ -405,12 +356,10 @@ export default function MapEdit() {
       <Modal
         heading="Name your Elements"
         modalIsActive={elementModalIsActive}
-        // eslint-disable-next-line
         setModalIsActive={setElementModalIsActive}
         closeModal={() => closeElementModal()}
       >
         <ElementForm
-          // eslint-disable-next-line
           onModalSubmit={onElementModalSubmit}
           setModalIsActive={setElementModalIsActive}
         />
@@ -422,17 +371,17 @@ export default function MapEdit() {
       >
         <SaveForm
           setModalIsActive={setSaveModalIsActive}
-          // eslint-disable-next-line
           onModalSubmit={onSaveModalSubmit}
         />
       </Modal>
       <InfoBanner
         isVisible={isModal}
-        // eslint-disable-next-line
         setIsVisible={toggleModal}
         message="Map saved"
         type="success"
       />
     </div>
   );
-}
+};
+
+export default MapEdit;

@@ -1,22 +1,25 @@
-// eslint-disable-next-line
 import { useState, useEffect, useRef } from 'react';
 
-export default function MapSelectionItem({
+interface props {
+  element: JSX.Element;
+  selectItem(elementName: string): void;
+  elementName: string;
+}
+
+const MapSelectionItem = ({
   element,
   selectItem,
   elementName,
-}: any) {
-  const node = useRef(null);
+}: props): JSX.Element => {
+  const node = useRef<any>(null);
   const [isSelected, setIsSelected] = useState(false);
   const handleClick = () => {
     selectItem(elementName);
     setIsSelected(true);
   };
 
-  const outsideClick = (e: any) => {
-    // console.log(e.target.classList.contains('main-svg'));
+  const outsideClick = (e: Event) => {
     if (!node.current) return;
-    // @ts-expect-error
     if (node.current.contains(e.target)) return;
     setIsSelected(false);
   };
@@ -29,12 +32,9 @@ export default function MapSelectionItem({
   }, []);
 
   return (
-    // eslint-disable-next-line
-    <div onClick={handleClick} className="element-presentation">
-      {/* {console.log(element.props.dataset)} */}
+    <button type="button" onClick={handleClick} className="element-presentation">
       <svg
         ref={node}
-        // onClick={handleClick}
         className={
           isSelected ? 'isSelected non-click-layer' : 'non-click-layer'
         }
@@ -43,6 +43,8 @@ export default function MapSelectionItem({
       >
         {element}
       </svg>
-    </div>
+    </button>
   );
-}
+};
+
+export default MapSelectionItem;
