@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import { iResourceListItem } from '../../../interfaces/externalData/externalData.interface';
 
 function Options<T extends iResourceListItem[]>(options: T | any[]) {

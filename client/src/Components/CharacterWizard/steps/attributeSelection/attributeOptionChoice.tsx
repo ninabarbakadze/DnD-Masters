@@ -1,12 +1,9 @@
 /* eslint-disable */
-// @ts-nocheck
-import { useEffect, useRef } from 'react';
 import './attributesSelection.scss';
 
 interface props {
   name: string;
   handleClick: any;
-  bonus: number;
   selected: boolean;
 }
 
