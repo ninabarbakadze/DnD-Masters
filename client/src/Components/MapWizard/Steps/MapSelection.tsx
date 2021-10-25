@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllMaps, deleteMap, getMap } from '../../../services/map.service';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../MapCarouselItem/MapCarouselItem';
-import InfoModal from '../../InfoModal/InfoModal';
+import InfoModal from '../../InfoBanner/InfoBanner';
 import './MapSteps.scss';
 import {
   updateMapNameAndId,

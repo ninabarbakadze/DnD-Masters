@@ -9,7 +9,7 @@ import ElementForm from '../Modal/ModalForms/ElementForm';
 import SaveForm from '../Modal/ModalForms/SaveForm';
 import MapItem from '../MapItem/MapItem';
 import Modal from '../Modal/Modal';
-import InfoModal from '../../InfoModal/InfoModal';
+import InfoBanner from '../../InfoBanner/InfoBanner';
 import DescriptionPreview from '../DescriptionPreview/DescriptionPreview';
 import getMapElements from '../../../assets/mapElements/mapData';
 import {
@@ -426,7 +426,7 @@ export default function MapEdit() {
           onModalSubmit={onSaveModalSubmit}
         />
       </Modal>
-      <InfoModal
+      <InfoBanner
         isVisible={isModal}
         // eslint-disable-next-line
         setIsVisible={toggleModal}
