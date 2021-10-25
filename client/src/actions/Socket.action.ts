@@ -1,7 +1,5 @@
 /* eslint-disable */
-// @ts-nocheck
 import { Socket } from 'socket.io-client';
-// import { iJoinRoomProps } from '../interfaces/redux.interface';
 import { createSocket } from '../services/socket.service';
 import appStore from '../stores/appStore';
 
@@ -15,15 +13,13 @@ export const joinGame = (gameRoom: string, player: string) => {
   return async (dispatch: any) => {
     if (!appStore.getState().socketReducer.socket) {
       createSocket().then((socket: Socket) => {
-        console.log('at creation', socket);
         socket.roomCode = gameRoom;
         socket.player = player;
         dispatch(updateSocket(socket));
         socket.emit('join_room', { gameRoom, player });
       });
     } else {
-      const { socket } = appStore.getState().socketReducer;
-      console.log('after getting from store', socket);
+      const { socket:Socket } = appStore.getState().socketReducer;
       socket.roomCode = gameRoom;
       socket.player = player;
       dispatch(updateSocket(socket));
