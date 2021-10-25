@@ -7,26 +7,21 @@ import { getAllCharacter } from '../../services/character.sevices';
 import CharacterCard from './CharacterCard';
 import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
-import { iCharacterRace } from '../../interfaces/externalData/externalData.interface';
+import { iJoinGameCharacter } from '../../interfaces/character.interface';
 
 interface props {
   activateGame: any;
   addPlayer: any;
-}
-interface iCharacter {
-  name: string;
-  race: iCharacterRace
 }
 
 const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   const user = useSelector((state: IRootState) => state.user);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
-  const [characterRaces, setcharacterRaces] = useState<iCharacter[]>([]);
+  const [characterRaces, setcharacterRaces] = useState<iJoinGameCharacter[]>([]);
   const [roomCode, setRoomCode] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [charactersArr, setCharactersArr] = useState<iCharacter[]>([]);
-  
+
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayerName(e.target.value);
   };
@@ -40,7 +35,7 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
     activateGame(true);
   }
 
-  const createRaceOptions = (races: iCharacter[]) => (
+  const createRaceOptions = (races: iJoinGameCharacter[]) => (
     races.map((race) => (
       <CharacterCard
         key={JSON.stringify(race.race)}
@@ -53,7 +48,6 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
   const getAllCharacters = async () => {
     if (user.name) {
       const characters = await getAllCharacter(user.name);
-      setCharactersArr(characters);
       const arr = characters.map((char) => ({
         race: char.race,
         name: char.name,
@@ -75,25 +69,27 @@ const PlayerJoin = ({ activateGame, addPlayer }: props) => {
     <div>
       <h1>Join a Game Room</h1>
       <div>
-        <label htmlFor="playerName">Player Name</label>
-        <input
-          name="playerName"
-          id="playerName"
-          type="text"
-          required
-          onChange={(e) => handleNameChange(e)}
-        />
-        <label htmlFor="roomCode">Room Code</label>
-        <input
-          name="roomCode"
-          id="roomCode"
-          type="text"
-          required
-          onChange={(e) => handleCodeChange(e)}
-        />
+        <label htmlFor="playerName">
+          <input
+            name="playerName"
+            id="playerName"
+            type="text"
+            required
+            onChange={(e) => handleNameChange(e)}
+          />
+        </label>
+        <label htmlFor="roomCode">
+          <input
+            name="roomCode"
+            id="roomCode"
+            type="text"
+            required
+            onChange={(e) => handleCodeChange(e)}
+          />
+        </label>
       </div>
       {characterRaces.length ? (
-        <Carousel  show={4}>
+        <Carousel show={4}>
           {createRaceOptions(characterRaces)}
         </Carousel>
       ) : (

@@ -29,8 +29,8 @@
   },
   "globals": {
     "JSX": true
-  },
-  "required": {
-    "some": [ "nesting", "id" ]
-}
+  }
+//   "required": {
+//     "some": [ "nesting", "id" ]
+// }
 }
