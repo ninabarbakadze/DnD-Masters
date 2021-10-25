@@ -1,6 +1,6 @@
-import './InfoModal.scss';
+import './InfoBanner.scss';
 
-export default function InfoModal({
+export default function InfoBanner({
   message,
   type,
   isVisible,
