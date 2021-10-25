@@ -17,7 +17,7 @@ DnD Masters is a game management and online game session tool for Dungeons and D
 
 - React front end framework
 - Redux for state management and thunk middleware
-- Gsep, for animations and image movement
+- Gsap, for animations and image movement
 - socket.io-client for client side websocket management
 
 ### Back End:
