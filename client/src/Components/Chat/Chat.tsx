@@ -1,12 +1,24 @@
-/* eslint-disable */
-// @ts-nocheck
 import './Chat.scss';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
+import { Socket } from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
-export default function Chat({ socket, username, room }) {
+
+type props = {
+  socket: Socket,
+  username: string,
+  room: string
+}
+interface Message {
+  room: string;
+  author: string;
+  message: string;
+  time: Date;
+}
+
+export default function Chat({ socket, username, room }: props) {
   const [currentMessage, setCurrentMessage] = useState('');
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState<Message[]>([]);
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -23,9 +35,8 @@ export default function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    socket.on('receive_message', (data: any) => {
-      // @ts-ignore
-      setMessageList((list) => [...list, data]);
+    socket.on('receive_message', (data: string) => {
+      setMessageList((list) => [...list, data ]);
     });
   }, [socket]);
 
@@ -34,19 +45,15 @@ export default function Chat({ socket, username, room }) {
       <p id="chat-header">Live Chat</p>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent, index) => (
+          {messageList.map((messageContent) => (
             <div
-              key={`${messageContent}${index}`}
+              key={`${messageContent}`}
               className="message"
-              // @ts-ignore
               id={username === messageContent.author ? 'you' : 'other'}
             >
-              {/*     @ts-ignore */}
               <p className="message-content">{messageContent.message}</p>
               <div className="message-meta">
-                {/*     @ts-ignore */}
                 <p id="time">{moment(messageContent.time).format('LT')}</p>
-                {/*     @ts-ignore */}
                 <p id="author">{messageContent.author}</p>
               </div>
             </div>
@@ -61,12 +68,9 @@ export default function Chat({ socket, username, room }) {
           onChange={(e) => {
             setCurrentMessage(e.target.value);
           }}
-          onKeyPress={(event) =>
-            /*     @ts-ignore */
-            event.key === 'Enter' && sendMessage()
-          }
+          onKeyPress={(event) => event.key === 'Enter' && sendMessage()}
         />
-        <button onClick={() => sendMessage()}>&#9658;</button>
+        <button type="button" onClick={() => sendMessage()}>&#9658;</button>
       </div>
     </div>
   );
