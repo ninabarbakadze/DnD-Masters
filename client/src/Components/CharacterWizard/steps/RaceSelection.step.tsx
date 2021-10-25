@@ -1,5 +1,4 @@
-/* eslint-disable */
-// @ts-nocheck
+/* eslint-disable arrow-body-style */
 import { useEffect, useState } from 'react';
 import { updateRace } from '../../../actions/characterCreationWizard.actions';
 import { iCharacter } from '../../../interfaces/character.interface';
@@ -8,12 +7,12 @@ import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
 import Carousel from '../../Carousel/Carousel';
 import DetailsCard from '../../DetailsCard/detailsCard.component';
-import photos from '../../../assets/racePhotos/racePhotos';
+import photos, { racePhotoKeys } from '../../../assets/racePhotos/racePhotos';
 import RaceDetails from '../../DetailsCard/raceDetails/raceDetails';
 
 const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const [races, setRaces] = useState<iCharacterRace[]>([]);
-  const [selectedRace, setSelectedRace] = useState();
+  const [selectedRace, setSelectedRace] = useState<iCharacterRace>();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -26,22 +25,28 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
   const getAllRaceOptions = () => {
     getAllInList<iCharacterRace>('races').then((results) => {
       setRaces(results);
+      setSelectedRace(results[0]);
       setIsLoading(false);
     });
   };
 
-  const createRaceOptions = (races: iCharacterRace[]) => {
-    return races.map((race) => {
+  const createRaceOptions = (raceOptions: iCharacterRace[]) => {
+    return raceOptions.map((race) => {
+      const key: racePhotoKeys = race.index.replace('-', '') as racePhotoKeys;
       return (
         <DetailsCard
-          key={JSON.stringify(race)}
+          key={key}
           name={race.name}
-          imgPath={photos[race.index.replace('-', '')]}
+          imgPath={getProperty(photos, key)}
           content={<RaceDetails race={race} />}
         />
       );
     });
   };
+
+  function handleClick() {
+    onSubmit({ race: selectedRace }, updateRace, handleNextStep());
+  }
 
   useEffect(() => {
     getAllRaceOptions();
@@ -64,12 +69,10 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
       <button
         className="main-button"
         type="button"
-        onClick={() =>
-          onSubmit({ race: selectedRace }, updateRace, handleNextStep())
-        }
+        onClick={() => handleClick()}
         disabled={isLoading}
       >
-        {selectedRace?.subraces?.length ? `Subrace` : 'Background'}
+        {selectedRace?.subraces?.length ? 'Subrace' : 'Background'}
       </button>
     </div>
   );

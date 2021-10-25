@@ -44,6 +44,17 @@ As well a game room that allows the combined use of the created assets through a
 
 Character creation walks the user the the many steps necessary to create their own first level character. The steps that are taken and the choices available at each step are affected by prevoius choices in the wizard. This demands that the character creation wizard is highly responsive.
 
+The following is a list of individual steps for character createion
+
+1. **Race Selection:** choose the base race of the class that provides subclass options, proficiency options, language options, feats, and other modifiers
+2. **Subrace Selection:** if available on the selected race the user must then select a subrace that provides further specifications and modifiers to be chosen in later steps
+3. **Create Personality:** select a background such as "sailor" or "acolyte" each background has it's own list of unique personality traits, bonds, flaws, and ideals that a user must choose one or two from each.
+4. **Select Class:** choose from a list of classes like "fighter" or "warlock" each class provides their own modifications and possible optional steps depending on whether the class uses magic, martial or simple weaponry, animal companions, etc. These are all linked to your eventual character sheet, or the choice is made in a further step
+5. **Attribute Selection** player must set up their starting attributes that are used to determine their bonuses and abilities to perform attacks and skills. Modifiers from the characters race, subrace and class are applied and shown. If required by the class additional choices as to where racial bonuses should be applied.
+6. **Skills, Language, and Feats:** based on their previous choices certain skills languages and feats are automatically selected. They must then choose the rest of their set number of skills from lists determined by class,race and subrace. 7.**Spell Selection:** if their class is a magic based class or any of their previous choices require the use of magic spells then the character here is able to choose from a list of spells determined by previous choices.
+
+Finally after all the information is submitted the user is brought to their character sheet where they can further modify their character before saving.
+
 **Designs**
 ![race and class selection](demoAssets/characterWizardPhotos/RaceClass.png) ![attributes and languses](demoAssets/characterWizardPhotos/attributesLanguages.png)![feats and spells](demoAssets/characterWizardPhotos/featsSpells.png)
 

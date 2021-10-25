@@ -1,10 +1,10 @@
 /* eslint-disable */
-// @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   iCharacter,
   iAbilityArray,
+  iAbilityBonusOption,
 } from '../../../../interfaces/character.interface';
 import { IRootState } from '../../../../reducers';
 import { iWizardStepProps } from '../../../../interfaces/wizard.interface';
@@ -31,8 +31,8 @@ const AttributeSelectionStep = ({
 }: iWizardStepProps<iCharacter>) => {
   const [abilityArray, setAbilityArray] = useState<iAbilityArray>(startArray);
   const [pool, setPool] = useState<number>(18);
-  const [bonusChoices, setBonusChoices] = useState([]);
-  const [selectedBonuses, setSelectedBonuses] = useState([]);
+  const [bonusChoices, setBonusChoices] = useState<iAbilityBonusOption>({});
+  const [selectedBonuses, setSelectedBonuses] = useState<string[]>([]);
 
   const character = useSelector(
     (state: IRootState) => state.characterCreationReducer,
@@ -48,18 +48,21 @@ const AttributeSelectionStep = ({
     if (bonuses.includes(name)) {
       setSelectedBonuses(selectedBonuses.filter((choice) => choice != name));
       const newAbilityArray = { ...abilityArray };
-      newAbilityArray[name].bonus--;
+      newAbilityArray[name as keyof iAbilityArray].bonus--;
       setAbilityArray(newAbilityArray);
-    } else if (selectedBonuses.length < bonusChoices.race.max) {
+    } else if (
+      bonusChoices.race &&
+      selectedBonuses.length < bonusChoices?.race?.max
+    ) {
       setSelectedBonuses([...selectedBonuses, name]);
       const newAbilityArray = { ...abilityArray };
-      newAbilityArray[name].bonus++;
+      newAbilityArray[name as keyof iAbilityArray].bonus++;
       setAbilityArray(newAbilityArray);
     }
   }
 
-  function increment(direction, value) {
-    let score = abilityArray[value].score;
+  function increment(direction: string, value: string) {
+    let score = abilityArray[value as keyof iAbilityArray].score;
     if (direction == '-') {
       score--;
       setPool(pool + 1);
@@ -70,7 +73,7 @@ const AttributeSelectionStep = ({
       }
     }
     const newAbilityArray = { ...abilityArray };
-    newAbilityArray[value].score = score;
+    newAbilityArray[value as keyof iAbilityArray].score = score;
     setAbilityArray(newAbilityArray);
   }
   const abilityKeys = Object.keys(abilityArray);
@@ -78,11 +81,11 @@ const AttributeSelectionStep = ({
   const pointBuyArray = abilityKeys.map((key) => {
     return (
       <AttributePointBuy
-        value={abilityArray[key].score}
+        value={abilityArray[key as keyof iAbilityArray].score}
         key={key}
         increment={increment}
         name={key}
-        bonus={abilityArray[key].bonus}
+        bonus={abilityArray[key as keyof iAbilityArray].bonus}
       />
     );
   });
@@ -103,7 +106,7 @@ const AttributeSelectionStep = ({
                     key={choice}
                     name={choice}
                     handleClick={handleBonusChoice}
-                    slected={selectedBonuses.includes(choice)}
+                    selected={selectedBonuses.includes(choice)}
                   />
                 );
               })}
@@ -116,13 +119,13 @@ const AttributeSelectionStep = ({
               {`choose ${bonusChoices.subrace.max} from ${character?.subrace?.name} bonuses:`}{' '}
             </h3>
             <div className="space-x-4">
-              {bonusChoices.race.choices.map((choice) => {
+              {bonusChoices.subrace.choices.map((choice) => {
                 return (
                   <AbilityBonusChoice
                     key={choice}
                     name={choice}
                     handleClick={() => {}}
-                    slected={false}
+                    selected={false}
                   />
                 );
               })}

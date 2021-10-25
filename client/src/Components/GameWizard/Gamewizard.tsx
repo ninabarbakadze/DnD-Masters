@@ -10,14 +10,12 @@ import WizardNav from '../WizardNav/WizardNav';
 
 import './GameWizard.scss';
 
-export default function GameWizard() {
+const GameWizard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const onWizardComplete = () => {
     alert('game created');
     history.push('/play');
-
-    // history.push('/game');
   };
 
   const onSubmit = (
@@ -39,16 +37,18 @@ export default function GameWizard() {
         <WizardNav history={history} />
       </div>
       <Switch>
-        <Route path="/gameWizard/step1">
-          <Name onSubmit={onSubmit} path="/gameWizard/step2" />
+        <Route path="/gameWizard/name">
+          <Name onSubmit={onSubmit} path="/gameWizard/MapSelection" />
         </Route>
-        <Route path="/gameWizard/step2">
-          <SelectMap onSubmit={onSubmit} path="/gameWizard/step3" />
+        <Route path="/gameWizard/MapSelection">
+          <SelectMap onSubmit={onSubmit} path="/gameWizard/invites" />
         </Route>
-        <Route path="/gameWizard/step3">
+        <Route path="/gameWizard/invites">
           <Invitation onSubmit={onSubmit} />
         </Route>
       </Switch>
     </div>
   );
-}
+};
+
+export default GameWizard;

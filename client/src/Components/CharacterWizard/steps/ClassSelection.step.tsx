@@ -1,5 +1,4 @@
 /* eslint-disable */
-// @ts-nocheck
 import { useEffect, useState } from 'react';
 import { updateClass } from '../../../actions/characterCreationWizard.actions';
 import { iCharacter } from '../../../interfaces/character.interface';
@@ -7,7 +6,9 @@ import { iCharacterClass } from '../../../interfaces/externalData/externalData.i
 import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
 import Carousel from '../../Carousel/Carousel';
-import photos from '../../../assets/classPhotos/classPhotos';
+import photos, {
+  classPhotoKeys,
+} from '../../../assets/classPhotos/classPhotos';
 import DetailsCard from '../../DetailsCard/detailsCard.component';
 import ClassDetails from '../../DetailsCard/classDetails/classDetails';
 
@@ -26,11 +27,12 @@ const ClassSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
 
   const createOptions = (classes: iCharacterClass[]) => {
     return classes.map((item) => {
+      const key: classPhotoKeys = item.index.replace('-', '') as classPhotoKeys;
       return (
         <DetailsCard
-          key={JSON.stringify(item)}
+          key={key}
           name={item.name}
-          imgPath={photos[item.index.replace('-', '')]}
+          imgPath={photos[key]}
           content={<ClassDetails CLASS={item} />}
         />
       );
