@@ -1,6 +1,5 @@
-/* eslint-disable */
-import { iAction } from '../interfaces/redux.interface';
 import { Socket } from 'socket.io-client';
+import { iAction } from '../interfaces/redux.interface';
 
 const initialState: { socket?: Socket; players: [] } = { players: [] };
 
