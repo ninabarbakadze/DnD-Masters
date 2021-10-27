@@ -30,7 +30,7 @@ const MapEdit = () => {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 });
   const { selectedElement, locationArr, elementArr, mapUrl, mapName, mapId } =
     useSelector((state: IRootState) => state.mapCreationReducer);
-  const username = useSelector((state: IRootState) => state.user);
+  const username = useSelector((state: IRootState) => state.userReducer);
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [pointerOrigin, setPointerOrigin] = useState({ x: 0, y: 0 });
   const [viewBox, setViewBox] = useState({

@@ -1,6 +1,11 @@
 import './WizardNav.scss';
+import { RouteComponentProps } from 'react-router';
 
-export default function WizardNav({ history }: any) {
+interface props {
+  history: RouteComponentProps['history'];
+}
+
+export default function WizardNav({ history }: props) {
   return (
     <div className="wizard-nav">
       <button type="button" onClick={() => history.push('/dashboard')}>

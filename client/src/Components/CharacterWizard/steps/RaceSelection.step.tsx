@@ -37,7 +37,7 @@ const RaceSelection = ({ path, onSubmit }: iWizardStepProps<iCharacter>) => {
         <DetailsCard
           key={key}
           name={race.name}
-          imgPath={getProperty(photos, key)}
+          imgPath={photos[key]}
           content={<RaceDetails race={race} />}
         />
       );

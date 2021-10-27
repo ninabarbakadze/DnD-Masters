@@ -10,7 +10,7 @@ import { joinGame, updatePlayers } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
 import { getAllCharacter } from '../../services/character.sevices';
 import CharacterCard from './CharacterCard';
-import photos, {racePhotoKeys} from '../../assets/racePhotos/racePhotos';
+import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';
 
 interface props {
@@ -19,7 +19,7 @@ interface props {
 }
 
 const PlayerJoin = ({ activateGame, addPlayer }: props) => {
-  const user = useSelector((state: IRootState) => state.user);
+  const user = useSelector((state: IRootState) => state.userReducer);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
   const [charraces, setCharRaces] = useState([]);

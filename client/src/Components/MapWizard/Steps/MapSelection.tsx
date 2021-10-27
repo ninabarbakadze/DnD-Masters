@@ -27,7 +27,7 @@ const MapSelection = ({ history }: props) => {
   ]);
   const [items, setItems] = useState<JSX.Element[]>([]);
   const [isModal, setIsModal] = useState(false);
-  const user = useSelector((state: IRootState) => state.user);
+  const user = useSelector((state: IRootState) => state.userReducer);
 
   const nextPage = async () => {
     if (mapIndex === 0) {

@@ -1,22 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Carousel from '../../Carousel/Carousel';
 import MapCarouselItem from '../../MapWizard/MapCarouselItem/MapCarouselItem';
 import { getAllMaps } from '../../../services/map.service';
 import { updateMap } from '../../../actions/gameWizard.actions';
 import { IRootState } from '../../../reducers';
+import { PayloadAction } from '../../../interfaces/redux.interface';
+import { iGameWizardState } from '../../../reducers/gameCreation.reducer';
+import { iLoadedMap } from '../../../interfaces/map.interface';
 
-function SelectMap({ onSubmit, path }: any) {
+interface props {
+  path: string;
+  onSubmit(data: iGameWizardState,
+    payLoadAction: PayloadAction<iGameWizardState>,
+    path?: string,): void;
+}
+
+const SelectMap = ({ onSubmit, path }: props) => {
   const [mapIndex, setMapIndex] = useState(0);
-  const [mapArr, setMapArr] = useState<any>([]);
+  const [mapArr, setMapArr] = useState<iLoadedMap[]>([]);
   const [items, setItems] = useState<JSX.Element[]>([]);
-  const user = useSelector((state: IRootState) => state.user);
+  const user = useSelector((state: IRootState) => state.userReducer);
 
   const nextPage = () => {
     onSubmit(
-      // eslint-disable-next-line
-      { mapId: mapArr[mapIndex]._id, mapUrl: mapArr[mapIndex].mapUrl },
+      { mapId: mapArr[mapIndex]._id, mapUrl: mapArr[mapIndex].mapUrl, playerArr: [] },
       updateMap,
       path,
     );
@@ -27,7 +35,6 @@ function SelectMap({ onSubmit, path }: any) {
     setMapArr(loadedMaps);
     setItems(
       loadedMaps.map((map: any) => (
-        // eslint-disable-next-line
         <MapCarouselItem url={map.mapUrl} key={map._id} />
       )),
     );
@@ -61,6 +68,6 @@ function SelectMap({ onSubmit, path }: any) {
       </div>
     </div>
   );
-}
+};
 
-export default withRouter(SelectMap);
+export default SelectMap;

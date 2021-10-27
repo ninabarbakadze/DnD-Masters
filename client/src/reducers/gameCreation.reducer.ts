@@ -16,10 +16,7 @@ const initialState = {
   mapId: '',
   mapUrl: '',
   elementArr: [],
-  playerArr: [
-    // { playerName: 'Horst', position: { x: 0, y: 0 } },
-    // { playerName: 'Detlef', position: { x: 0, y: 0 } },
-  ],
+  playerArr: [],
 };
 
 interface IAction {

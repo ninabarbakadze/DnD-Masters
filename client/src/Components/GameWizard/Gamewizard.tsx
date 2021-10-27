@@ -1,7 +1,6 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { PayloadAction } from '../../interfaces/redux.interface';
-
 import { iGameWizardState } from '../../reducers/gameCreation.reducer';
 import Name from './Steps/Name.step';
 import SelectMap from './Steps/SelectMap.step';
@@ -14,7 +13,6 @@ const GameWizard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const onWizardComplete = () => {
-    alert('game created');
     history.push('/play');
   };
 

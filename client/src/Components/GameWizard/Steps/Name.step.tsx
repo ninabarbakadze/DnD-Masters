@@ -2,8 +2,17 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { updateNameAndTag } from '../../../actions/gameWizard.actions';
 import { IRootState } from '../../../reducers';
+import { PayloadAction } from '../../../interfaces/redux.interface';
+import { iGameWizardState } from '../../../reducers/gameCreation.reducer';
 
-function Name({ path, onSubmit }: any) {
+interface props {
+  path: string;
+  onSubmit(data: iGameWizardState,
+    payLoadAction: PayloadAction<iGameWizardState>,
+    path?: string,): void;
+}
+
+function Name({ path, onSubmit }: props) {
   const [name, setName] = useState('');
   const [tags, setTags] = useState('');
   const gameWizard = useSelector(
@@ -11,8 +20,7 @@ function Name({ path, onSubmit }: any) {
   );
 
   const handleSubmit = () => {
-    console.log(name);
-    onSubmit({ name, tags }, updateNameAndTag, path);
+    onSubmit({ name, tags, playerArr: [] }, updateNameAndTag, path);
   };
 
   return (

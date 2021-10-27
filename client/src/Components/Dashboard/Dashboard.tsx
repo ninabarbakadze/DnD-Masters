@@ -3,8 +3,8 @@ import { IRootState } from '../../reducers';
 import DashboarMenuItem from './DashboardMenuItem/DashboarMenuItem';
 import './Dashboard.scss';
 
-export default function Dashboard() {
-  const user = useSelector((state: IRootState) => state.user);
+const Dashboard = () => {
+  const user = useSelector((state: IRootState) => state.userReducer);
   return (
     <div className="dashboard-container">
       <div className="header">
@@ -53,4 +53,6 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;
