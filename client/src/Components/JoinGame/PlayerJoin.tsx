@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { joinGame, updatePlayers } from '../../actions/Socket.action';
 import { IRootState } from '../../reducers';
-import { getAllCharacter } from '../../services/character.sevices';
+import { getAllCharacter } from '../../services/character.services';
 import CharacterCard from './CharacterCard';
 import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import Carousel from '../Carousel/Carousel';

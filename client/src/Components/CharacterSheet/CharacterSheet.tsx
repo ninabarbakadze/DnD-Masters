@@ -2,22 +2,22 @@
 import './CharacterSheet.scss';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import photos from '../../assets/racePhotos/racePhotos';
+import photos, { racePhotoKeys } from '../../assets/racePhotos/racePhotos';
 import { IRootState } from '../../reducers';
-// import CharacterSheetNotes from './CharacterSheetNotes';
-import mockCharacter from '../../mockData/mockCharackter';
+// import mockCharacter from '../../mockData/mockCharackter';
 import CharacterSheetSkills from './CharacterSheetSkills';
 import CharacterSheetFeatures from './CharacterSheetFeatures';
 import CharacterSheetDeathSaves from './CharacterSheetDeathSaves';
-import formatCharacter from './CharacterFormater';
+import formatCharacter from './CharacterFormatter';
 import CharacterSheetAbilityInfo from './CharacterSheetAbilityInfo';
 import CharacterSheetSavingThrows from './CharacterSheetSavingThrows';
-import { mod, proficiencyBonusCalc, positivePrecursor } from './helper';
+import {
+  mod, proficiencyBonusCalc, positivePrecursor, updateArrObj,
+} from './helper';
 import EditableDisplayComponent from '../EditableDisplayComponent/EditableDisplayComponent';
-// import { saveCharacter } from '../../services/character.sevices';
 import ButtonForSaveOrUpdate from './ButtonForSaveOrUpdate';
 import CharacterSheetAttacks from './CharacterSheetAttacks';
-import { ICharacterDB } from '../../interfaces/characterFromDB.intervace';
+import { ICharacterDB } from '../../interfaces/characterFromDB.interface';
 
 interface IProps{
   fetched:ICharacterDB |undefined
@@ -26,10 +26,9 @@ export default function CharacterSheet({ fetched }:IProps) {
   const username = useSelector((state:IRootState) => state.user.name);
   const newCharacter = useSelector((state:IRootState) => state.characterCreationReducer);
   const formatted = fetched || formatCharacter(newCharacter);
-  // const formatted = formatCharacter(newCharacter);
-
   const [character, setCharacter] = useState({ ...formatted });
   const { success, fails } = character.deathSaves;
+  const racePhotoKey: racePhotoKeys = character.race.index.replace('-', '') as racePhotoKeys;
 
   const modifyPassiveWisdom = (perception:number) => {
     // setCharacter((preVal:any) => ({ ...preVal, passiveWisdom: perception }));
@@ -48,11 +47,8 @@ export default function CharacterSheet({ fetched }:IProps) {
     });
     setCharacter((prevVal:any) => ({ ...prevVal, abilityScores: updateAbilityScrList }));
   };
-  // console.log('Character', newCharacter);
 
-  const updateDeathSaves = (result:string) => {
-    // eslint-disable-next-line no-unused-expressions
-    (result === 'success'
+  const updateDeathSaves = (result:string) => (result === 'success'
     && success > 0
     && setCharacter((prevVal:any) => ({
       ...prevVal,
@@ -73,10 +69,10 @@ export default function CharacterSheet({ fetched }:IProps) {
         fails - 1,
       },
     })));
-  };
 
-  // console.log( newCharacter);
-  // console.log('character: ', character);
+  useEffect(() => {
+    setCharacter((prevVal:any) => ({ ...prevVal, name: username }));
+  }, []);
   return (
     <div className="character-sheet-background ">
       <div className="character-sheet bg-gray-300">
@@ -84,24 +80,21 @@ export default function CharacterSheet({ fetched }:IProps) {
           <div className="character-sheet-avatar-container" />
           <div className="character-sheet-initial-information">
             <h5 className="character-sheet-username">
-              User Name:
+              Hello
               &nbsp;
               <em><b>{username || 'user name'}</b></em>
             </h5>
             <div className="character-name">
-              {/* <b>Character Name</b> */}
               <EditableDisplayComponent
                 inputType="input"
                 action={(val:string) => { setCharacter((prevVal:any) => ({ ...prevVal, characterName: val })); }}
-                initialVal=" Character Name"
+                initialVal="Name your Char!"
               />
               <hr />
-              {/* <h4 className="character-sheet-campaign">Campaign Name</h4> */}
             </div>
             <img
               className="character-sheet-img"
-              // @ts-ignore
-              src={photos[character.race.index.replace('-', '')]}
+              src={photos[racePhotoKey]}
               alt={character.race.index}
             />
             <div className="character-sheet-background-info">
@@ -289,10 +282,12 @@ export default function CharacterSheet({ fetched }:IProps) {
                     <div>
                       Current:
                       <EditableDisplayComponent
-                        action={(val:number) => {
-                          setCharacter((prevVal:any) => (
-                            { ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
-                        }}
+                        action={
+                          (val:number) => {
+                            setCharacter((prevVal:any) => (
+                              { ...prevVal, hitPoints: { ...prevVal.hitPoints, current: val } }));
+                          }
+}
                         initialVal={character.hitPoints.max}
                         inputType="number"
                       />
@@ -335,31 +330,10 @@ export default function CharacterSheet({ fetched }:IProps) {
                 <CharacterSheetAttacks weapons={character.weapons} />
               </div>
               <div className="character-sheet-equipment">
-                {/* <div className="character-sheet-currency">
-                  <div className="character-sheet-coin">
-                CP:
-                <EditableDisplayComponent action={null} initialVal={10} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                SP:
-                <EditableDisplayComponent action={null} initialVal={7} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                EP:
-                <EditableDisplayComponent action={null} initialVal={8} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                GP:
-                <EditableDisplayComponent action={null} initialVal={7} inputType="number" />
-              </div>
-              <div className="character-sheet-coin">
-                PP:
-                <EditableDisplayComponent action={null} initialVal={0} inputType="number" />
-              </div>
-                </div> */}
                 <div className="character-sheet-equipment-list">
                   <div className="hit-point ">Equipments</div>
                   <br />
+                  {console.log('character at equip', character)}
                   {character.equipments.map((item:any) => (
                     <div className="equipment-list-item" key={item.equipment.name}>
                       {item.equipment.name}
@@ -368,7 +342,8 @@ export default function CharacterSheet({ fetched }:IProps) {
 
                       <EditableDisplayComponent
                         inputType="number"
-                        action={null}
+                        itemKey={item.equipment.name}
+                        action={(val:number, key:string) => setCharacter(updateArrObj(character, key, Number(val)))}
                         initialVal={item.quantity}
                       />
 

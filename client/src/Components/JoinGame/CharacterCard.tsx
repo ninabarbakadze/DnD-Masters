@@ -1,10 +1,9 @@
-// interface props {
-//   name: string;
-//   imgPath: string;
-// }
+interface props {
+  name: string;
+  imgPath: string;
+}
 /* eslint-disable */
-// @ts-ignore
-export default function CharacterCard({ name, imgPath }) {
+export default function CharacterCard({ name, imgPath }:props) {
   return (
     <div>
       {imgPath && (

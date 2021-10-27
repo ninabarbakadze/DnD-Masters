@@ -1,4 +1,4 @@
-import { IWeapon } from '../../interfaces/characterFromDB.intervace';
+import { IWeapon } from '../../interfaces/characterFromDB.interface';
 import { positivePrecursor } from './helper';
 
 export default function CharacterSheetAttacks({ weapons }:any) {

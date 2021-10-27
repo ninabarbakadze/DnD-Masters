@@ -7,7 +7,7 @@ import { iWizardStepProps } from '../../../interfaces/wizard.interface';
 import { getAllInList } from '../../../services/externalData.service';
 import Carousel from '../../Carousel/Carousel';
 import photos, {
-  classPhotoKeys,
+  classPhotoKeys
 } from '../../../assets/classPhotos/classPhotos';
 import DetailsCard from '../../DetailsCard/detailsCard.component';
 import ClassDetails from '../../DetailsCard/classDetails/classDetails';
