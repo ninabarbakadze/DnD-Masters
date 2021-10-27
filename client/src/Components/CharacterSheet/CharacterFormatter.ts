@@ -1,35 +1,26 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
-// @ts-ignore
-import { iCharacter } from '../../interfaces/character.interface';
+
+import { iCharacter, iAbilityArray } from '../../interfaces/character.interface';
 
 const formatCharacter = (charFromWizard:iCharacter) => {
-  // const updateSkillProficiency = (skill:string, arr:any) => {
-  //   if (skill === arr[0].index) return true;
-  //   if (skill === arr[1].index) return true;
-  //   return false;
-  // };
-
   const {
     abilityArray, background, race, subrace,
-  } = charFromWizard;
+  }:any = charFromWizard;
   const {
     cha, con, dex, int, str, wis,
   }:any = abilityArray;
   const {
     chosen_bond, chosen_flaw, chosen_ideal, chosen_personality_trait, feature,
-    // starting_equipment,
-    starting_proficiencies,
-  } :any = background;
+
+  }:any = background;
   const {
-    hit_die, proficiencies, proficiency_choices, saving_throws, spellcasting, starting_equipment, subclasses,
-  } :any|undefined = charFromWizard.class;
+    hit_die, proficiencies, spellcasting, starting_equipment, subclasses,
+  }:any = charFromWizard.class;
   const {
-    ability_bonuses, age, size, speed,
-    // starting_proficiencies,
-    traits, alignment, languages,
-  }:any = race;
+    speed, traits, alignment, languages,
+  }: any = race;
 
   const mockCharacter:any = {
     note: 'note goes here',
@@ -100,14 +91,6 @@ const formatCharacter = (charFromWizard:iCharacter) => {
       value: 14,
       description: 'natural armor',
     },
-    // savingThrows: [
-    //   { name: 'Strength', proficient: false },
-    //   { name: 'Dexterity', proficient: false },
-    //   { name: 'Constitution', proficient: true },
-    //   { name: 'Intelligence', proficient: false },
-    //   { name: 'Wisdom', proficient: false },
-    //   { name: 'Charisma', proficient: true },
-    // ],
     languages,
     background: {
       name: background?.name,

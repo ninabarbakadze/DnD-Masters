@@ -1,5 +1,5 @@
 /* eslint-disable */
-import './attributesSelection.scss';
+// import './attributesSelection.scss';
 
 interface props {
   name: string;
