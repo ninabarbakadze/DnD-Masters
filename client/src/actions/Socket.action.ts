@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { createSocket } from '../services/socket.service';
 import appStore from '../stores/appStore';
-import iSocket from '../interfaces/socket.interface'
+import { iSocket } from '../interfaces/socket.interface'
 
 export function updateSocket(socket: iSocket) {
  return  {type: 'CREATE_SOCKET',

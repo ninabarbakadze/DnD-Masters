@@ -30,7 +30,7 @@ function App() {
         <Route path="/dashboard">
           <Dashboard />
         </Route>
-        <Route path="/play">
+        <Route path="/joinGame">
           <GameRoom />
         </Route>
       </Switch>
