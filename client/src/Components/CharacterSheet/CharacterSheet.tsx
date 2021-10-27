@@ -23,7 +23,7 @@ interface IProps{
   fetched:ICharacterDB |undefined
 }
 export default function CharacterSheet({ fetched }:IProps) {
-  const username = useSelector((state:IRootState) => state.user.name);
+  const username = useSelector((state:IRootState) => state.userReducer.name);
   const newCharacter = useSelector((state:IRootState) => state.characterCreationReducer);
   const formatted = fetched || formatCharacter(newCharacter);
   const [character, setCharacter] = useState({ ...formatted });

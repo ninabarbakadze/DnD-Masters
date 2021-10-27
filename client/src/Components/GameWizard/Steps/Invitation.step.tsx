@@ -1,22 +1,26 @@
-import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getMap } from '../../../services/map.service';
 import { IRootState } from '../../../reducers';
 import { updateMapElements } from '../../../actions/gameWizard.actions';
+import { PayloadAction } from '../../../interfaces/redux.interface';
+import { iGameWizardState } from '../../../reducers/gameCreation.reducer';
 
-function Invitation({ onSubmit }: any) {
-  // const dispatch = useDispatch();
+interface props {
+  onSubmit(data: iGameWizardState, payloadAction: PayloadAction<iGameWizardState>): void;
+}
+
+const Invitation = ({ onSubmit }: props) => {
   const { mapId } = useSelector(
     (state: IRootState) => state.gameCreationReducer,
   );
 
-  const user = useSelector((state: IRootState) => state.user);
+  const user = useSelector((state: IRootState) => state.userReducer);
 
   const getMapData = async () => {
     if (mapId) {
       const mapData = await getMap(user.name, mapId);
       onSubmit(
-        { elementArr: JSON.parse(mapData.locationData) },
+        { elementArr: JSON.parse(mapData.locationData), playerArr: [] },
         updateMapElements,
       );
     }
@@ -24,7 +28,6 @@ function Invitation({ onSubmit }: any) {
 
   const handleClick = () => {
     getMapData();
-    // onSubmit();
   };
 
   return (
@@ -38,6 +41,6 @@ function Invitation({ onSubmit }: any) {
       </button>
     </div>
   );
-}
+};
 
-export default withRouter(Invitation);
+export default Invitation;

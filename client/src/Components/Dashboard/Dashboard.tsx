@@ -3,8 +3,8 @@ import { IRootState } from '../../reducers';
 import DashboarMenuItem from './DashboardMenuItem/DashboarMenuItem';
 import './Dashboard.scss';
 
-export default function Dashboard() {
-  const user = useSelector((state: IRootState) => state.user);
+const Dashboard = () => {
+  const user = useSelector((state: IRootState) => state.userReducer);
   return (
     <div className="dashboard-container">
       <div className="header">
@@ -42,7 +42,7 @@ export default function Dashboard() {
         />
         <DashboarMenuItem
           image="https://images.unsplash.com/photo-1601987177651-8edfe6c20009?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
-          link="/gameWizard/step1"
+          link="/gameWizard/name"
           text="Create Game"
         />
         <DashboarMenuItem
@@ -53,4 +53,6 @@ export default function Dashboard() {
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

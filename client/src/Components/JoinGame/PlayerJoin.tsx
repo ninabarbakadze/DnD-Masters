@@ -16,7 +16,7 @@ interface props {
 }
 
 const PlayerJoin = ({ activateGame, addPlayer }: props) => {
-  const user = useSelector((state: IRootState) => state.user);
+  const user = useSelector((state: IRootState) => state.userReducer);
   const dispatch = useDispatch();
   const [playerName, setPlayerName] = useState('');
   const [characterRaces, setcharacterRaces] = useState<iJoinGameCharacter[]>([]);
