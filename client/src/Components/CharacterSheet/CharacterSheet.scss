@@ -357,3 +357,45 @@ justify-content: space-around;
 .character-sheet-skills::-webkit-scrollbar {
     display: none;
 }
+
+
+.header{
+    font-weight: 500;
+    position: absolute;
+    z-index: 5;
+    top: 10px;
+
+}
+.flex-initial-1:hover{
+    background-color:#dbe2f06b;
+}
+
+.head-menu{
+    // background-color:yellow;
+    padding:9px;
+    border-radius: 10px;
+}
+.img-avatar{
+    height: 60px;
+    width: 60px;
+    // background-color: yellow;
+    border-radius:45px;
+    object-fit: cover;
+    object-position: 100% 0;
+    // margin-right: -30px;
+
+}
+.sheet{
+    
+    position: absolute;
+    z-index: 5;
+    // top:10px;
+    // left: 50px;
+}
+// .menu{
+//     width: 500vh;
+//     display: flex;
+//     flex-direction: column;
+//     align-items:center;
+//     justify-content: start;
+// }

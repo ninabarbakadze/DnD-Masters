@@ -1,3 +1,5 @@
+import { ICharacterDB } from '../../interfaces/characterFromDB.interface';
+
 export const mod = (score:number) => {
   const m = Math.round(score / 2 - 5.1);
   return m;
@@ -13,3 +15,17 @@ export const proficiencyBonusCalc = (level: number) => {
   if (level > 16 && level < 20) proficiencyBonus = 6;
   return proficiencyBonus;
 };
+
+export function updateArrObj(obj: ICharacterDB, key:string, newValue:number) {
+  const { equipments, ...data } = obj;
+
+  const temp = equipments.filter((item) => item.equipment.name !== key);
+  const newItem = equipments.find((item) => item.equipment.name === key);
+
+  // eslint-disable-next-line no-unused-expressions
+  newItem && temp.push(Object.assign(newItem, { quantity: newValue }));
+
+  const objToReturn = { equipments: temp, ...data };
+
+  return objToReturn;
+}

@@ -36,3 +36,7 @@ export interface iCharacterWizardState {
   character?: iCharacter;
   races?: iCharacterRace[];
 }
+export interface iJoinGameCharacter {
+  name: string;
+  race: iCharacterRace
+}

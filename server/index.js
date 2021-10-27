@@ -48,7 +48,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected', socket.id);
   });
-  socket.on('new_player', ({ player, room }, respond) => {
+  socket.on('new_player', ({ player }, respond) => {
     players.push(player);
     respond(players);
   });

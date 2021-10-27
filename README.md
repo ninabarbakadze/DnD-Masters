@@ -70,7 +70,8 @@ Finally after all the information is submitted the user is brought to their char
 
 **Designs**
 
-### Backend Architechture
+### Backend Architecture
+
 
 ## Desired Future Functionality
 

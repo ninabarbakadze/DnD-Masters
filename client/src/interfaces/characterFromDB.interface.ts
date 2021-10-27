@@ -1,4 +1,3 @@
-/* eslint-disable semi */
 export interface IBackground { name: string }
 export interface IArmorClass {
     value: number,

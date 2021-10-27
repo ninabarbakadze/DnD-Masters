@@ -3,22 +3,17 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 import { Socket } from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { iMessage } from '../../interfaces/chat.interface';
 
 type props = {
   socket: Socket,
   username: string,
   room: string
 }
-interface Message {
-  room: string;
-  author: string;
-  message: string;
-  time: Date;
-}
 
 export default function Chat({ socket, username, room }: props) {
   const [currentMessage, setCurrentMessage] = useState('');
-  const [messageList, setMessageList] = useState<Message[]>([]);
+  const [messageList, setMessageList] = useState<iMessage[]>([]);
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -35,7 +30,11 @@ export default function Chat({ socket, username, room }: props) {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     socket.on('receive_message', (data: string) => {
+=======
+    socket.on('receive_message', (data: iMessage) => {
+>>>>>>> 8c2aca47eb253aa0bd99bea1d4ac71fc5d369640
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
