@@ -30,11 +30,7 @@ export default function Chat({ socket, username, room }: props) {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    socket.on('receive_message', (data: string) => {
-=======
     socket.on('receive_message', (data: iMessage) => {
->>>>>>> 8c2aca47eb253aa0bd99bea1d4ac71fc5d369640
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
